@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    tools:context=".Activities.LoginActivity">
+    <include layout="@layout/toolbar_second"
+        android:id="@+id/toolbar_second_id"/>
+
+    <LinearLayout
+        android:layout_below="@id/toolbar_second_id"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_phone_android_black_24dp"
+            android:drawablePadding="10dp"
+            android:layout_marginStart="20dp"
+            android:gravity="start"
+            android:id="@+id/ed_phone_login"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:maxLength="11"
+            android:drawableTint="@color/gray"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="40dp"
+            android:hint="@string/phonenumber"
+            tools:targetApi="m" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_lock_open_black_24dp"
+            android:drawablePadding="10dp"
+            android:layout_marginStart="20dp"
+            android:gravity="end"
+            android:id="@+id/ed_pass_login"
+            android:inputType="numberPassword"
+            android:maxLines="1"
+            android:maxLength="30"
+            android:drawableTint="@color/gray"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:hint="@string/password"
+            tools:targetApi="m" />
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="start"
+            android:id="@+id/chk_show_pass_login"
+            android:layout_height="wrap_content"
+            android:text="@string/showpassword"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_forgot_password"
+            android:layout_marginTop="20dp"
+            android:text="@string/forgot_password"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/black"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/didnt_register_yet"
+            android:gravity="center"
+            android:id="@+id/txt_register"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textColor="#9E1515"/>
+    </LinearLayout>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/card_login"
+        android:elevation="@dimen/standard_elevation"
+        android:layout_height="50dp"
+        tools:targetApi="lollipop">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/green"
+            android:gravity="center_vertical"
+            android:text="@string/welcometo_bookstore"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

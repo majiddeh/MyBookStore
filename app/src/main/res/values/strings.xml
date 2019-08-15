@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">فروشگاه کتاب من</string>
+    <string name="navigation_drawer_open">باز کردن پنل</string>
+    <string name="navigation_drawer_close">بستن پنل</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">تنظیمات</string>
+
+    <string name="menu_home">دسته بندی محصولات</string>
+    <string name="menu_gallery">سبد خرید</string>
+    <string name="menu_slideshow">گالری عکس</string>
+    <string name="menu_tools">تنظیمات</string>
+    <string name="menu_share">درباره ما</string>
+    <string name="menu_send"> ارسال نرم افزار به دوستان</string>
+    <string name="nav_communicate">ارتباطات</string>
+    <string name="login">ورود</string>
+    <string name="register">عضویت در فروشگاه</string>
+    <string name="showpassword">نمایش رمز عبور</string>
+    <string name="address">نشانی</string>
+    <string name="email">پست الکترونیک</string>
+    <string name="phonenumber">تلفن همراه</string>
+    <string name="password">رمزعبور</string>
+    <string name="forgot_password">رمز عبور خود را فراموش کرده اید؟!</string>
+    <string name="didnt_register_yet">ثبت نام نکرده ام!</string>
+    <string name="welcometo_bookstore">ورود به فروشگاه</string>
+    <string name="category">دسته بندی محصولات</string>
+    <string name="offers">تخفیفات ویژه</string>
+    <string name="products">محصولات</string>
+    <string name="mostvisited">محصولات پر بازدید</string>
+    <string name="numbers">تعداد :</string>
+    <string name="price">قیمت محصول :</string>
+    <string name="totalprice">قیمت کل محصول :</string>
+    <string name="delete">حذف</string>
+    <string name="login_register">عضویت / ورود</string>
+    <string name="edit_information">ویرایش اطلاعات</string>
+    <string name="exit_profile">خروج از حساب</string>
+    <string name="favorite">علاقه مندی ها</string>
+    <string name="name">نام</string>
+    <string name="family">نام خانوادگی</string>
+</resources>

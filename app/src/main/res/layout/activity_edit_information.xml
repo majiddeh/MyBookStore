@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activities.EditInformation">
+    <include layout="@layout/toolbar_second"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ed_edit_name"
+            android:layout_marginLeft="30dp"
+            android:inputType="text"
+            android:maxLines="1"
+            android:maxLength="30"
+            android:hint="@string/name"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:maxLines="1"
+            android:id="@+id/ed_edit_family"
+            android:maxLength="40"
+            android:layout_marginLeft="30dp"
+            android:hint="@string/family"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_marginEnd="30dp"
+        android:layout_height="wrap_content" >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:maxLines="1"
+            android:maxLength="30"
+            android:id="@+id/ed_edit_email"
+            android:inputType="textEmailAddress"
+            android:layout_marginLeft="30dp"
+            android:hint="@string/email"
+            android:autofillHints="" />
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <EditText
+            android:inputType="textMultiLine"
+            android:id="@+id/ed_edit_address"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:maxLength="500"
+            android:maxLines="5"
+            android:hint="@string/address"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:layout_width="200dp"
+        android:id="@+id/btn_edit_edit_activity"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_information"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:textSize="@dimen/text_size_big"
+        android:textColor="@color/white"
+        android:background="@drawable/shape_btn_edit_profile"/>
+
+
+</LinearLayout>
