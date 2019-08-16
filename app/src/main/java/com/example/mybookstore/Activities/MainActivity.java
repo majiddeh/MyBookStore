@@ -25,6 +25,7 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.mybookstore.Adapters.AdapterOff;
 import com.example.mybookstore.Models.ModelOff;
 import com.example.mybookstore.R;
+import com.example.mybookstore.Utils.ApiServices;
 import com.example.mybookstore.Utils.Links;
 import com.example.mybookstore.Utils.Put;
 import com.example.mybookstore.Utils.UserSharedPrefrences;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity
      TextView txtNaviLogin;
      NavigationView navigationView;
      String phone;
+     ApiServices apiServices = new ApiServices(MainActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,20 +106,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void recyclerInitialize() {
-        modelOffs.add(new ModelOff(1,"http://"+ Links.Link + "/samed_bookstore/uploads/book1.jpg","نخل و نارنج","125","250000","20%"));
-        modelOffs.add(new ModelOff(1,"http://"+ Links.Link + "/samed_bookstore/uploads/book2.jpg","نخل و نارنج","125","250000","20%"));
-        modelOffs.add(new ModelOff(1,"http://"+ Links.Link + "/samed_bookstore/uploads/book3.jpg","نخل و نارنج","125","250000","20%"));
-        modelOffs.add(new ModelOff(1,"http://"+ Links.Link + "/samed_bookstore/uploads/book4.jpg","نخل و نارنج","125","250000","20%"));
-        modelOffs.add(new ModelOff(1,"http://"+ Links.Link + "/samed_bookstore/uploads/book5.jpg","نخل و نارنج","125","250000","20%"));
-        modelOffs.add(new ModelOff(1,"http://"+ Links.Link + "/samed_bookstore/uploads/book6.jpg","نخل و نارنج","125","250000","20%"));
-        modelOffs.add(new ModelOff(1,"http://"+ Links.Link + "/samed_bookstore/uploads/book7.jpg","نخل و نارنج","125","250000","20%"));
-        modelOffs.add(new ModelOff(1,"http://"+ Links.Link + "/samed_bookstore/uploads/book8.jpg","نخل و نارنج","125","250000","20%"));
-        modelOffs.add(new ModelOff(1,"http://"+ Links.Link + "/samed_bookstore/uploads/book9.jpg","نخل و نارنج","125","250000","20%"));
-        modelOffs.add(new ModelOff(1,"http://"+ Links.Link + "/samed_bookstore/uploads/book10.jpg","نخل و نارنج","125","250000","20%"));
 
-        adapterOff = new AdapterOff(modelOffs,getApplicationContext());
-        recyclerOff.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
-        recyclerOff.setAdapter(adapterOff);
+        apiServices.offReceived(new ApiServices.OnOffReceived() {
+            @Override
+            public void onOffReceived(List<ModelOff> modelOffs) {
+                adapterOff = new AdapterOff(modelOffs,getApplicationContext());
+                recyclerOff.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+                recyclerOff.setAdapter(adapterOff);
+
+            }
+        });
+
+
     }
 
     private void sliderInitialize() {

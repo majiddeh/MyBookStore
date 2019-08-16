@@ -18,6 +18,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.mybookstore.Models.ModelCategory;
+import com.example.mybookstore.Models.ModelOff;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -242,6 +243,53 @@ public class ApiServices {
         MySingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
     }
 
+    public void offReceived(final OnOffReceived onOffReceived){
+
+        final ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setTitle("لطفا صبر کنید");
+        progressDialog.setMessage("در حال دریافت اطلاعات");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(0, Links.GET_OFF, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                List<ModelOff> modelOffs = new ArrayList<>();
+                for (int i = 0; i < response.length(); i++) {
+                    ModelOff modelOff = new ModelOff();
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        modelOff.setId(jsonObject.getInt(Put.id));
+                        modelOff.setImage(jsonObject.getString(Put.image));
+                        modelOff.setLable(jsonObject.getString(Put.lable));
+                        modelOff.setPrice(jsonObject.getString(Put.price));
+                        modelOff.setTitle(jsonObject.getString(Put.title));
+                        modelOff.setVisit(jsonObject.getString(Put.visit));
+
+                        modelOffs.add(modelOff);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                onOffReceived.onOffReceived(modelOffs);
+                progressDialog.dismiss();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
+                Log.i("errorOff",error.toString());
+
+            }
+        });
+
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
+
+    }
+
     public interface OnSignUpComplete {
         void onSignUp (int responseStatus);
     }
@@ -260,6 +308,10 @@ public class ApiServices {
 
     public interface OnCategoryReceived{
         void onCatReceived(List<ModelCategory> modelCategories);
+    }
+
+    public interface  OnOffReceived{
+        void onOffReceived(List<ModelOff> modelOffs);
     }
 
 }

@@ -17,6 +17,9 @@ public class ModelOff {
         this.lable = lable;
     }
 
+    public ModelOff() {
+    }
+
     public int getId() {
         return id;
     }

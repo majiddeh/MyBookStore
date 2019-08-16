@@ -13,8 +13,10 @@ import android.widget.TextView;
 
 import com.example.mybookstore.Models.ModelOff;
 import com.example.mybookstore.R;
+import com.example.mybookstore.Utils.Links;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import jp.shts.android.library.TriangleLabelView;
@@ -39,12 +41,14 @@ public class AdapterOff extends RecyclerView.Adapter<AdapterOff.viewHolder> {
     @Override
     public void onBindViewHolder(@NonNull AdapterOff.viewHolder viewHolder, int i) {
 
-        viewHolder.txtPrice.setText(modelOffs.get(i).getPrice());
+        DecimalFormat decimalFormat = new DecimalFormat("###,###");
+
+        viewHolder.txtPrice.setText(decimalFormat.format(Integer.valueOf(modelOffs.get(i).getPrice()))+" "+"تومان");
         viewHolder.txtVisit.setText(modelOffs.get(i).getVisit());
         viewHolder.txtTitle.setText(modelOffs.get(i).getTitle());
         viewHolder.triangleLabelView.setSecondaryText(modelOffs.get(i).getLable());
         Picasso.with(context)
-                .load(modelOffs.get(i).getImage())
+                .load(modelOffs.get(i).getImage().replace(Links.LOCALHOST,Links.Link))
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
                 .into(viewHolder.imgOff);
