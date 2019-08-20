@@ -6,6 +6,7 @@
     android:id="@+id/activity_register"
     android:layout_width="match_parent"
     android:layoutDirection="rtl"
+    android:background="@color/gray_light_for_bg_activity"
     android:layout_height="match_parent"
     android:orientation="vertical">
     <include layout="@layout/toolbar_second"

@@ -47,6 +47,14 @@
                         android:id="@+id/img_search"
                         android:layout_height="match_parent"
                         app:srcCompat="@drawable/ic_search_black_24dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="0"
+                        android:textSize="@dimen/text_size_small"
+                        android:id="@+id/txt_count_cart"
+                        />
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_marginEnd="@dimen/large_margin"

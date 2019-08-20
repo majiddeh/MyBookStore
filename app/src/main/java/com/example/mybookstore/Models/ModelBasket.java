@@ -19,6 +19,9 @@ public class ModelBasket {
         this.allPrice = allPrice;
     }
 
+    public ModelBasket() {
+    }
+
     public int getId() {
         return id;
     }

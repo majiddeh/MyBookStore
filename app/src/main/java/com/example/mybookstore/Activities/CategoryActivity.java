@@ -3,7 +3,6 @@ package com.example.mybookstore.Activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,11 +12,11 @@ import com.example.mybookstore.Adapters.AdapterCategory;
 import com.example.mybookstore.Models.ModelCategory;
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
+import com.example.mybookstore.Utils.Links;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryAvtivity extends AppCompatActivity {
+public class CategoryActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private AdapterCategory adapterCategory ;
     private ImageView imgBackButton;
@@ -26,7 +25,7 @@ public class CategoryAvtivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category_avtivity);
+        setContentView(R.layout.activity_category);
         findViews();
         txtTitle.setText("دسته بندی محصولات");
 
@@ -37,11 +36,11 @@ public class CategoryAvtivity extends AppCompatActivity {
             }
         });
 
-        ApiServices apiServices = new ApiServices(CategoryAvtivity.this);
+        ApiServices apiServices = new ApiServices(CategoryActivity.this);
         apiServices.categoryReceive(new ApiServices.OnCategoryReceived() {
             @Override
             public void onCatReceived(List<ModelCategory> modelCategories) {
-                adapterCategory = new AdapterCategory(CategoryAvtivity.this,modelCategories);
+                adapterCategory = new AdapterCategory(CategoryActivity.this,modelCategories);
                 recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
                 recyclerView.setAdapter(adapterCategory);
             }

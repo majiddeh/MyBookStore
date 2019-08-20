@@ -5,8 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/gray_light_for_bg_activity"
     android:layout_height="match_parent"
-    tools:context=".Activities.ActivityProfile">
+    tools:context=".Activities.ProfileActivity">
     <include layout="@layout/toolbar_second"/>
 
     <LinearLayout

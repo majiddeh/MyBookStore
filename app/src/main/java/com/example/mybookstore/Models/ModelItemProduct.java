@@ -1,7 +1,8 @@
 package com.example.mybookstore.Models;
 
-public class ModelSearch {
+import com.android.volley.toolbox.StringRequest;
 
+public class ModelItemProduct {
     private int id;
     private String image;
     private String title;
@@ -10,19 +11,10 @@ public class ModelSearch {
     private String lable;
     private String offPrice;
     private String desc;
+    private String author;
+    private String publisher;
 
-    public ModelSearch() {
-    }
-
-    public ModelSearch(int id, String image, String title, String visit, String price, String lable, String offPrice, String desc) {
-        this.id = id;
-        this.image = image;
-        this.title = title;
-        this.visit = visit;
-        this.price = price;
-        this.lable = lable;
-        this.offPrice = offPrice;
-        this.desc = desc;
+    public ModelItemProduct() {
     }
 
     public int getId() {
@@ -87,5 +79,21 @@ public class ModelSearch {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
     }
 }

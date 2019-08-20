@@ -1,23 +1,25 @@
 package com.example.mybookstore.Models;
 
-public class ModelOff {
+public class ModelOff_Only_MostVisit {
     int id;
     String image;
     String title;
     String visit;
     String price;
     String lable;
+    String offPrice;
 
-    public ModelOff(int id, String image, String title, String visit, String price, String lable) {
+    public ModelOff_Only_MostVisit(int id, String image, String title, String visit, String price, String lable, String offPrice) {
         this.id = id;
         this.image = image;
         this.title = title;
         this.visit = visit;
         this.price = price;
         this.lable = lable;
+        this.offPrice = offPrice;
     }
 
-    public ModelOff() {
+    public ModelOff_Only_MostVisit() {
     }
 
     public int getId() {
@@ -66,5 +68,13 @@ public class ModelOff {
 
     public void setLable(String lable) {
         this.lable = lable;
+    }
+
+    public String getOffPrice() {
+        return offPrice;
+    }
+
+    public void setOffPrice(String offPrice) {
+        this.offPrice = offPrice;
     }
 }

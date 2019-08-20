@@ -12,34 +12,35 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mybookstore.Activities.ItemActivity;
 import com.example.mybookstore.Activities.ItemCatActivity;
 import com.example.mybookstore.Models.ModelCategory;
 import com.example.mybookstore.R;
-import com.example.mybookstore.Utils.ApiServices;
 import com.example.mybookstore.Utils.Links;
 import com.example.mybookstore.Utils.Put;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.viewHolder> {
+public class AdapterItemCat extends RecyclerView.Adapter<AdapterItemCat.viewHolder> {
     Context context;
     List<ModelCategory> modelCategories;
 
-    public AdapterCategory(Context context, List<ModelCategory> modelCategories) {
+    public AdapterItemCat(Context context, List<ModelCategory> modelCategories) {
         this.context = context;
         this.modelCategories = modelCategories;
     }
 
     @NonNull
     @Override
-    public AdapterCategory.viewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public viewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_view_category,viewGroup,false);
         return new viewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final AdapterCategory.viewHolder viewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final viewHolder viewHolder, final int i) {
+
         final ModelCategory modelCategory = modelCategories.get(i);
 
         viewHolder.txtCat.setText(modelCategory.getTitle_category());
@@ -51,7 +52,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.viewHo
         viewHolder.cardCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(viewHolder.itemView.getContext(), ItemCatActivity.class);
+                Intent intent = new Intent(viewHolder.itemView.getContext(), ItemActivity.class);
                 intent.putExtra(Put.id,modelCategories.get(i).getId()+"");
                 String title = modelCategory.getTitle_category();
                 intent.putExtra(Put.name,title);
@@ -66,19 +67,16 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.viewHo
         return modelCategories.size();
     }
 
-
-    public class viewHolder extends RecyclerView.ViewHolder{
+    class viewHolder extends RecyclerView.ViewHolder{
         CardView cardCategory;
         ImageView imgCat;
         TextView txtCat;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
-
             cardCategory=itemView.findViewById(R.id.card_category);
             imgCat=itemView.findViewById(R.id.img_category);
             txtCat=itemView.findViewById(R.id.txt_title_category);
         }
     }
-
 }

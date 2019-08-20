@@ -1,7 +1,6 @@
 package com.example.mybookstore.Activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +12,7 @@ import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.Put;
 import com.example.mybookstore.Utils.UserSharedPrefrences;
 
-public class ActivityProfile extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     private Button btnEdit,btnFavorit,btnExite;
     private ImageView imgBack;
@@ -38,7 +37,7 @@ public class ActivityProfile extends AppCompatActivity {
         btnExite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(ActivityProfile.this);
+                UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(ProfileActivity.this);
                 userSharedPrefrences.exitFromAccount();
                 Intent intent =new Intent();
                 intent.putExtra(Put.phone,"ورود/عضویت");
@@ -50,7 +49,7 @@ public class ActivityProfile extends AppCompatActivity {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActivityProfile.this,EditInformation.class));
+                startActivity(new Intent(ProfileActivity.this,EditInformation.class));
             }
         });
     }

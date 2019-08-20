@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="@dimen/standard_margin"
+    android:layout_margin="5dp"
     app:cardBackgroundColor="@color/bg_for_itemshow"
     android:clickable="true"
     android:foreground="?attr/selectableItemBackground"
     android:layoutDirection="rtl"
-    android:id="@+id/card_search"
+    android:id="@+id/card_item_product"
     xmlns:tools="http://schemas.android.com/tools"
     android:elevation="@dimen/standard_elevation"
-    android:layout_height="200dp">
+    android:layout_height="220dp">
 
     <LinearLayout
         android:orientation="vertical"
@@ -21,7 +20,7 @@
             android:layout_width="140dp"
             android:layout_height="0dp"
             android:layout_marginStart="5dp"
-            android:id="@+id/img_item_search"
+            android:id="@+id/img_item_product"
             android:layout_gravity="center"
             tools:src="@drawable/side_nav_bar"
             android:scaleType="centerInside"
@@ -43,7 +42,7 @@
                 android:ellipsize="end"
                 android:layout_marginTop="@dimen/margin_itemshow_product"
                 android:maxLines="1"
-                android:id="@+id/txttitle_search"
+                android:id="@+id/txt_title_item_product"
                 android:layout_marginBottom="@dimen/margin_itemshow_product"
                 android:layout_marginStart="10dp"
                 tools:text="نخل ونارنج"
@@ -56,7 +55,7 @@
                 android:ellipsize="end"
                 android:layout_marginTop="@dimen/margin_itemshow_product"
                 android:maxLines="1"
-                android:id="@+id/txt_visit_item_search"
+                android:id="@+id/txt_visit_item_product"
                 android:layout_marginBottom="@dimen/margin_itemshow_product"
                 android:layout_marginEnd="@dimen/small_margin"
                 tools:text="110"
@@ -84,46 +83,46 @@
             android:layout_marginLeft="@dimen/standard_margin"
             android:background="#40292424"/>
 
-        <!--<LinearLayout-->
-            <!--android:layout_marginTop="@dimen/margin_itemshow_product"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:layout_marginBottom="@dimen/margin_itemshow_product"-->
-            <!--android:layout_height="wrap_content">-->
-            <!--<TextView-->
-                <!--android:textColor="@color/black"-->
-                <!--android:ellipsize="end"-->
-                <!--android:maxLines="1"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_weight=".5"-->
-                <!--android:textAlignment="center"-->
-                <!--android:id="@+id/txt_authur_item_product"-->
-                <!--android:layout_marginEnd="10dp"-->
-                <!--android:gravity="center_vertical|start"-->
-                <!--tools:text="وحید یامین پور"-->
-                <!--android:layout_height="wrap_content" />-->
+        <LinearLayout
+            android:layout_marginTop="@dimen/margin_itemshow_product"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/margin_itemshow_product"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@color/black"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_width="0dp"
+                android:layout_weight=".5"
+                android:textAlignment="center"
+                android:id="@+id/txt_authur_item_product"
+                android:layout_marginEnd="10dp"
+                android:gravity="center_vertical|start"
+                tools:text="وحید یامین پور"
+                android:layout_height="wrap_content" />
 
-            <!--<TextView-->
-                <!--android:textColor="@color/black"-->
-                <!--android:ellipsize="end"-->
-                <!--android:maxLines="1"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_weight="0.5"-->
-                <!--android:textAlignment="center"-->
-                <!--android:id="@+id/txt_publisher_item_product"-->
-                <!--android:layout_marginEnd="10dp"-->
-                <!--android:gravity="center_vertical|start"-->
-                <!--tools:text="انتشارات جمکران"-->
-                <!--android:layout_height="wrap_content" />-->
+            <TextView
+                android:textColor="@color/black"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:textAlignment="center"
+                android:id="@+id/txt_publisher_item_product"
+                android:layout_marginEnd="10dp"
+                android:gravity="center_vertical|start"
+                tools:text="انتشارات جمکران"
+                android:layout_height="wrap_content" />
 
-        <!--</LinearLayout>-->
+        </LinearLayout>
 
-        <!--<View-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_marginRight="@dimen/margin_itemshow_product"-->
-            <!--android:layout_marginLeft="@dimen/margin_itemshow_product"-->
-            <!--android:background="#40292424"/>-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginRight="@dimen/margin_itemshow_product"
+            android:layout_marginLeft="@dimen/margin_itemshow_product"
+            android:background="#40292424"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -138,7 +137,7 @@
                 android:textAlignment="center"
                 android:layout_marginTop="@dimen/margin_itemshow_product"
                 android:layout_marginBottom="@dimen/margin_itemshow_product"
-                android:id="@+id/txtprice_search"
+                android:id="@+id/txtprice_item_product"
                 android:layout_marginEnd="10dp"
                 tools:text="250000"
                 android:gravity="center_vertical|start"
@@ -152,7 +151,7 @@
                 android:textAlignment="center"
                 android:layout_marginTop="@dimen/margin_itemshow_product"
                 android:layout_marginBottom="@dimen/margin_itemshow_product"
-                android:id="@+id/txtprice_off_item_search"
+                android:id="@+id/txtprice_off_item_product"
                 android:layout_marginEnd="10dp"
                 tools:text="250000"
                 android:gravity="center_vertical|start"
@@ -165,10 +164,11 @@
             android:layout_width="match_parent"
             android:textColor="@color/black"
             android:ellipsize="end"
-            android:maxLines="2"
-            android:id="@+id/txtdescription_search"
-            android:layout_marginBottom="@dimen/margin_itemshow_product"
-            android:layout_marginEnd="10dp"
+            android:lines="1"
+            android:layout_marginEnd="@dimen/standard_margin"
+            android:id="@+id/txt_description_item_product"
+            android:layout_marginBottom="@dimen/standard_margin"
+            android:layout_marginStart="@dimen/standard_margin"
             tools:text="نخل ونارنج نوشته وحید یامین پور در باره شیخ مرتضی انصاری"
             android:gravity="center_vertical|start"
             android:layout_height="0dp"

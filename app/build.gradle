@@ -4,6 +4,11 @@ repositories {
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 
+configurations {
+    cleanedAnnotations
+    compile.exclude group: 'org.jetbrains' , module:'annotations'
+}
+
 android {
     compileSdkVersion 28
     buildToolsVersion "29.0.0"
@@ -48,4 +53,5 @@ dependencies {
     implementation 'com.github.shts:TriangleLabelView:1.1.2'
     implementation 'net.schmizz:sshj:0.10.0'
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'org.jetbrains:annotations-java5:15.0'
 }

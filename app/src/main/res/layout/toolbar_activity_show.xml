@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layoutDirection="rtl"
+    android:layout_width="match_parent"
+    app:layout_collapseMode="pin"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@android:color/transparent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight=".5"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:id="@+id/imgback_showactivity"
+                    android:tint="@color/gray"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_arrow_forward_black_24dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:orientation="horizontal"
+                android:layout_weight=".5"
+                android:gravity="center_vertical|end"
+                android:layout_height="match_parent">
+
+                <!--<ImageView-->
+                    <!--android:layout_width="30dp"-->
+                    <!--android:layout_marginEnd="@dimen/large_margin"-->
+                    <!--android:tint="@color/gray"-->
+                    <!--android:id="@+id/img_shop_cart_showactivity"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--app:srcCompat="@drawable/ic_shopping_cart_black_24dp"/>-->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray"
+                    android:text="0"
+                    android:textSize="@dimen/text_size_small"
+                    android:id="@+id/txt_count_cart"
+                    />
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="@dimen/standard_margin"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/gray"
+                    android:src="@drawable/ic_shopping_cart_black_24dp"
+                    android:id="@+id/img_shop_cart_showactivity"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>

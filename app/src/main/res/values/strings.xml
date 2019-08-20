@@ -38,4 +38,18 @@
     <string name="favorite">علاقه مندی ها</string>
     <string name="name">نام</string>
     <string name="family">نام خانوادگی</string>
+    <string name="only_in_samed">فقط در فروشگاه صامد</string>
+    <string name="most_sold">محصولات پر فروش</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, cons maximus odio sed tiPraesent ac diam nibh. Praesent sit amet ante consectetur, fermentum odio a, varius odio. Ut maximus elementum mauris, eget pellentesque felis rhoncus et. Praesent congue neque in massa condimentum placerat. Nunc tristique varius elit sit amet commodo. Morbi sed venenatis</string>
+    <string name="product_information">مشخصات محصول</string>
+    <string name="comments">نظرات کاربران</string>
+    <string name="add_to_shopcart">اضافه به سبد خرید</string>
+    <string name="continue_reading">ادامه مطلب</string>
+    <string name="author">نویسنده :</string>
+    <string name="publisher">انتشارات :</string>
+    <string name="add_to_favorite">افزودن به علاقه مندی ها</string>
+    <string name="totallprice">قیمت کل محصول :</string>
+    <string name="product_price">قیمت محصول :</string>
+    <string name="number">تعداد :</string>
+    <string name="group">دسته بندی</string>
 </resources>

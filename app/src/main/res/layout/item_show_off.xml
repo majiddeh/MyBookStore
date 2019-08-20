@@ -4,9 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="170dp"
-    android:id="@+id/cardview_off"
-    android:layout_height="200dp"
-    android:layout_margin="8dp"
+    android:id="@+id/cardview_product"
+    android:background="@color/bg_for_itemshow"
+    android:layout_height="220dp"
+    android:layout_margin="@dimen/standard_margin"
     android:layoutDirection="rtl"
     app:cardCornerRadius="5dp"
     app:cardElevation="5dp">
@@ -14,21 +15,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:gravity="center|bottom"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:id="@+id/img_off"
+                android:id="@+id/img_product"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="170dp"
                 tools:src="@drawable/side_nav_bar"
                 android:scaleType="centerInside"/>
 
             <jp.shts.android.library.TriangleLabelView
-                android:id="@+id/triangle_off"
+                android:id="@+id/triangle_product"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
@@ -46,6 +47,7 @@
                 app:secondaryTextSize="10sp" />
         </RelativeLayout>
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="20dp">
@@ -58,40 +60,40 @@
                 />
 
             <TextView
-                android:id="@+id/product_off_name"
+                android:id="@+id/txt_title_product"
                 android:textSize="@dimen/text_size_very_small"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="@dimen/small_margin"
                 android:layout_toEndOf="@id/vieww"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/standard_margin"
-                tools:text="نخل ونارنج" />
+                tools:text="ماجرای فکری آوینی" />
 
         </RelativeLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
 
             android:orientation="horizontal">
             <TextView
                 android:textSize="@dimen/text_size_very_small"
-                android:id="@+id/product_off_price"
+                android:id="@+id/txt_price_product"
                 android:gravity="start"
                 android:textColor="@color/green"
                 android:layout_width="0dp"
                 android:layout_marginStart="@dimen/standard_margin"
-                android:layout_weight=".9"
+                android:layout_weight=".5"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="3dp"
+                android:layout_marginEnd="@dimen/small_margin"
                 tools:text="5000" />
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight=".7"
+                android:layout_weight=".3"
                 android:orientation="horizontal"
                 android:gravity="end|center_vertical"
                 android:layout_height="match_parent">
@@ -101,18 +103,28 @@
                     android:layout_height="20dp" />
                 <TextView
                     android:layout_width="20dp"
-                    android:id="@+id/product_off_visit"
+                    android:id="@+id/txt_visit_product"
                     android:gravity="center_vertical"
                     android:layout_marginStart="3dp"
                     android:layout_marginEnd="8dp"
                     android:textSize="@dimen/text_size_very_small"
                     android:layout_height="match_parent"
-                    android:text="20"/>
+                    tools:text="20"/>
             </LinearLayout>
 
-
-
         </LinearLayout>
+
+        <TextView
+            android:layout_gravity="start|bottom"
+            android:textSize="@dimen/text_size_very_small"
+            android:id="@+id/txt_price_off"
+            android:gravity="bottom"
+            android:textColor="@color/red"
+            android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/small_margin"
+            tools:text="5000" />
 
 
     </LinearLayout>

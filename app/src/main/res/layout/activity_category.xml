@@ -5,8 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_light_for_bg_activity"
     android:orientation="vertical"
-    tools:context=".Activities.CategoryAvtivity">
+    tools:context=".Activities.CategoryActivity">
     <include layout="@layout/toolbar_second"/>
 
     <android.support.v7.widget.RecyclerView

@@ -14,11 +14,20 @@ public class Put {
     static final String family = "family";
     static final String password = "password";
 
-    static final String image = "image";
-    static final String price = "price";
-    static final String lable = "lable";
+    public static final String image = "image";
+    public static final String price = "price";
+    public static final String lable = "lable";
     public static final String id = "id";
-    static final String title = "title";
-    static final String visit = "visit";
+    public static final String title = "title";
+    public static final String visit = "visit";
+    public static final String offPrice = "offPrice";
+    static final String date = "date";
+    static final String only = "only";
+    static final String author = "author";
+    static final String publisher = "publisher";
+    public static final String cat = "cat";
+    public static final String desc = "desc";
+    static final String num_sold = "num_sold";
 
+    public static final String record = "record";
 }
