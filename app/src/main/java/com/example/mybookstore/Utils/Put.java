@@ -12,7 +12,7 @@ public class Put {
     static final String address = "address";
     public static final String name = "name";
     static final String family = "family";
-    static final String password = "password";
+    public static final String password = "password";
 
     public static final String image = "image";
     public static final String price = "price";
@@ -28,6 +28,14 @@ public class Put {
     public static final String cat = "cat";
     public static final String desc = "desc";
     static final String num_sold = "num_sold";
+
+    static final String comment = "comment";
+    static final String user = "user";
+    static final String rating = "rating";
+    static final String negative = "negative";
+    static final String positive = "positive";
+
+
 
     public static final String record = "record";
 }

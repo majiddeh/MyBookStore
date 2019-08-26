@@ -52,7 +52,7 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.viewHold
             viewHolder.txtTitle.setText(modelProduct.get(i).getTitle());
             viewHolder.triangleLabelView.setSecondaryText(modelProduct.get(i).getLable());
             Picasso.with(context)
-                    .load(modelProduct.get(i).getImage().replace(Links.LOCALHOST,Links.Link))
+                    .load(modelProduct.get(i).getImage().replace(Links.LOCALHOST,Links.LINK_ADAPTER))
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.placeholder)
                     .into(viewHolder.imgOnly);
@@ -62,7 +62,7 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.viewHold
             viewHolder.txtTitle.setText(modelProduct.get(i).getTitle());
             viewHolder.triangleLabelView.setVisibility(View.GONE);
             Picasso.with(context)
-                    .load(modelProduct.get(i).getImage().replace(Links.LOCALHOST,Links.Link))
+                    .load(modelProduct.get(i).getImage().replace(Links.LOCALHOST,Links.LINK_ADAPTER))
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.placeholder)
                     .into(viewHolder.imgOnly);

@@ -4,15 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -25,6 +24,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
@@ -36,17 +38,22 @@ import com.example.mybookstore.Models.ModelOff_Only_MostVisit;
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
 import com.example.mybookstore.Utils.Links;
+import com.example.mybookstore.Utils.MySingleton;
 import com.example.mybookstore.Utils.Put;
 import com.example.mybookstore.Utils.UserSharedPrefrences;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, BaseSliderView.OnSliderClickListener {
     DrawerLayout drawer;
     Toolbar toolbar;
     ImageView imgShopCart,imgSearch;
+    CircleImageView circleImageView;
     SliderLayout sliderLayout;
     CardView cardCategory;
     RecyclerView recyclerOff, recyclerCategory,recyclerOnly,recyclerMostVisit,recyclerMostSold;
@@ -56,11 +63,15 @@ public class MainActivity extends AppCompatActivity
     NavigationView navigationView;
     String phone;
     ApiServices apiServices = new ApiServices(MainActivity.this);
+    UserSharedPrefrences userSharedPrefrences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        api();
         init();
 
 
@@ -78,17 +89,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void findViews() {
-        Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),"Vazir-Medium-FD-WOL.ttf");
-        txtCount=findViewById(R.id.txt_count_cart);
-        txtCount.setTypeface(typeface);
-        drawer = findViewById(R.id.drawer_layout);
-        imgShopCart=findViewById(R.id.img_shop_cart);
-        imgSearch=findViewById(R.id.img_search);
-        navigationView = findViewById(R.id.nav_view);
-        toolbar = findViewById(R.id.toolbar);
-        View navi = navigationView.getHeaderView(0);
-        txtNaviLogin = navi.findViewById(R.id.txt_nav_login);
-        txtNaviLogin.setText(phone);
+        Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),Links.LINK_FONT_VAZIR);
+        userSharedPrefrences = new UserSharedPrefrences(MainActivity.this);
+
+        phone = userSharedPrefrences.getUserPhone();
+
         recyclerOff = findViewById(R.id.offlist_recycler);
         sliderLayout = findViewById(R.id.slider);
         cardCategory = findViewById(R.id.card_category_main);
@@ -97,8 +102,35 @@ public class MainActivity extends AppCompatActivity
         recyclerOnly = findViewById(R.id.recycler_only);
         recyclerMostVisit = findViewById(R.id.recycler_most_visited);
         recyclerMostSold = findViewById(R.id.recycler_most_sold);
-        UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(MainActivity.this);
-        phone = userSharedPrefrences.getUserLoginInfo();
+        txtCount=findViewById(R.id.txt_count_cart);
+        drawer = findViewById(R.id.drawer_layout);
+        imgShopCart=findViewById(R.id.img_shop_cart);
+        imgSearch=findViewById(R.id.img_search);
+        navigationView = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.toolbar);
+        txtCount.setTypeface(typeface);
+
+
+        View navi = navigationView.getHeaderView(0);
+        circleImageView = navi.findViewById(R.id.img_circle_nav_header);
+        if (userSharedPrefrences.getUserImaje().equals("")){
+                    Picasso.with(getApplicationContext()).load(R.drawable.banner2).
+                error(R.drawable.placeholder)
+                .placeholder(R.drawable.placeholder)
+                .into(circleImageView);
+        }else {
+            Picasso.with(getApplicationContext()).load(userSharedPrefrences.getUserImaje().replace(Links.LOCALHOST,Links.LINK_ADAPTER)).
+                    error(R.drawable.placeholder)
+                    .placeholder(R.drawable.placeholder)
+                    .into(circleImageView);
+        }
+
+        txtNaviLogin = navi.findViewById(R.id.txt_nav_login);
+        txtNaviLogin.setText(phone);
+        txtNaviLogin.setTypeface(typeface);
+
+
+
 
     }
 
@@ -210,15 +242,16 @@ public class MainActivity extends AppCompatActivity
 
     private void sliderInitialize() {
         HashMap<String, String> url_image = new HashMap<>();
-        url_image.put("image1", "http://" + Links.Link + "/samed_bookstore/uploads/banners/banner4.jpg");
-        url_image.put("image2", "http://" + Links.Link + "/samed_bookstore/uploads/banners/banner6.jpg");
-        url_image.put("image3", "http://" + Links.Link + "/samed_bookstore/uploads/banners/banner7.jpg");
-        url_image.put("image4", "http://" + Links.Link + "/samed_bookstore/uploads/banners/banner8.jpg");
+        url_image.put("image1",Links.Link_HOST + "/samed_bookstore/uploads/banners/banner4.jpg");
+        url_image.put("image2",Links.Link_HOST + "/samed_bookstore/uploads/banners/banner6.jpg");
+        url_image.put("image3",Links.Link_HOST + "/samed_bookstore/uploads/banners/banner7.jpg");
+        url_image.put("image4",Links.Link_HOST + "/samed_bookstore/uploads/banners/banner8.jpg");
 
         for (int i = 0; i < url_image.keySet().size(); i++) {
             String keyname = url_image.keySet().toArray()[i].toString();
             TextSliderView textSliderView = new TextSliderView(MainActivity.this);
-            textSliderView.description(keyname)
+            textSliderView
+//                    .description(keyname)
                     .image(url_image.get(keyname))
                     .setOnSliderClickListener(this)
                     .empty(R.drawable.placeholder)
@@ -233,8 +266,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void setUpToolbar() {
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -251,6 +282,31 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    private void api(){
+        StringRequest stringRequest = new StringRequest(0, "https://majiddd74.000webhostapp.com/majid.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
+                Log.i("rrrrrr",response);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        MySingleton.getInstance(MainActivity.this).addToRequestQueue(stringRequest);
+    }
+
+
+
+
+
+
+
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -261,12 +317,29 @@ public class MainActivity extends AppCompatActivity
         if (requestCode == Put.REQUEST_CODE && resultCode == RESULT_OK) {
             if (data != null) {
                 String phone = data.getStringExtra(Put.phone);
+                String image = data.getStringExtra(Put.image);
                 txtNaviLogin.setText("خوش آمدید  " + phone);
+                Picasso.with(getApplicationContext()).load(image.replace(Links.LOCALHOST,Links.LINK_ADAPTER))
+                        .placeholder(R.drawable.avatar)
+                        .error(R.drawable.avatar)
+                        .into(circleImageView);
                 recreate();
             }
         } else if (requestCode == Put.REQUEST_EXIT && resultCode == RESULT_OK) {
             if (data != null) {
                 String phone = data.getStringExtra(Put.phone);
+                String image = data.getStringExtra(Put.image);
+                if (image.equals("")){
+                    Picasso.with(getApplicationContext()).load(R.drawable.banner2).
+                            error(R.drawable.placeholder)
+                            .placeholder(R.drawable.placeholder)
+                            .into(circleImageView);
+                }else {
+                    Picasso.with(getApplicationContext()).load(userSharedPrefrences.getUserImaje()).
+                            error(R.drawable.placeholder)
+                            .placeholder(R.drawable.placeholder)
+                            .into(circleImageView);
+                }
                 txtNaviLogin.setText(phone);
                 recreate();
             }
@@ -307,15 +380,25 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            // Handle the camera action
+        if (id == R.id.nav_category) {
+            startActivity(new Intent(MainActivity.this,CategoryActivity.class));
         } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_profile) {
+            if (txtNaviLogin.getText().equals("ورود/عضویت")) {
+                startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), Put.REQUEST_CODE);
+            } else {
+                startActivityForResult(new Intent(MainActivity.this, ProfileActivity.class), Put.REQUEST_EXIT);
+            }
 
-        } else if (id == R.id.nav_tools) {
+        } else if (id == R.id.nav_shop_cart) {
+            if (txtNaviLogin.getText().equals("ورود/عضویت")) {
+                Toast.makeText(this, "لطفا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
+            } else {
+                startActivity(new Intent(MainActivity.this, BasketActivity.class));
+            }
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_about) {
 
         } else if (id == R.id.nav_send) {
 

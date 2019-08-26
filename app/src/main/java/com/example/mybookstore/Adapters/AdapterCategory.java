@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mybookstore.Activities.ItemCatActivity;
+import com.example.mybookstore.Activities.MainActivity;
 import com.example.mybookstore.Models.ModelCategory;
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
@@ -43,7 +44,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.viewHo
         final ModelCategory modelCategory = modelCategories.get(i);
 
         viewHolder.txtCat.setText(modelCategory.getTitle_category());
-        Picasso.with(context).load(modelCategory.getImage().replace("localhost", Links.Link))
+        Picasso.with(context).load(modelCategory.getImage().replace("localhost", Links.LINK_ADAPTER))
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
                 .into(viewHolder.imgCat);

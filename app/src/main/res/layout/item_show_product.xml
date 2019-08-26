@@ -34,7 +34,7 @@
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                app:backgroundColor="#D83000"
+                app:backgroundColor="@color/colorPrimary"
                 app:corner="leftTop"
                 app:labelBottomPadding="6dp"
                 app:labelCenterPadding="5sp"

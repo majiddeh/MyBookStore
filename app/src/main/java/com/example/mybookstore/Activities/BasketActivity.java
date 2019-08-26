@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.example.mybookstore.Adapters.AdapterBasket;
 import com.example.mybookstore.Models.ModelBasket;
 import com.example.mybookstore.R;
@@ -36,7 +35,7 @@ public class BasketActivity extends AppCompatActivity {
         setContentView(R.layout.activity_basket);
 
         UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(BasketActivity.this);
-        phone= userSharedPrefrences.getUserLoginInfo();
+        phone= userSharedPrefrences.getUserPhone();
 
         finViews();
         initializePage();

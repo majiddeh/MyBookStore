@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">فروشگاه کتاب من</string>
+    <string name="app_name">فروشگاه کتاب صامد</string>
     <string name="navigation_drawer_open">باز کردن پنل</string>
     <string name="navigation_drawer_close">بستن پنل</string>
     <string name="nav_header_title">Android Studio</string>
@@ -52,4 +52,7 @@
     <string name="product_price">قیمت محصول :</string>
     <string name="number">تعداد :</string>
     <string name="group">دسته بندی</string>
+    <string name="account">حساب کاربری</string>
+    <string name="similar_products">محصولات مشابه</string>
+    <string name="others_buy">دیگران خریده اند</string>
 </resources>

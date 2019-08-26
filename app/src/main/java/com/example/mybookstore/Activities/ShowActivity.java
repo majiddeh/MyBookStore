@@ -8,6 +8,8 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +19,8 @@ import android.widget.Toast;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.example.mybookstore.Adapters.AdapterProduct;
+import com.example.mybookstore.Models.ModelOff_Only_MostVisit;
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
 import com.example.mybookstore.Utils.Links;
@@ -25,6 +29,7 @@ import com.example.mybookstore.Utils.UserSharedPrefrences;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ShowActivity extends AppCompatActivity {
     private SliderLayout sliderLayout;
@@ -32,8 +37,9 @@ public class ShowActivity extends AppCompatActivity {
     private ImageView imgBack,imgShopCart;
     private TextView txtTitle,txtAuthor,txtPublisher,txtDesc,txtPrice,txtNext,txtPriceOff,txtCounCart;
     private ApiServices apiServices = new ApiServices(ShowActivity.this);
-    private CardView addToShoCart;
+    private CardView addToShoCart,cardComments;
     private String id,titlee,imagee,pricee,phone,offPrice;
+    private RecyclerView recyclerViewSimilar,recyclerViewOthers;
     private int counter;
     private boolean b =true;
 
@@ -43,7 +49,7 @@ public class ShowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show);
 
         UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(ShowActivity.this);
-        phone = userSharedPrefrences.getUserLoginInfo();
+        phone = userSharedPrefrences.getUserPhone();
 
         findViews();
         appBarLayoutEdit();
@@ -128,6 +134,15 @@ public class ShowActivity extends AppCompatActivity {
                 startActivity(new Intent(ShowActivity.this,BasketActivity.class));
             }
         });
+
+        cardComments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShowActivity.this,ShowCommentActivity.class);
+                intent.putExtra(Put.id,id);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initializePage() {
@@ -158,7 +173,6 @@ public class ShowActivity extends AppCompatActivity {
                     txtPrice.setTextColor(Color.RED);
                     txtPrice.setPaintFlags(txtPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 }
-
                 txtPrice.setText(decimalFormat.format(Integer.valueOf(pricee))+" "+"تومان");
                 txtPrice.setTypeface(typeface);
                 txtTitle.setText(titlee);
@@ -172,6 +186,27 @@ public class ShowActivity extends AppCompatActivity {
 
             }
         });
+
+        ApiServices apiServices = new ApiServices(ShowActivity.this);
+        apiServices.MostvisitReceived(new ApiServices.OnMostVisitReceived() {
+            @Override
+            public void onMostVisit(List<ModelOff_Only_MostVisit> modelMostVisit) {
+                AdapterProduct adapterProduct = new AdapterProduct(getApplicationContext(),modelMostVisit);
+                recyclerViewOthers.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+                recyclerViewOthers.setAdapter(adapterProduct);
+            }
+        });
+
+        apiServices.MostvisitReceived(new ApiServices.OnMostVisitReceived() {
+            @Override
+            public void onMostVisit(List<ModelOff_Only_MostVisit> modelMostVisit) {
+                AdapterProduct adapterProduct = new AdapterProduct(getApplicationContext(),modelMostVisit);
+                recyclerViewSimilar.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+                recyclerViewSimilar.setAdapter(adapterProduct);
+            }
+        });
+
+
     }
 
     private void appBarLayoutEdit() {
@@ -195,6 +230,7 @@ public class ShowActivity extends AppCompatActivity {
     }
 
     private void findViews() {
+        cardComments=findViewById(R.id.card_comments_show_activity);
         offPrice=getIntent().getStringExtra(Put.offPrice);
         txtCounCart=findViewById(R.id.txt_count_cart);
         addToShoCart=findViewById(R.id.card_addto_shopcart);
@@ -210,6 +246,8 @@ public class ShowActivity extends AppCompatActivity {
         appBarLayout=findViewById(R.id.app_bar_layout_show_activity);
         imgBack = findViewById(R.id.imgback_showactivity);
         imgShopCart = findViewById(R.id.img_shop_cart_showactivity);
+        recyclerViewOthers=findViewById(R.id.recycler_similar);
+        recyclerViewSimilar=findViewById(R.id.recycler_others);
     }
 
     private void sliderInitialize() {
@@ -220,7 +258,7 @@ public class ShowActivity extends AppCompatActivity {
                 for (int i = 0; i < pics.size(); i++) {
                     TextSliderView textSliderView = new TextSliderView(ShowActivity.this);
                     textSliderView
-                            .image(pics.get(i).replace(Links.LOCALHOST,Links.Link))
+                            .image(pics.get(i).replace(Links.LOCALHOST,Links.LINK_ADAPTER))
 //                    .setOnSliderClickListener(this)
                             .empty(R.drawable.placeholder)
                             .error(R.drawable.placeholder)

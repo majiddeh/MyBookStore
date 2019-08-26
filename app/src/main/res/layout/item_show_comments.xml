@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView android:layout_margin="4dp"
+    app:cardElevation="1dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layoutDirection="rtl"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:gravity="center_vertical|right"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_userComment"
+                android:layout_width="50dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/book12"
+                app:civ_border_width="1dp"
+                app:civ_border_color="@color/gray"
+                android:layout_height="50dp" />
+            <TextView
+                android:textSize="15sp"
+                android:id="@+id/txt_usercomment"
+                android:textColor="@color/black"
+                android:text="ali@yahoo.com"
+                android:gravity="center_vertical|right"
+                android:layout_marginRight="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/txt_commnet"
+            android:layout_margin="5dp"
+            tools:text="@string/lorem"
+            android:textSize="13dp"
+            android:textColor="@color/black"
+            android:gravity="center_vertical|right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:gravity="center_vertical|right"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:tint="@color/green"
+                android:src="@drawable/ic_arrow_drop_up_black_24dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp" />
+            <TextView
+                android:id="@+id/txt_posotiveComment"
+                android:text="این گوشی عالیه"
+                android:textColor="@color/green"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center_vertical|right"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:tint="@color/red"
+                android:src="@drawable/ic_arrow_drop_down_black_24dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp" />
+            <TextView
+                android:id="@+id/txt_negativeComment"
+                android:text="این گوشی عالیه"
+                android:textColor="@color/red"
+                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <RatingBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rating_comment"/>
+
+        <!--<com.willy.ratingbar.ScaleRatingBar-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--android:id="@+id/ratingbarcomment"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:srb_numStars="5"-->
+        <!--app:srb_minimumStars="0"-->
+        <!--app:srb_rating="0"-->
+        <!--app:srb_starWidth="30dp"-->
+        <!--app:srb_starHeight="30dp"-->
+        <!--app:srb_starPadding="5dp"-->
+        <!--app:srb_stepSize="1"-->
+        <!--app:srb_isIndicator="true"-->
+        <!--app:srb_clickable="true"-->
+        <!--app:srb_scrollable="true"-->
+        <!--app:srb_clearRatingEnabled="true"-->
+        <!--app:srb_drawableEmpty="@drawable/empty"-->
+        <!--app:srb_drawableFilled="@drawable/filled">-->
+        <!--</com.willy.ratingbar.ScaleRatingBar>-->
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>

@@ -31,7 +31,7 @@
             android:layout_height="1dp"
             android:layout_marginRight="@dimen/standard_margin"
             android:layout_marginLeft="@dimen/standard_margin"
-            android:background="#40292424"/>
+            android:background="@color/gray_for_littile_view"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
             android:layout_height="1dp"
             android:layout_marginRight="@dimen/standard_margin"
             android:layout_marginLeft="@dimen/standard_margin"
-            android:background="#40292424"/>
+            android:background="@color/gray_for_littile_view"/>
 
         <LinearLayout
             android:layout_marginTop="@dimen/margin_itemshow_product"
@@ -122,7 +122,7 @@
             android:layout_height="1dp"
             android:layout_marginRight="@dimen/margin_itemshow_product"
             android:layout_marginLeft="@dimen/margin_itemshow_product"
-            android:background="#40292424"/>
+            android:background="@color/gray_for_littile_view"/>
 
         <LinearLayout
             android:layout_width="match_parent"

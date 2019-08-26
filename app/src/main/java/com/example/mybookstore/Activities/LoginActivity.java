@@ -2,10 +2,12 @@ package com.example.mybookstore.Activities;
 
 import android.content.Intent;
 import android.media.Image;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -47,8 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         txtRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
-                finish();
+                startActivityForResult(new Intent(LoginActivity.this, RegisterActivity.class), Put.REQUEST_CODE);
             }
         });
 
@@ -64,26 +65,33 @@ public class LoginActivity extends AppCompatActivity {
         cardLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ApiServices apiServices = new ApiServices(LoginActivity.this);
-                apiServices.loginUser(edphone.getText().toString().trim(), edPass.getText().toString().trim(), new ApiServices.OnLoginComplete() {
-                    @Override
-                    public void onResponse(int loginStatus) {
-                        switch (loginStatus){
-                            case Put.STATUS_FAILED:
-                                Toast.makeText(LoginActivity.this, "نام کاربری یا رمز عبور اشتباه است", Toast.LENGTH_SHORT).show();
-                                break;
-                            case Put.STATUS_SUCCESS:
-                                Toast.makeText(LoginActivity.this, "به فروشگاه کتاب صامد خوش آمدید", Toast.LENGTH_SHORT).show();
-                                UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(LoginActivity.this);
-                                userSharedPrefrences.saveUserLoginInfo(edphone.getText().toString().trim());
-                                Intent intent = new Intent();
-                                intent.putExtra(Put.phone,edphone.getText().toString().trim());
-                                setResult(RESULT_OK,intent);
-                                finish();
-                                break;
+                if (edPass.getText().toString().equals("") && edphone.getText().toString().equals("")){
+                    Toast.makeText(LoginActivity.this, "لطفا همه مقادیر را پر کنید", Toast.LENGTH_SHORT).show();
+                }else {
+                    ApiServices apiServices = new ApiServices(LoginActivity.this);
+                    apiServices.loginUser(edphone.getText().toString(), edPass.getText().toString(), new ApiServices.OnLoginComplete() {
+                        @Override
+                        public void onResponse(int loginStatus, String image) {
+                            switch (loginStatus){
+                                case Put.STATUS_FAILED:
+                                    Toast.makeText(LoginActivity.this, "نام کاربری یا رمز عبور اشتباه است", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case Put.STATUS_SUCCESS:
+                                    Toast.makeText(LoginActivity.this, "به فروشگاه کتاب صامد خوش آمدید", Toast.LENGTH_SHORT).show();
+                                    UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(LoginActivity.this);
+                                    userSharedPrefrences.saveUserLoginInfo(edphone.getText().toString().trim(),image);
+                                    Intent intent = new Intent();
+                                    intent.putExtra(Put.phone,edphone.getText().toString().trim());
+                                    intent.putExtra(Put.image,image);
+                                    setResult(RESULT_OK,intent);
+                                    finish();
+                                    break;
+                            }
                         }
-                    }
-                });
+                    });
+
+                }
+
             }
         });
 
@@ -103,5 +111,16 @@ public class LoginActivity extends AppCompatActivity {
         cardLogin = findViewById(R.id.card_login);
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Put.REQUEST_CODE && resultCode == RESULT_OK){
+            String phone = data.getStringExtra(Put.phone);
+            String password = data.getStringExtra(Put.password);
+            edphone.setText(phone);
+            edPass.setText(password);
+        }
     }
 }

@@ -54,7 +54,7 @@ public class AdapterOff extends RecyclerView.Adapter<AdapterOff.viewHolder> {
         viewHolder.txtoffPrice.setPaintFlags(viewHolder.txtoffPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         viewHolder.triangleLabelView.setSecondaryText(modelOffOnlies.get(i).getLable());
         Picasso.with(context)
-                .load(modelOffOnlies.get(i).getImage().replace(Links.LOCALHOST,Links.Link))
+                .load(modelOffOnlies.get(i).getImage().replace(Links.LOCALHOST,Links.LINK_ADAPTER))
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
                 .into(viewHolder.imgOff);

@@ -66,7 +66,7 @@ public class AdapterItemProduct extends RecyclerView.Adapter<AdapterItemProduct.
 
         viewHolder.txtDesc.setText(modelItemProduct.getDesc());
 
-        Picasso.with(context).load(modelItemProduct.getImage().replace(Links.LOCALHOST,Links.Link))
+        Picasso.with(context).load(modelItemProduct.getImage().replace(Links.LOCALHOST,Links.LINK_ADAPTER))
                 .error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder)
                 .into(viewHolder.imgProduct);

@@ -1,6 +1,5 @@
 package com.example.mybookstore.Activities;
 
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,7 +28,7 @@ public class EditInformation extends AppCompatActivity {
         setContentView(R.layout.activity_edit_information);
         findViews();
         UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(EditInformation.this);
-        phone =userSharedPrefrences.getUserLoginInfo();
+        phone =userSharedPrefrences.getUserPhone();
         receiveInformation();
         onClicks();
     }

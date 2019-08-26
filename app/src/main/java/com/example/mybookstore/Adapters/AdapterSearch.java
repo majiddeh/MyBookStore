@@ -66,7 +66,7 @@ public class AdapterSearch extends RecyclerView.Adapter<AdapterSearch.viewHolder
 
         viewHolder.txtDesc.setText(modelSearch.getDesc());
 
-        Picasso.with(context).load(modelSearch.getImage().replace(Links.LOCALHOST,Links.Link))
+        Picasso.with(context).load(modelSearch.getImage().replace(Links.LOCALHOST,Links.LINK_ADAPTER))
                 .error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder)
                 .into(viewHolder.imageViewSearch);

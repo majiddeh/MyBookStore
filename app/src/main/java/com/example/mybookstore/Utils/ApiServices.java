@@ -2,7 +2,9 @@ package com.example.mybookstore.Utils;
 
 import android.content.Context;
 import android.database.DefaultDatabaseErrorHandler;
+import android.graphics.ColorSpace;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -18,6 +20,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.mybookstore.Models.ModelBasket;
 import com.example.mybookstore.Models.ModelCategory;
+import com.example.mybookstore.Models.ModelComment;
 import com.example.mybookstore.Models.ModelItemProduct;
 import com.example.mybookstore.Models.ModelOff_Only_MostVisit;
 import com.google.gson.Gson;
@@ -49,15 +52,20 @@ public class ApiServices {
         StringRequest request = new StringRequest(Request.Method.POST, Links.REGISTER_URL , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                if (response.equals("218")||response.equals("214")||response.equals("0")){
+                    int responseStatus = Integer.valueOf(response) ;
+                    onSignUpComplete.onSignUp(responseStatus);
+                }else {
+                    Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                }
 
-                int responseStatus = Integer.valueOf(response) ;
-                onSignUpComplete.onSignUp(responseStatus);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
                 onSignUpComplete.onSignUp(Put.STATUS_FAILED);
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
             }
         }){
 
@@ -82,14 +90,22 @@ public class ApiServices {
         StringRequest request = new StringRequest(Request.Method.POST, Links.LOGIN_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                int loginStatus = Integer.valueOf(response);
-                onLoginComplete.onResponse(loginStatus);
+                if (response.startsWith("2")|| response.startsWith("0")){
+//                    String image = response.substring(1,response.length());
+                    String[] split =  response.split(";");
+                    String image= split[1].trim();
+                    int loginStatus = Integer.valueOf(split[0]);
+                    onLoginComplete.onResponse(loginStatus,image);
+                }else {
+                    Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
+                }
+
                 Log.i("login",response.toString());
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
                 Log.i("login",error.toString());
             }
         }){
@@ -113,7 +129,7 @@ public class ApiServices {
         StringRequest request = new StringRequest(1, Links.EDIT_INFORMATION, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if (response.equals("218")){
+                if (response.equals("218")||response.equals("0")){
                     int editStatus = Integer.valueOf(response);
                     onInformationEdit.onEdit(editStatus);
 
@@ -605,11 +621,12 @@ public class ApiServices {
             public void onResponse(String response) {
 
                 onCountReceived.onCount(response);
+                Log.i("errorCount",response.toString());
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.i("errorCount",error.toString());
             }
         }){
             @Override
@@ -622,6 +639,7 @@ public class ApiServices {
 
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         MySingleton.getInstance(context).addToRequestQueue(stringRequest);
+
 
     }
 
@@ -732,6 +750,64 @@ public class ApiServices {
         MySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
+    public void GetComment (final String id,final OnCommentReceived onCommentReceived){
+
+        StringRequest stringRequest = new StringRequest(1, Links.GET_COMMENT, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+//                List<ModelComment> modelComments = new ArrayList<>();
+//                Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+//                Log.i("idi",response);
+//                Gson gson = new Gson();
+//                ModelComment[] comments = gson.fromJson(response,ModelComment[].class);
+//                for (int i = 0; i < comments.length; i++) {
+//                    modelComments.add(comments[i]);
+//                    onCommentReceived.onComment(modelComments);
+//                }
+                Log.i("rresponseComment",response);
+                List<ModelComment> modelComment = new ArrayList<>();
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        ModelComment comment = new ModelComment();
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        comment.setComment(jsonObject.getString(Put.comment));
+                        comment.setUser(jsonObject.getString(Put.user));
+                        comment.setImage(jsonObject.getString(Put.image));
+                        comment.setNegative(jsonObject.getString(Put.negative));
+                        comment.setPositive(jsonObject.getString(Put.positive));
+                        comment.setRating(jsonObject.getLong(Put.rating));
+
+                        modelComment.add(comment);
+
+                    }
+                    onCommentReceived.onComment(modelComment);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("rresponseComment",error.toString());
+
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map = new HashMap<>();
+                map.put(Put.id,id);
+                return map;
+            }
+        }
+        ;
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(stringRequest);
+    }
+
 
 
 
@@ -739,7 +815,7 @@ public class ApiServices {
         void onSignUp (int responseStatus);
     }
     public interface OnLoginComplete{
-        void onResponse(int loginStatus);
+        void onResponse(int loginStatus,String image);
     }
     public interface OnInformationEdit{
         void onEdit(int editStatus);
@@ -785,6 +861,9 @@ public class ApiServices {
     }
     public interface OnSearchComplete{
         void OnComplete(JSONObject jsonObject);
+    }
+    public interface OnCommentReceived{
+        void onComment(List<ModelComment> modelComments);
     }
 
 

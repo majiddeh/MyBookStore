@@ -41,6 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
                 userSharedPrefrences.exitFromAccount();
                 Intent intent =new Intent();
                 intent.putExtra(Put.phone,"ورود/عضویت");
+                intent.putExtra(Put.image,"");
                 setResult(RESULT_OK,intent);
                 finish();
             }

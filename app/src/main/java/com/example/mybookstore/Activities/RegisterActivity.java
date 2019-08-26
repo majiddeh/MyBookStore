@@ -20,11 +20,11 @@ import com.example.mybookstore.Utils.UserSharedPrefrences;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    TextView txtTitle;
     CardView cardRegister;
     EditText edEmail,edPass,edPhone,edAddres;
     CheckBox chkpass;
     ImageView imgBack;
+    TextView txtTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final String phone = edPhone.getText().toString().trim();
                 String email = edEmail.getText().toString().trim();
-                String password = edPass.getText().toString().trim();
+                final String password = edPass.getText().toString().trim();
                 String address = edAddres.getText().toString().trim();
 
                 if (!email.isEmpty() && !password.isEmpty() && !phone.isEmpty() && !address.isEmpty()){
@@ -79,10 +79,9 @@ public class RegisterActivity extends AppCompatActivity {
                                                 break;
                                             case Put.STATUS_SUCCESS:
                                                 Toast.makeText(RegisterActivity.this, "ثبت نام با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
-                                                UserSharedPrefrences userSharedPrefrences =new UserSharedPrefrences(RegisterActivity.this);
-                                                userSharedPrefrences.saveUserLoginInfo(phone);
                                                 Intent intent = new Intent();
                                                 intent.putExtra(Put.phone,phone);
+                                                intent.putExtra(Put.password,password);
                                                 setResult(RESULT_OK,intent);
                                                 finish();
                                                 break;
