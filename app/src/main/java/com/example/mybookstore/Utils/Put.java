@@ -4,6 +4,8 @@ public class Put {
     public static final int REQUEST_CODE =220;
     public static final int STATUS_FAILED=0;
     public static final int STATUS_SUCCESS=218;
+    public static final int CHOOSE_GALLERY=2332;
+    public static final int EXTERNAL_STORAGE=3211;
     public static final int STATUS_USER_EXIST =214;
     public static final int REQUEST_EXIT =214;
 

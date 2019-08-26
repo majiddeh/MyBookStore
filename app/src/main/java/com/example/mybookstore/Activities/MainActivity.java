@@ -282,6 +282,8 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+
+    // TODO: 8/26/2019 remember to delete this.
     private void api(){
         StringRequest stringRequest = new StringRequest(0, "https://majiddd74.000webhostapp.com/majid.php", new Response.Listener<String>() {
             @Override
@@ -374,7 +376,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.

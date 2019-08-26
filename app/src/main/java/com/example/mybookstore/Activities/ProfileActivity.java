@@ -9,13 +9,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mybookstore.R;
+import com.example.mybookstore.Utils.ImageGallery;
 import com.example.mybookstore.Utils.Put;
+import com.example.mybookstore.Utils.RuntimePermissionsActivity;
 import com.example.mybookstore.Utils.UserSharedPrefrences;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private Button btnEdit,btnFavorit,btnExite;
     private ImageView imgBack;
+
     private TextView txtTitle;
 
     @Override
@@ -24,7 +29,10 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         findViews();
         onClicks();
+
     }
+
+
 
     private void onClicks() {
         imgBack.setOnClickListener(new View.OnClickListener() {
@@ -64,5 +72,15 @@ public class ProfileActivity extends AppCompatActivity {
         txtTitle=findViewById(R.id.txt_title_toolbar_second);
         txtTitle.setText("حساب کاربری");
 
+
     }
+
+
+
+
+
+
+
+
+
 }

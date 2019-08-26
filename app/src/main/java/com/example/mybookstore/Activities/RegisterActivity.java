@@ -1,6 +1,9 @@
 package com.example.mybookstore.Activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -15,21 +18,28 @@ import android.widget.Toast;
 
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
+import com.example.mybookstore.Utils.ImageGallery;
 import com.example.mybookstore.Utils.Put;
+import com.example.mybookstore.Utils.RuntimePermissionsActivity;
 import com.example.mybookstore.Utils.UserSharedPrefrences;
 
-public class RegisterActivity extends AppCompatActivity {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class RegisterActivity extends RuntimePermissionsActivity {
 
     CardView cardRegister;
     EditText edEmail,edPass,edPhone,edAddres;
     CheckBox chkpass;
     ImageView imgBack;
-    TextView txtTitle;
+    TextView txtTitle,txtImage;
+    private CircleImageView circleImageView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
         findViews();
         chkpass.setChecked(true);
         onClicks();
@@ -99,6 +109,13 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        txtImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegisterActivity.super.requestAppPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},Put.EXTERNAL_STORAGE);
+            }
+        });
+
 
 
     }
@@ -113,8 +130,45 @@ public class RegisterActivity extends AppCompatActivity {
         txtTitle.setText("ثبت نام");
         cardRegister = findViewById(R.id.card_Register);
         imgBack = findViewById(R.id.img_back_second_toolbar);
+        circleImageView = findViewById(R.id.img_user_register);
+        txtImage = findViewById(R.id.txt_image_user_register);
     }
+
     private  boolean isEmailValid(String email){
        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private void getImage() {
+
+        ImageGallery.showImage(RegisterActivity.this,Put.CHOOSE_GALLERY);
+    }
+
+
+
+
+    @Override
+    public void onPermissionsGranted(int requestCode) {
+
+        if (requestCode == Put.EXTERNAL_STORAGE){
+            getImage();
+        }
+
+    }
+
+    @Override
+    public void onPermissionsDeny(int requestCode) {
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode ==Put.CHOOSE_GALLERY && resultCode == RESULT_OK){
+
+            Bitmap bitmap = ImageGallery.getBitmap(RegisterActivity.this,data.getData());
+            circleImageView.setImageBitmap(bitmap);
+        }
+
     }
 }
