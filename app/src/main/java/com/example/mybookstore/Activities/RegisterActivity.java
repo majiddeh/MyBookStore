@@ -25,6 +25,8 @@ import com.example.mybookstore.Utils.UserSharedPrefrences;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.example.mybookstore.Utils.Put.image;
+
 public class RegisterActivity extends RuntimePermissionsActivity {
 
     CardView cardRegister;
@@ -32,6 +34,7 @@ public class RegisterActivity extends RuntimePermissionsActivity {
     CheckBox chkpass;
     ImageView imgBack;
     TextView txtTitle,txtImage;
+    private String imageEncode = "";
     private CircleImageView circleImageView;
 
 
@@ -76,28 +79,31 @@ public class RegisterActivity extends RuntimePermissionsActivity {
                     if (phone.length() == 11){
                         if (password.length() >= 4){
                             if (isEmailValid(email)){
-                                ApiServices apiServices = new ApiServices(RegisterActivity.this);
-                                apiServices.registerUser(phone, email, password, address, new ApiServices.OnSignUpComplete() {
-                                    @Override
-                                    public void onSignUp(int responseStatus) {
-                                        switch (responseStatus){
-                                            case Put.STATUS_USER_EXIST:
-                                                Toast.makeText(RegisterActivity.this,"کاربری با این این شماره تلفن موجود است",Toast.LENGTH_LONG).show();
-                                                break;
-                                            case Put.STATUS_FAILED:
-                                                Toast.makeText(RegisterActivity.this, "متاسفانه خطایی رخ داد", Toast.LENGTH_SHORT).show();
-                                                break;
-                                            case Put.STATUS_SUCCESS:
-                                                Toast.makeText(RegisterActivity.this, "ثبت نام با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent();
-                                                intent.putExtra(Put.phone,phone);
-                                                intent.putExtra(Put.password,password);
-                                                setResult(RESULT_OK,intent);
-                                                finish();
-                                                break;
+                                if (!imageEncode.equals("")){
+                                    ApiServices apiServices = new ApiServices(RegisterActivity.this);
+                                    apiServices.registerUser(imageEncode,phone, email, password, address, new ApiServices.OnSignUpComplete() {
+                                        @Override
+                                        public void onSignUp(int responseStatus) {
+                                            switch (responseStatus){
+                                                case Put.STATUS_USER_EXIST:
+                                                    Toast.makeText(RegisterActivity.this,"کاربری با این این شماره تلفن موجود است",Toast.LENGTH_LONG).show();
+                                                    break;
+                                                case Put.STATUS_FAILED:
+                                                    Toast.makeText(RegisterActivity.this, "متاسفانه خطایی رخ داد", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                case Put.STATUS_SUCCESS:
+                                                    Toast.makeText(RegisterActivity.this, "ثبت نام با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
+                                                    Intent intent = new Intent();
+                                                    intent.putExtra(Put.phone,phone);
+                                                    intent.putExtra(Put.password,password);
+                                                    setResult(RESULT_OK,intent);
+                                                    finish();
+                                                    break;
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                                }else
+                                    Toast.makeText(RegisterActivity.this, "لطفا یک عکس انتخاب کنید", Toast.LENGTH_SHORT).show();
 
                             }else Toast.makeText(RegisterActivity.this, "لطفا یک ایمیل معتبر وارد کنید", Toast.LENGTH_SHORT).show();
 
@@ -167,8 +173,15 @@ public class RegisterActivity extends RuntimePermissionsActivity {
         if (requestCode ==Put.CHOOSE_GALLERY && resultCode == RESULT_OK){
 
             Bitmap bitmap = ImageGallery.getBitmap(RegisterActivity.this,data.getData());
+            imageEncode = ImageGallery.getStringImage(bitmap,300);
             circleImageView.setImageBitmap(bitmap);
         }
 
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

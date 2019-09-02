@@ -149,8 +149,10 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 if (txtNaviLogin.getText().equals("ورود/عضویت")) {
                     startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), Put.REQUEST_CODE);
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 } else {
                     startActivityForResult(new Intent(MainActivity.this, ProfileActivity.class), Put.REQUEST_EXIT);
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 }
             }
         });
@@ -159,6 +161,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, CategoryActivity.class));
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
 
@@ -169,6 +172,7 @@ public class MainActivity extends AppCompatActivity
                     Toast.makeText(MainActivity.this, "لطفا وارد حساب خود شوید", Toast.LENGTH_SHORT).show();
                 }else {
                     startActivity(new Intent(MainActivity.this,BasketActivity.class));
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 }
 
             }
@@ -178,6 +182,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,SearchActivity.class));
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
 
@@ -383,13 +388,16 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_category) {
             startActivity(new Intent(MainActivity.this,CategoryActivity.class));
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_profile) {
             if (txtNaviLogin.getText().equals("ورود/عضویت")) {
                 startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), Put.REQUEST_CODE);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             } else {
                 startActivityForResult(new Intent(MainActivity.this, ProfileActivity.class), Put.REQUEST_EXIT);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
 
         } else if (id == R.id.nav_shop_cart) {
@@ -397,12 +405,18 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(this, "لطفا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
             } else {
                 startActivity(new Intent(MainActivity.this, BasketActivity.class));
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
 
         } else if (id == R.id.nav_about) {
+            startActivity(new Intent(MainActivity.this,AboutActivity.class));
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 
         } else if (id == R.id.nav_send) {
 
+        }else if (id == R.id.nav_favorite){
+//            startActivity(new Intent(MainActivity.this,FavoriteActivity.class));
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

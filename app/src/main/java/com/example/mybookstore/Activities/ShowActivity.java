@@ -1,5 +1,6 @@
 package com.example.mybookstore.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -13,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,14 +36,17 @@ import java.util.List;
 public class ShowActivity extends AppCompatActivity {
     private SliderLayout sliderLayout;
     private AppBarLayout appBarLayout;
-    private ImageView imgBack,imgShopCart;
-    private TextView txtTitle,txtAuthor,txtPublisher,txtDesc,txtPrice,txtNext,txtPriceOff,txtCounCart;
+    private ImageView imgBack,imgShopCart,imgFav;
+    private TextView txtTitle,txtAuthor,txtPublisher,txtDesc,txtPrice,txtNext,txtPriceOff,txtCounCart,txtRate;
     private ApiServices apiServices = new ApiServices(ShowActivity.this);
     private CardView addToShoCart,cardComments;
-    private String id,titlee,imagee,pricee,phone,offPrice;
+    private String id,titlee,imagee,pricee,phone,offPrice,visitt,lablee;
     private RecyclerView recyclerViewSimilar,recyclerViewOthers;
+    private RatingBar ratingBar;
     private int counter;
     private boolean b =true;
+    private boolean fav =true;
+//    private DbSqlite dbSqlite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +136,12 @@ public class ShowActivity extends AppCompatActivity {
         imgShopCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ShowActivity.this,BasketActivity.class));
+                if (phone.equals("ورود/عضویت")){
+                    Toast.makeText(ShowActivity.this, "لطفا وارد حساب خود شوید", Toast.LENGTH_SHORT).show();
+                }else {
+                    startActivity(new Intent(ShowActivity.this,BasketActivity.class));
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                }
             }
         });
 
@@ -139,8 +149,25 @@ public class ShowActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShowActivity.this,ShowCommentActivity.class);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 intent.putExtra(Put.id,id);
                 startActivity(intent);
+            }
+        });
+
+        imgFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                if (fav){
+//                    dbSqlite.insertFav(new ModelFAV(Integer.valueOf(id),imagee,titlee,visitt,offPrice,pricee,lablee,"dasd","dfgd"));
+//                    imgFav.setImageResource(R.drawable.ic_star_black_24dp);
+//                    imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.red));
+//                    fav=false;
+//                }else {
+//                    fav=true;
+//                    imgFav.setImageResource(R.drawable.ic_star_border_black_24dp);
+//                    imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.gray));
+//                }
             }
         });
     }
@@ -154,17 +181,21 @@ public class ShowActivity extends AppCompatActivity {
                 txtCounCart.setText(count);
                 txtCounCart.setTypeface(typeface);
                 counter= Integer.parseInt(count);
+                txtRate.setTypeface(typeface);
             }
         });
 
 
-        apiServices.GetProductInfo(id,new ApiServices.OnProductInfoReceived() {
+        apiServices.GetProductInfo(id, new ApiServices.OnProductInfoReceived() {
+            @SuppressLint("SetTextI18n")
             @Override
-            public void onInfoReceived(String desc, String title, String visit, String price, String publisher, String author, String image) {
+            public void onInfoReceived(String desc, String title, String visit, String price, String finalrating, String publisher, String author, String image,String lable) {
                 DecimalFormat decimalFormat = new DecimalFormat("###,###");
                 titlee= title;
                 imagee = image;
                 pricee = price;
+                visitt=visit;
+                lablee=lable;
                 txtPriceOff.setVisibility(View.GONE);
                 if (!offPrice.equals("0")){
                     txtPriceOff.setText(decimalFormat.format(Integer.valueOf(offPrice))+" "+"تومان");
@@ -178,11 +209,13 @@ public class ShowActivity extends AppCompatActivity {
                 txtTitle.setText(titlee);
                 txtTitle.setTypeface(typeface);
                 txtPublisher.setText(publisher);
+                ratingBar.setRating(Float.parseFloat(finalrating));
                 txtPublisher.setTypeface(typeface);
                 txtDesc.setText(desc);
                 txtDesc.setTypeface(typeface);
                 txtAuthor.setText(author);
                 txtAuthor.setTypeface(typeface);
+                txtRate.setText(finalrating+" از "+"5");
 
             }
         });
@@ -230,6 +263,7 @@ public class ShowActivity extends AppCompatActivity {
     }
 
     private void findViews() {
+//        dbSqlite = new DbSqlite(ShowActivity.this);
         cardComments=findViewById(R.id.card_comments_show_activity);
         offPrice=getIntent().getStringExtra(Put.offPrice);
         txtCounCart=findViewById(R.id.txt_count_cart);
@@ -248,6 +282,9 @@ public class ShowActivity extends AppCompatActivity {
         imgShopCart = findViewById(R.id.img_shop_cart_showactivity);
         recyclerViewOthers=findViewById(R.id.recycler_similar);
         recyclerViewSimilar=findViewById(R.id.recycler_others);
+        ratingBar = findViewById(R.id.ratingbar);
+        txtRate = findViewById(R.id.txt_rate);
+        imgFav = findViewById(R.id.img_favorite);
     }
 
     private void sliderInitialize() {
@@ -275,5 +312,11 @@ public class ShowActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

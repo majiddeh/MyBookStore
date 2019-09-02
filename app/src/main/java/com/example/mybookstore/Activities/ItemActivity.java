@@ -1,7 +1,9 @@
 package com.example.mybookstore.Activities;
 
+import android.app.Dialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +26,8 @@ public class ItemActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private AdapterItemProduct adapterItemProduct ;
     private TextView txtTitle;
+    private CardView cardFilter;
+    ImageView imgBackButton ;
     String id;
 
     @Override
@@ -36,7 +40,30 @@ public class ItemActivity extends AppCompatActivity {
         findViews();
         initializePage();
         txtTitle.setText(getString(R.string.group) + " " + title);
+        onClicks();
 
+
+    }
+
+    private void onClicks() {
+        imgBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        cardFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ItemActivity.this, "sdadasd", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void dialogeFilter(){
+
+        Dialog dialog = new Dialog(ItemActivity.this);
+        dialog.setContentView(R.layout.content_main);
 
     }
 
@@ -55,14 +82,15 @@ public class ItemActivity extends AppCompatActivity {
 
     private void findViews() {
         recyclerView=findViewById(R.id.recycler_item);
+        imgBackButton = findViewById(R.id.img_back_second_toolbar);
         txtTitle=findViewById(R.id.txt_title_toolbar_second);
-        ImageView imgBackButton = findViewById(R.id.img_back_second_toolbar);
-        imgBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        cardFilter = findViewById(R.id.card_filter);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
 }

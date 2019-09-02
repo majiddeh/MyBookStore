@@ -25,7 +25,9 @@ public class Links {
     static final String GET_COUNT = Link_HOST + "/samed_bookstore/getcount.php";
     public static final String GET_ITEM_CAT = Link_HOST + "/samed_bookstore/getItemCat.php";
     public static final String GET_ITEM_PRODUCT = Link_HOST + "/samed_bookstore/getProductForCategory.php";
+
     public static final String GET_COMMENT = Link_HOST + "/samed_bookstore/getComment.php";
+    public static final String SEND_COMMENT = Link_HOST + "/samed_bookstore/sendcomment.php";
 
     static final String ADD_TO_SHOP_CART = Link_HOST + "/samed_bookstore/addToShopCart.php";
     static final String LINK_DELETE_CART = Link_HOST + "/samed_bookstore/deleteFromCart.php";

@@ -79,8 +79,10 @@ public class AdapterItemProduct extends RecyclerView.Adapter<AdapterItemProduct.
                     intent.putExtra(Put.offPrice,"0");
                 }else {
                     intent.putExtra(Put.offPrice,modelItemProduct.getOffPrice());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
                 intent.putExtra(Put.id,modelItemProduct.getId()+"");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 context.startActivity(intent);
 

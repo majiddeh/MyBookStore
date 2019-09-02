@@ -1,5 +1,7 @@
 package com.example.mybookstore.Activities;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +25,7 @@ public class ShowCommentActivity extends AppCompatActivity {
     AdapterComment adapterComment;
     ImageView imgBack;
     TextView txtTitle;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,16 @@ public class ShowCommentActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShowCommentActivity.this,SendCommentActivity.class);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                intent.putExtra(Put.id,getIntent().getStringExtra(Put.id));
+                startActivity(intent);
+            }
+        });
     }
 
     private void initPage() {
@@ -58,10 +71,17 @@ public class ShowCommentActivity extends AppCompatActivity {
     }
 
     private void findViews() {
+        fab=findViewById(R.id.fab_comment);
         recyclerView=findViewById(R.id.recycler_comment);
         txtTitle = findViewById(R.id.txt_title_toolbar_second);
         txtTitle.setText("نظرات کاربران");
         imgBack = findViewById(R.id.img_back_second_toolbar);
 
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }
