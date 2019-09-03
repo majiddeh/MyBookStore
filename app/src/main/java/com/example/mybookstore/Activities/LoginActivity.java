@@ -23,8 +23,8 @@ import com.example.mybookstore.Utils.UserSharedPrefrences;
 
 public class LoginActivity extends AppCompatActivity {
     private TextView txtTitle,txtRegister;
-    private EditText edPass,edphone;
     private ImageView imgBackButton;
+    private EditText edPass,edphone;
     private CardView cardLogin;
     private CheckBox chkpass;
 

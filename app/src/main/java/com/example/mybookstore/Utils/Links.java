@@ -33,6 +33,9 @@ public class Links {
     static final String LINK_DELETE_CART = Link_HOST + "/samed_bookstore/deleteFromCart.php";
     static final String GET_CART = Link_HOST + "/samed_bookstore/getbasket.php";
 
+    static final String FILTER_ITEM = Link_HOST + "/samed_bookstore/filter.php";
+
+
     public static final String SEARCH = Link_HOST + "/samed_bookstore/search.php?s=";
 
 }

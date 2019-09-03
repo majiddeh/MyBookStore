@@ -2,6 +2,7 @@ package com.example.mybookstore.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -22,9 +23,12 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.mybookstore.Adapters.AdapterProduct;
+import com.example.mybookstore.Models.ModelFav;
+import com.example.mybookstore.Models.ModelItemProduct;
 import com.example.mybookstore.Models.ModelOff_Only_MostVisit;
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
+import com.example.mybookstore.Utils.DbSqlite;
 import com.example.mybookstore.Utils.Links;
 import com.example.mybookstore.Utils.Put;
 import com.example.mybookstore.Utils.UserSharedPrefrences;
@@ -46,7 +50,7 @@ public class ShowActivity extends AppCompatActivity {
     private int counter;
     private boolean b =true;
     private boolean fav =true;
-//    private DbSqlite dbSqlite;
+    private DbSqlite dbSqlite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +65,23 @@ public class ShowActivity extends AppCompatActivity {
         initializePage();
         sliderInitialize();
         onClicks();
+        dbSQLite();
 
+    }
+
+    private void dbSQLite() {
+        Cursor cursor = dbSqlite.cu(Integer.parseInt(id));
+
+        if (cursor.getCount() == 1){
+            imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.red));
+            imgFav.setImageResource(R.drawable.ic_star_black_24dp);
+            fav=false;
+        }else {
+
+            imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.gray));
+            imgFav.setImageResource(R.drawable.ic_star_border_black_24dp);
+            fav=true;
+        }
     }
 
     private void onClicks() {
@@ -158,22 +178,29 @@ public class ShowActivity extends AppCompatActivity {
         imgFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (fav){
-//                    dbSqlite.insertFav(new ModelFAV(Integer.valueOf(id),imagee,titlee,visitt,offPrice,pricee,lablee,"dasd","dfgd"));
-//                    imgFav.setImageResource(R.drawable.ic_star_black_24dp);
-//                    imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.red));
-//                    fav=false;
-//                }else {
-//                    fav=true;
-//                    imgFav.setImageResource(R.drawable.ic_star_border_black_24dp);
-//                    imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.gray));
-//                }
+                if (fav){
+                    boolean isInsert=dbSqlite.insertFav(new ModelFav(Integer.valueOf(id),imagee,titlee,visitt,pricee,lablee,offPrice,"sdasd","dasd","dfgd"));
+                    imgFav.setImageResource(R.drawable.ic_star_black_24dp);
+                    imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.red));
+                    fav=false;
+                    if (isInsert){
+                        Toast.makeText(ShowActivity.this, "به لیست علاقه مندی ها اضافه شد", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    boolean isDelete=dbSqlite.deleteFav(Integer.parseInt(id));
+                    if (isDelete){
+                        Toast.makeText(ShowActivity.this, "از لیست علاقه مندی ها حذف شد", Toast.LENGTH_SHORT).show();
+                    }
+                    fav=true;
+                    imgFav.setImageResource(R.drawable.ic_star_border_black_24dp);
+                    imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.gray));
+                }
             }
         });
     }
 
     private void initializePage() {
-        final Typeface typeface = Typeface.createFromAsset(getAssets(),"Vazir-Medium-FD-WOL.ttf");
+        final Typeface typeface = Typeface.createFromAsset(getAssets(),Links.LINK_FONT_VAZIR);
 
         apiServices.GetCount(phone, new ApiServices.OnCountReceived() {
             @Override
@@ -263,7 +290,7 @@ public class ShowActivity extends AppCompatActivity {
     }
 
     private void findViews() {
-//        dbSqlite = new DbSqlite(ShowActivity.this);
+        dbSqlite = new DbSqlite(ShowActivity.this);
         cardComments=findViewById(R.id.card_comments_show_activity);
         offPrice=getIntent().getStringExtra(Put.offPrice);
         txtCounCart=findViewById(R.id.txt_count_cart);

@@ -1,6 +1,8 @@
 package com.example.mybookstore.Activities;
 
 import android.app.Dialog;
+import android.content.ClipData;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -8,7 +10,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,8 +31,10 @@ public class ItemActivity extends AppCompatActivity {
     private AdapterItemProduct adapterItemProduct ;
     private TextView txtTitle;
     private CardView cardFilter;
-    ImageView imgBackButton ;
-    String id;
+    private ImageView imgBackButton ;
+    private String id;
+    private ApiServices apiServices;
+    private List<ModelItemProduct> modelItemProductss;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +61,121 @@ public class ItemActivity extends AppCompatActivity {
         cardFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ItemActivity.this, "sdadasd", Toast.LENGTH_SHORT).show();
+                dialogeFilter();
             }
         });
     }
 
     private void dialogeFilter(){
 
-        Dialog dialog = new Dialog(ItemActivity.this);
-        dialog.setContentView(R.layout.content_main);
+        final Dialog dialog = new Dialog(ItemActivity.this);
+        dialog.setContentView(R.layout.dialoge_filter);
+
+        RadioButton rd1,rd2,rd3,rd4;
+
+        rd1 = dialog.findViewById(R.id.rd1);
+        rd2 = dialog.findViewById(R.id.rd2);
+        rd3 = dialog.findViewById(R.id.rd3);
+        rd4 = dialog.findViewById(R.id.rd4);
+
+        rd1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                modelItemProductss.clear();
+                adapterItemProduct.notifyDataSetChanged();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        apiServices.FilterItem(id, Put.visit, new ApiServices.OnFilterItem() {
+                            @Override
+                            public void onFilter(List<ModelItemProduct> modelItemProducts) {
+
+                                adapterItemProduct = new AdapterItemProduct(ItemActivity.this,modelItemProducts);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                recyclerView.setAdapter(adapterItemProduct);
+                            }
+                        });
+                        dialog.cancel();
+                    }
+                },100);
+            }
+        });
+        rd2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                modelItemProductss.clear();
+                adapterItemProduct.notifyDataSetChanged();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        apiServices.FilterItem(id, "sale", new ApiServices.OnFilterItem() {
+                            @Override
+                            public void onFilter(List<ModelItemProduct> modelItemProducts) {
+                                modelItemProductss =modelItemProducts;
+
+                                adapterItemProduct = new AdapterItemProduct(ItemActivity.this,modelItemProductss);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                recyclerView.setAdapter(adapterItemProduct);
+                            }
+                        });
+                        dialog.cancel();
+                    }
+                },100);
+            }
+        });
+        rd3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                modelItemProductss.clear();
+                adapterItemProduct.notifyDataSetChanged();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        apiServices.FilterItem(id, "priceUp", new ApiServices.OnFilterItem() {
+                            @Override
+                            public void onFilter(List<ModelItemProduct> modelItemProducts) {
+                                modelItemProductss =modelItemProducts;
+
+                                adapterItemProduct = new AdapterItemProduct(ItemActivity.this,modelItemProductss);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                recyclerView.setAdapter(adapterItemProduct);
+                            }
+                        });
+                        dialog.cancel();
+                    }
+                },100);
+            }
+        });
+        rd4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                modelItemProductss.clear();
+                adapterItemProduct.notifyDataSetChanged();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        apiServices.FilterItem(id, "priceDown", new ApiServices.OnFilterItem() {
+                            @Override
+                            public void onFilter(List<ModelItemProduct> modelItemProducts) {
+                                modelItemProductss =modelItemProducts;
+
+                                adapterItemProduct = new AdapterItemProduct(ItemActivity.this,modelItemProductss);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                                recyclerView.setAdapter(adapterItemProduct);
+                            }
+                        });
+                        dialog.cancel();
+                    }
+                },100);
+            }
+        });
+
+
+        dialog.show();
 
     }
 
@@ -72,7 +184,9 @@ public class ItemActivity extends AppCompatActivity {
         apiServices.GetItemProduct(id, new ApiServices.OnItemProductReceived() {
             @Override
             public void onItemReceived(List<ModelItemProduct> modelItemProducts) {
-                adapterItemProduct = new AdapterItemProduct(ItemActivity.this,modelItemProducts);
+                modelItemProductss =modelItemProducts;
+
+                adapterItemProduct = new AdapterItemProduct(ItemActivity.this,modelItemProductss);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 recyclerView.setAdapter(adapterItemProduct);
             }
@@ -85,6 +199,7 @@ public class ItemActivity extends AppCompatActivity {
         imgBackButton = findViewById(R.id.img_back_second_toolbar);
         txtTitle=findViewById(R.id.txt_title_toolbar_second);
         cardFilter = findViewById(R.id.card_filter);
+        apiServices=new ApiServices(ItemActivity.this);
     }
 
     @Override

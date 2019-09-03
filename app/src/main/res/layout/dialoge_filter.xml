@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_gravity="center"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rdog_filter"
+        android:gravity="center|start"
+        android:layout_gravity="center_horizontal">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:padding="5dp"
+            android:text="محبوب ترین "
+            android:layout_height="wrap_content"
+            android:id="@+id/rd1"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginRight="@dimen/standard_margin"
+            android:layout_marginLeft="@dimen/standard_margin"
+            android:background="@color/gray_for_littile_view"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:padding="5dp"
+            android:text="پر فروش ترین ها"
+            android:layout_height="wrap_content"
+            android:id="@+id/rd2"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginRight="@dimen/standard_margin"
+            android:layout_marginLeft="@dimen/standard_margin"
+            android:background="@color/gray_for_littile_view"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:padding="5dp"
+            android:text="قیمت کم به زیاد"
+            android:layout_height="wrap_content"
+            android:id="@+id/rd3"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginRight="@dimen/standard_margin"
+            android:layout_marginLeft="@dimen/standard_margin"
+            android:background="@color/gray_for_littile_view"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:padding="5dp"
+            android:text="قیمت زیاد به کم"
+            android:layout_height="wrap_content"
+            android:id="@+id/rd4"/>
+
+    </RadioGroup>
+
+</LinearLayout>

@@ -415,7 +415,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         }else if (id == R.id.nav_favorite){
-//            startActivity(new Intent(MainActivity.this,FavoriteActivity.class));
+            startActivity(new Intent(MainActivity.this,FavoriteActivity.class));
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         }
 

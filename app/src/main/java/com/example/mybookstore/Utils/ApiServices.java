@@ -851,6 +851,57 @@ public class ApiServices {
         MySingleton.getInstance(context).addToRequestQueue(stringRequest);
     }
 
+    public void FilterItem(final String id, final String param , final OnFilterItem onFilterItem){
+
+        StringRequest stringRequest = new StringRequest(1, Links.FILTER_ITEM, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    List<ModelItemProduct> modelItemProduct = new ArrayList<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        ModelItemProduct modelItemProduct1 = new ModelItemProduct();
+
+                        modelItemProduct1.setDesc(jsonObject.getString(Put.desc));
+                        modelItemProduct1.setId(jsonObject.getInt(Put.id));
+                        modelItemProduct1.setImage(jsonObject.getString(Put.image));
+                        modelItemProduct1.setLable(jsonObject.getString(Put.lable));
+                        modelItemProduct1.setOffPrice(jsonObject.getString(Put.offPrice));
+                        modelItemProduct1.setTitle(jsonObject.getString(Put.title));
+                        modelItemProduct1.setPrice(jsonObject.getString(Put.price));
+                        modelItemProduct1.setVisit(jsonObject.getString(Put.visit));
+                        modelItemProduct1.setAuthor(jsonObject.getString(Put.author));
+                        modelItemProduct1.setPublisher(jsonObject.getString(Put.publisher));
+
+                        modelItemProduct.add(modelItemProduct1);
+                    }
+                    onFilterItem.onFilter(modelItemProduct);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map = new HashMap<>();
+                map.put("idcat",id);
+                map.put(Put.params,param);
+                return map;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(stringRequest);
+
+    }
+
 
 
 
@@ -911,6 +962,9 @@ public class ApiServices {
     }
     public interface OnCommentSend{
         void onSend(int responsStatus);
+    }
+    public interface OnFilterItem{
+        void onFilter(List<ModelItemProduct> modelItemProducts);
     }
 
 

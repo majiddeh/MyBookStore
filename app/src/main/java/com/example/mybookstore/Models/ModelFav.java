@@ -1,8 +1,7 @@
 package com.example.mybookstore.Models;
 
-import com.android.volley.toolbox.StringRequest;
+public class ModelFav {
 
-public class ModelItemProduct {
     private int id;
     private String image;
     private String title;
@@ -13,12 +12,11 @@ public class ModelItemProduct {
     private String desc;
     private String author;
     private String publisher;
-    private float finalrating;
 
-    public ModelItemProduct() {
+    public ModelFav() {
     }
 
-    public ModelItemProduct(int id, String image, String title, String visit, String price, String lable, String offPrice, String desc, String author, String publisher) {
+    public ModelFav(int id, String image, String title, String visit, String price, String lable, String offPrice, String desc, String author, String publisher) {
         this.id = id;
         this.image = image;
         this.title = title;
@@ -29,20 +27,6 @@ public class ModelItemProduct {
         this.desc = desc;
         this.author = author;
         this.publisher = publisher;
-    }
-
-    public ModelItemProduct(int id, String image, String title, String visit, String price, String lable, String offPrice, String desc, String author, String publisher, float finalrating) {
-        this.id = id;
-        this.image = image;
-        this.title = title;
-        this.visit = visit;
-        this.price = price;
-        this.lable = lable;
-        this.offPrice = offPrice;
-        this.desc = desc;
-        this.author = author;
-        this.publisher = publisher;
-        this.finalrating = finalrating;
     }
 
     public int getId() {
@@ -123,13 +107,5 @@ public class ModelItemProduct {
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
-    }
-
-    public float getFinalrating() {
-        return finalrating;
-    }
-
-    public void setFinalrating(float finalrating) {
-        this.finalrating = finalrating;
     }
 }
