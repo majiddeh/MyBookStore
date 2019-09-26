@@ -18,7 +18,7 @@ public class Put {
 
     public static final String image = "image";
     public static final String price = "price";
-    public static final String lable = "lable";
+    public static final String label = "label";
     public static final String id = "id";
     public static final String title = "title";
     public static final String visit = "visit";

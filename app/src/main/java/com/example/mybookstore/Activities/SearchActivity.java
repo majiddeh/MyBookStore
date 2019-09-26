@@ -9,10 +9,8 @@ import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mybookstore.Adapters.AdapterSearch;
-import com.example.mybookstore.Models.ModelItemProduct;
 import com.example.mybookstore.Models.ModelSearch;
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
@@ -74,7 +72,7 @@ public class SearchActivity extends AppCompatActivity {
                                         image = object.getString(Put.image);
                                         title = object.getString(Put.title);
                                         price = object.getString(Put.price);
-                                        lable = object.getString(Put.lable);
+                                        lable = object.getString(Put.label);
                                         offPrice = String.valueOf(object.getInt(Put.offPrice));
                                         visit = object.getString(Put.visit);
                                         description = object.getString(Put.desc);
@@ -109,7 +107,7 @@ public class SearchActivity extends AppCompatActivity {
                                                 id = object.getString(Put.id);
                                                 image = object.getString(Put.image);
                                                 title = object.getString(Put.title);
-                                                lable = object.getString(Put.lable);
+                                                lable = object.getString(Put.label);
                                                 price = object.getString(Put.price);
                                                 offPrice = String.valueOf(object.getInt(Put.offPrice));
                                                 visit = object.getString(Put.visit);

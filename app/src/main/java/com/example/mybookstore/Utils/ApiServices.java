@@ -1,13 +1,7 @@
 package com.example.mybookstore.Utils;
 
 import android.content.Context;
-import android.database.DefaultDatabaseErrorHandler;
-import android.graphics.ColorSpace;
 import android.util.Log;
-import android.view.Display;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -26,9 +20,7 @@ import com.example.mybookstore.Models.ModelItemProduct;
 import com.example.mybookstore.Models.ModelLikes;
 import com.example.mybookstore.Models.ModelOff_Only_MostVisit;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 
-import org.bouncycastle.operator.DefaultDigestAlgorithmIdentifierFinder;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,7 +58,7 @@ public class ApiServices {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("registerapierror",error.toString());
+                Log.i("registererror",error.toString());
 
                 onSignUpComplete.onSignUp(Put.STATUS_FAILED);
                 Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
@@ -144,13 +136,13 @@ public class ApiServices {
                     Toast.makeText(context, "نام کاربری یا رمز عبور اشتباه است", Toast.LENGTH_SHORT).show();
                 }else Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
 
-                Log.i("apiii",response.toString());
+                Log.i("loginapi",response.toString());
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-                Log.i("apiii",error.toString());
+                Log.i("loginapierror",error.toString());
             }
         }){
 
@@ -179,6 +171,7 @@ public class ApiServices {
 
                 }
                 else Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                Log.i("editapi",response.toString());
 
 
             }
@@ -186,6 +179,7 @@ public class ApiServices {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, "خطایی رخ داد مجددا امتحان کنید", Toast.LENGTH_SHORT).show();
+                Log.i("editapierror",error.toString());
             }
         }){
 
@@ -220,7 +214,7 @@ public class ApiServices {
         JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(1, Links.GET_PERSONAL_INFORMATION, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-
+                Log.i("infoapi",response.toString());
                 try {
                     JSONObject jsonObject = response.getJSONObject("0");
                     String name = jsonObject.getString(Put.name);
@@ -236,7 +230,7 @@ public class ApiServices {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-                Log.i("apiii",error.toString());
+                Log.i("infoapierror",error.toString());
 
             }
         });
@@ -316,7 +310,7 @@ public class ApiServices {
                         JSONObject jsonObject = response.getJSONObject(i);
                         modelOffOnly.setId(jsonObject.getInt(Put.id));
                         modelOffOnly.setImage(jsonObject.getString(Put.image));
-                        modelOffOnly.setLable(jsonObject.getString(Put.lable));
+                        modelOffOnly.setLable(jsonObject.getString(Put.label));
                         modelOffOnly.setPrice(jsonObject.getString(Put.price));
                         modelOffOnly.setTitle(jsonObject.getString(Put.title));
                         modelOffOnly.setVisit(jsonObject.getString(Put.visit));
@@ -361,7 +355,7 @@ public class ApiServices {
                         modelOnly.setImage(jsonObject.getString(Put.image));
                         modelOnly.setOffPrice(jsonObject.getString(Put.offPrice));
                         modelOnly.setPrice(jsonObject.getString(Put.price));
-                        modelOnly.setLable(jsonObject.getString(Put.lable));
+                        modelOnly.setLable(jsonObject.getString(Put.label));
                         modelOnly.setTitle(jsonObject.getString(Put.title));
                         modelOnly.setVisit(jsonObject.getString(Put.visit));
 
@@ -403,7 +397,7 @@ public class ApiServices {
                         modelMostVisit.setImage(jsonObject.getString(Put.image));
                         modelMostVisit.setOffPrice(jsonObject.getString(Put.offPrice));
                         modelMostVisit.setPrice(jsonObject.getString(Put.price));
-                        modelMostVisit.setLable(jsonObject.getString(Put.lable));
+                        modelMostVisit.setLable(jsonObject.getString(Put.label));
                         modelMostVisit.setTitle(jsonObject.getString(Put.title));
                         modelMostVisit.setVisit(jsonObject.getString(Put.visit));
 
@@ -446,7 +440,7 @@ public class ApiServices {
                         modelMostSold.setImage(jsonObject.getString(Put.image));
                         modelMostSold.setOffPrice(jsonObject.getString(Put.offPrice));
                         modelMostSold.setPrice(jsonObject.getString(Put.price));
-                        modelMostSold.setLable(jsonObject.getString(Put.lable));
+                        modelMostSold.setLable(jsonObject.getString(Put.label));
                         modelMostSold.setTitle(jsonObject.getString(Put.title));
                         modelMostSold.setVisit(jsonObject.getString(Put.visit));
 
@@ -529,13 +523,13 @@ public class ApiServices {
                     String title =(jsonObject.getString(Put.title));
                     String visit =(jsonObject.getString(Put.visit));
                     String author =(jsonObject.getString(Put.author));
-                    String lable =(jsonObject.getString(Put.lable));
+                    String lable =(jsonObject.getString(Put.label));
                     String publisher =(jsonObject.getString(Put.publisher));
                     String desc =(jsonObject.getString(Put.desc));
                     String finalrating = String.valueOf((jsonObject.getInt(Put.finalrating)));
                     String cat = jsonObject.getString(Put.cat);
 //                        int id =(jsonObject.getInt(Put.id));
-//                        String lable = (jsonObject.getString(Put.lable));
+//                        String label = (jsonObject.getString(Put.label));
 //                        String offPrice =(jsonObject.getString(Put.offPrice));
 //                        String date =(jsonObject.getString(Put.date));
 //                        String only =(jsonObject.getString(Put.only));
@@ -775,7 +769,7 @@ public class ApiServices {
                         modelItemProduct1.setDesc(jsonObject.getString(Put.desc));
                         modelItemProduct1.setId(jsonObject.getInt(Put.id));
                         modelItemProduct1.setImage(jsonObject.getString(Put.image));
-                        modelItemProduct1.setLable(jsonObject.getString(Put.lable));
+                        modelItemProduct1.setLable(jsonObject.getString(Put.label));
                         modelItemProduct1.setOffPrice(jsonObject.getString(Put.offPrice));
                         modelItemProduct1.setTitle(jsonObject.getString(Put.title));
                         modelItemProduct1.setPrice(jsonObject.getString(Put.price));
@@ -943,7 +937,7 @@ public class ApiServices {
                         modelItemProduct1.setDesc(jsonObject.getString(Put.desc));
                         modelItemProduct1.setId(jsonObject.getInt(Put.id));
                         modelItemProduct1.setImage(jsonObject.getString(Put.image));
-                        modelItemProduct1.setLable(jsonObject.getString(Put.lable));
+                        modelItemProduct1.setLable(jsonObject.getString(Put.label));
                         modelItemProduct1.setOffPrice(jsonObject.getString(Put.offPrice));
                         modelItemProduct1.setTitle(jsonObject.getString(Put.title));
                         modelItemProduct1.setPrice(jsonObject.getString(Put.price));
@@ -1065,7 +1059,7 @@ public class ApiServices {
                         modelItemProduct1.setDesc(jsonObject.getString(Put.desc));
                         modelItemProduct1.setId(jsonObject.getInt(Put.id));
                         modelItemProduct1.setImage(jsonObject.getString(Put.image));
-                        modelItemProduct1.setLable(jsonObject.getString(Put.lable));
+                        modelItemProduct1.setLable(jsonObject.getString(Put.label));
                         modelItemProduct1.setOffPrice(jsonObject.getString(Put.offPrice));
                         modelItemProduct1.setTitle(jsonObject.getString(Put.title));
                         modelItemProduct1.setPrice(jsonObject.getString(Put.price));
@@ -1117,7 +1111,7 @@ public class ApiServices {
 
                         modelLikes1.setId(jsonObject.getInt(Put.id));
                         modelLikes1.setImage(jsonObject.getString(Put.image));
-                        modelLikes1.setLable(jsonObject.getString(Put.lable));
+                        modelLikes1.setLable(jsonObject.getString(Put.label));
                         modelLikes1.setTitle(jsonObject.getString(Put.title));
                         modelLikes1.setPrice(jsonObject.getString(Put.price));
                         modelLikes1.setVisit(jsonObject.getString(Put.visit));
