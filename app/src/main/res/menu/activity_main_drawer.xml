@@ -20,6 +20,11 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_account_circle_black_24dp"
             android:title="@string/account" />
+
+        <item
+            android:id="@+id/nav_favorite"
+            android:icon="@drawable/ic_star_border_black_24dp"
+            android:title="@string/fav_list" />
     </group>
 
     <item>

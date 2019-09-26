@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,14 +9,29 @@
     android:background="@color/gray_light_for_bg_activity"
     android:orientation="vertical"
     tools:context=".Activities.CategoryActivity">
-    <include layout="@layout/toolbar_second"/>
+    <include layout="@layout/toolbar_second"
+        android:id="@+id/toollllbar"/>
 
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/toollllbar"
         android:layout_width="match_parent"
         android:id="@+id/recycler_comment"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/standard_margin">
-
     </android.support.v7.widget.RecyclerView>
 
-</LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        app:fabSize="normal"
+        android:backgroundTint="@color/green"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_add_black_24dp"
+        android:tint="@color/white"
+        android:id="@+id/fab_comment"
+        android:layout_margin="20dp"/>
+
+</RelativeLayout>

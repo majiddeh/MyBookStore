@@ -36,6 +36,9 @@ public class Put {
     static final String rating = "rating";
     static final String negative = "negative";
     static final String positive = "positive";
+    static final String finalrating = "finalrating";
+
+    static final String params = "param";
 
 
 

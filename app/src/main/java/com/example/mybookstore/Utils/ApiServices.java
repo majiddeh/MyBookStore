@@ -46,7 +46,7 @@ public class ApiServices {
 
 
 
-    public void registerUser(final String phone, final String email, final String password, final String address, final OnSignUpComplete onSignUpComplete) {
+    public void registerUser(final String image,final String phone, final String email, final String password, final String address, final OnSignUpComplete onSignUpComplete) {
 
 
         StringRequest request = new StringRequest(Request.Method.POST, Links.REGISTER_URL , new Response.Listener<String>() {
@@ -76,6 +76,7 @@ public class ApiServices {
                 map.put(Put.address,address);
                 map.put(Put.phone,phone);
                 map.put(Put.password,password);
+                map.put(Put.image,image);
                 return map;
             }
         };
@@ -90,15 +91,15 @@ public class ApiServices {
         StringRequest request = new StringRequest(Request.Method.POST, Links.LOGIN_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if (response.startsWith("2")|| response.startsWith("0")){
+                if (response.startsWith("2")){
 //                    String image = response.substring(1,response.length());
                     String[] split =  response.split(";");
                     String image= split[1].trim();
                     int loginStatus = Integer.valueOf(split[0]);
                     onLoginComplete.onResponse(loginStatus,image);
-                }else {
-                    Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
-                }
+                }else if (response.startsWith("0")){
+                    Toast.makeText(context, "نام کاربری یا رمز عبور اشتباه است", Toast.LENGTH_SHORT).show();
+                }else Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
 
                 Log.i("login",response.toString());
             }
@@ -452,15 +453,17 @@ public class ApiServices {
                     String title =(jsonObject.getString(Put.title));
                     String visit =(jsonObject.getString(Put.visit));
                     String author =(jsonObject.getString(Put.author));
+                    String lable =(jsonObject.getString(Put.lable));
                     String publisher =(jsonObject.getString(Put.publisher));
                     String desc =(jsonObject.getString(Put.desc));
+                    String finalrating = String.valueOf((jsonObject.getInt(Put.finalrating)));
 //                        int id =(jsonObject.getInt(Put.id));
 //                        String lable = (jsonObject.getString(Put.lable));
 //                        String offPrice =(jsonObject.getString(Put.offPrice));
 //                        String date =(jsonObject.getString(Put.date));
 //                        String only =(jsonObject.getString(Put.only));
 //                        String num_sold =(jsonObject.getString(Put.num_sold));
-                    onProductInfoReceived.onInfoReceived(desc,title,visit,price,publisher,author,image);
+                    onProductInfoReceived.onInfoReceived(desc,title,visit,price,finalrating,publisher,author,image,lable);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -703,6 +706,7 @@ public class ApiServices {
                         modelItemProduct1.setAuthor(jsonObject.getString(Put.author));
                         modelItemProduct1.setPublisher(jsonObject.getString(Put.publisher));
 
+
                         modelItemProduct.add(modelItemProduct1);
                     }
                     onItemProductReceived.onItemReceived(modelItemProduct);
@@ -808,6 +812,96 @@ public class ApiServices {
         MySingleton.getInstance(context).addToRequestQueue(stringRequest);
     }
 
+    public void SendComment(final String idProduct, final String phone, final String image, final String comment, final String positive, final String negative, final float rating,
+                            final OnCommentSend onCommentSend){
+
+        StringRequest stringRequest = new StringRequest(1,Links.SEND_COMMENT, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("ressss",response);
+                if (response.equals("218")){
+                    onCommentSend.onSend(Integer.valueOf(response));
+                }else Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                Log.i("errrrrr",error.toString());
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map = new HashMap<>();
+                map.put(Put.id,idProduct);
+                map.put(Put.image,image);
+                map.put(Put.phone,phone);
+                map.put(Put.negative,negative);
+                map.put(Put.positive,positive);
+                map.put(Put.comment,comment);
+                map.put(Put.rating, String.valueOf(rating));
+                return map;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(stringRequest);
+    }
+
+    public void FilterItem(final String id, final String param , final OnFilterItem onFilterItem){
+
+        StringRequest stringRequest = new StringRequest(1, Links.FILTER_ITEM, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    List<ModelItemProduct> modelItemProduct = new ArrayList<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        ModelItemProduct modelItemProduct1 = new ModelItemProduct();
+
+                        modelItemProduct1.setDesc(jsonObject.getString(Put.desc));
+                        modelItemProduct1.setId(jsonObject.getInt(Put.id));
+                        modelItemProduct1.setImage(jsonObject.getString(Put.image));
+                        modelItemProduct1.setLable(jsonObject.getString(Put.lable));
+                        modelItemProduct1.setOffPrice(jsonObject.getString(Put.offPrice));
+                        modelItemProduct1.setTitle(jsonObject.getString(Put.title));
+                        modelItemProduct1.setPrice(jsonObject.getString(Put.price));
+                        modelItemProduct1.setVisit(jsonObject.getString(Put.visit));
+                        modelItemProduct1.setAuthor(jsonObject.getString(Put.author));
+                        modelItemProduct1.setPublisher(jsonObject.getString(Put.publisher));
+
+                        modelItemProduct.add(modelItemProduct1);
+                    }
+                    onFilterItem.onFilter(modelItemProduct);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map = new HashMap<>();
+                map.put("idcat",id);
+                map.put(Put.params,param);
+                return map;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(stringRequest);
+
+    }
+
 
 
 
@@ -842,7 +936,8 @@ public class ApiServices {
         void onImageReceived(ArrayList<String> pics);
     }
     public interface OnProductInfoReceived{
-        void onInfoReceived(String desc,String title,String visit,String price,String publisher,String author,String image) ;
+        void onInfoReceived(String desc,String title,String visit,String price,
+                            String finalrating,String publisher,String author,String image,String lable) ;
     }
     public interface OnShopCartAdd{
         void onShopCart(int responseStatus);
@@ -864,6 +959,12 @@ public class ApiServices {
     }
     public interface OnCommentReceived{
         void onComment(List<ModelComment> modelComments);
+    }
+    public interface OnCommentSend{
+        void onSend(int responsStatus);
+    }
+    public interface OnFilterItem{
+        void onFilter(List<ModelItemProduct> modelItemProducts);
     }
 
 

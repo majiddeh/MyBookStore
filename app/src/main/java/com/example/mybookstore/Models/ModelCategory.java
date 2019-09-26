@@ -11,6 +11,9 @@ public class ModelCategory {
         this.image = image;
     }
 
+    public ModelCategory() {
+    }
+
     public int getId() {
         return id;
     }

@@ -60,4 +60,10 @@ public class CategoryActivity extends AppCompatActivity {
         txtTitle=findViewById(R.id.txt_title_toolbar_second);
         imgBackButton=findViewById(R.id.img_back_second_toolbar);
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
 }

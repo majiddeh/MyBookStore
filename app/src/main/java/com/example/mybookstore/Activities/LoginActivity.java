@@ -23,8 +23,8 @@ import com.example.mybookstore.Utils.UserSharedPrefrences;
 
 public class LoginActivity extends AppCompatActivity {
     private TextView txtTitle,txtRegister;
-    private EditText edPass,edphone;
     private ImageView imgBackButton;
+    private EditText edPass,edphone;
     private CardView cardLogin;
     private CheckBox chkpass;
 
@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(LoginActivity.this, RegisterActivity.class), Put.REQUEST_CODE);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
 
@@ -122,5 +123,11 @@ public class LoginActivity extends AppCompatActivity {
             edphone.setText(phone);
             edPass.setText(password);
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

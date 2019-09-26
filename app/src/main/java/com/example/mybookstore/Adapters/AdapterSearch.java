@@ -79,8 +79,10 @@ public class AdapterSearch extends RecyclerView.Adapter<AdapterSearch.viewHolder
                     intent.putExtra(Put.offPrice,"0");
                 }else {
                     intent.putExtra(Put.offPrice,modelSearch.getOffPrice());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
                 intent.putExtra(Put.id,modelSearch.getId()+"");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 context.startActivity(intent);
 

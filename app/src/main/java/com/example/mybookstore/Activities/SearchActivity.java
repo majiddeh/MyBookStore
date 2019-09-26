@@ -136,6 +136,12 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
 //    private void editor(){
 //        edSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 //            @Override

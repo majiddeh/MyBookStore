@@ -65,6 +65,7 @@ public class AdapterOff extends RecyclerView.Adapter<AdapterOff.viewHolder> {
                 Intent intent = new Intent(viewHolder.itemView.getContext(), ShowActivity.class);
                 intent.putExtra(Put.id,modelOffOnlies.get(i).getId()+"");
                 intent.putExtra(Put.offPrice,modelOffOnlies.get(i).getOffPrice());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
 
             }

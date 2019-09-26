@@ -56,6 +56,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.viewHo
                 intent.putExtra(Put.id,modelCategories.get(i).getId()+"");
                 String title = modelCategory.getTitle_category();
                 intent.putExtra(Put.name,title);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });

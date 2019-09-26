@@ -2,8 +2,8 @@ package com.example.mybookstore.Utils;
 
 
 public class Links {
-    public static final String Link_HOST = "http://192.168.1.2";
-    public static final String LINK_ADAPTER = "192.168.1.2";
+    public static final String Link_HOST = "http://majiddehghan74.ir";
+    public static final String LINK_ADAPTER = "192.168.43.14";
     public static final String LOCALHOST = "localhost";
     public static final String LINK = "https://majiddd74.000webhostapp.com";
     public static final String LINK_ADAPTER2 = "majiddd74.000webhostapp.com";
@@ -25,11 +25,16 @@ public class Links {
     static final String GET_COUNT = Link_HOST + "/samed_bookstore/getcount.php";
     public static final String GET_ITEM_CAT = Link_HOST + "/samed_bookstore/getItemCat.php";
     public static final String GET_ITEM_PRODUCT = Link_HOST + "/samed_bookstore/getProductForCategory.php";
+
     public static final String GET_COMMENT = Link_HOST + "/samed_bookstore/getComment.php";
+    public static final String SEND_COMMENT = Link_HOST + "/samed_bookstore/sendcomment.php";
 
     static final String ADD_TO_SHOP_CART = Link_HOST + "/samed_bookstore/addToShopCart.php";
     static final String LINK_DELETE_CART = Link_HOST + "/samed_bookstore/deleteFromCart.php";
     static final String GET_CART = Link_HOST + "/samed_bookstore/getbasket.php";
+
+    static final String FILTER_ITEM = Link_HOST + "/samed_bookstore/filter.php";
+
 
     public static final String SEARCH = Link_HOST + "/samed_bookstore/search.php?s=";
 

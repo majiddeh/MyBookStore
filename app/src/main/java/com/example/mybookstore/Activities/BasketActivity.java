@@ -91,4 +91,10 @@ public class BasketActivity extends AppCompatActivity {
         lnrBasket=findViewById(R.id.lnrbasket);
         txttotal=findViewById(R.id.txt_total);
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
 }

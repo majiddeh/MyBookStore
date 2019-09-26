@@ -84,4 +84,9 @@ public class EditInformation extends AppCompatActivity {
         btnEdit=findViewById(R.id.btn_edit_edit_activity);
 
     }
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
 }

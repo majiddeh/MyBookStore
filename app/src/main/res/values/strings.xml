@@ -56,4 +56,8 @@
     <string name="similar_products">محصولات مشابه</string>
     <string name="others_buy">دیگران خریده اند</string>
     <string name="get_image">دریافت عکس</string>
+    <string name="positive_points">نقاط قوت کتاب</string>
+    <string name="negative_point">نقاط ضعف</string>
+    <string name="insert_comment">ثبت دیدگاه</string>
+    <string name="fav_list">لیست علاقه مندی ها</string>
 </resources>

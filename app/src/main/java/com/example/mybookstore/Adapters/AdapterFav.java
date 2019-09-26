@@ -8,7 +8,6 @@ import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mybookstore.Activities.ShowActivity;
+import com.example.mybookstore.Models.ModelFav;
 import com.example.mybookstore.Models.ModelItemProduct;
-import com.example.mybookstore.Models.ModelOff_Only_MostVisit;
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.Links;
 import com.example.mybookstore.Utils.Put;
@@ -26,47 +25,47 @@ import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 import java.util.List;
 
-public class AdapterItemProduct extends RecyclerView.Adapter<AdapterItemProduct.viewHolder> {
+public class AdapterFav extends RecyclerView.Adapter<AdapterFav.viewHolder> {
     Context context;
-    List<ModelItemProduct> modelItemProducts;
+    List<ModelFav> modelFavs;
 
-    public AdapterItemProduct(Context context, List<ModelItemProduct> modelItemProducts) {
+    public AdapterFav(Context context, List<ModelFav> modelFavs) {
         this.context = context;
-        this.modelItemProducts = modelItemProducts;
+        this.modelFavs = modelFavs;
     }
 
     @NonNull
     @Override
-    public viewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public AdapterFav.viewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_show_item_product,viewGroup,false);
-        return new viewHolder(view);
+        return new AdapterFav.viewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final viewHolder viewHolder, int i) {
-        final ModelItemProduct modelItemProduct =modelItemProducts.get(i);
+    public void onBindViewHolder(@NonNull final AdapterFav.viewHolder viewHolder, int i) {
+        final ModelFav modelFav = modelFavs.get(i);
         DecimalFormat decimalFormat = new DecimalFormat("###,###");
 
 
 
-        if (modelItemProduct.getLable().equals("0")){
+        if (modelFav.getLable().equals("0")){
             viewHolder.txtOffPrice.setVisibility(View.GONE);
         }else {
             viewHolder.txtPrice.setTextColor(Color.RED);
             viewHolder.txtPrice.setPaintFlags(viewHolder.txtPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             viewHolder.txtOffPrice.setVisibility(View.VISIBLE);
-            viewHolder.txtOffPrice.setText(decimalFormat.format(Integer.valueOf(modelItemProduct.getOffPrice()))+" "+"تومان");
+            viewHolder.txtOffPrice.setText(decimalFormat.format(Integer.valueOf(modelFav.getOffPrice()))+" "+"تومان");
         }
 
-        viewHolder.txtVisit.setText(modelItemProduct.getVisit());
-        viewHolder.txtTitle.setText(modelItemProduct.getTitle());
-        viewHolder.txtPublisher.setText(modelItemProduct.getPublisher());
-        viewHolder.txtAuthor.setText(modelItemProduct.getAuthor());
-        viewHolder.txtPrice.setText(decimalFormat.format(Integer.valueOf(modelItemProduct.getPrice()))+" "+"تومان");
+        viewHolder.txtVisit.setText(modelFav.getVisit());
+        viewHolder.txtTitle.setText(modelFav.getTitle());
+        viewHolder.txtPublisher.setText(modelFav.getPublisher());
+        viewHolder.txtAuthor.setText(modelFav.getAuthor());
+        viewHolder.txtPrice.setText(decimalFormat.format(Integer.valueOf(modelFav.getPrice()))+" "+"تومان");
 
-        viewHolder.txtDesc.setText(modelItemProduct.getDesc());
+        viewHolder.txtDesc.setText(modelFav.getDesc());
 
-        Picasso.with(context).load(modelItemProduct.getImage().replace(Links.LOCALHOST,Links.LINK_ADAPTER))
+        Picasso.with(context).load(modelFav.getImage().replace(Links.LOCALHOST,Links.LINK_ADAPTER))
                 .error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder)
                 .into(viewHolder.imgProduct);
@@ -75,13 +74,13 @@ public class AdapterItemProduct extends RecyclerView.Adapter<AdapterItemProduct.
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(viewHolder.itemView.getContext(), ShowActivity.class);
-                if (modelItemProduct.getOffPrice().equals(modelItemProduct.getPrice())){
+                if (modelFav.getOffPrice().equals(modelFav.getPrice())){
                     intent.putExtra(Put.offPrice,"0");
                 }else {
-                    intent.putExtra(Put.offPrice,modelItemProduct.getOffPrice());
+                    intent.putExtra(Put.offPrice,modelFav.getOffPrice());
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
-                intent.putExtra(Put.id,modelItemProduct.getId()+"");
+                intent.putExtra(Put.id,modelFav.getId()+"");
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 context.startActivity(intent);
@@ -93,7 +92,7 @@ public class AdapterItemProduct extends RecyclerView.Adapter<AdapterItemProduct.
 
     @Override
     public int getItemCount() {
-        return modelItemProducts.size();
+        return modelFavs.size();
     }
 
     class viewHolder extends  RecyclerView.ViewHolder{
