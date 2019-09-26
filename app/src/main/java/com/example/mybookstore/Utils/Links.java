@@ -3,25 +3,23 @@ package com.example.mybookstore.Utils;
 
 public class Links {
     public static final String Link_HOST = "http://majiddehghan74.ir";
-    public static final String LINK_ADAPTER = "majiddehghan74.ir";
+    public static final String LINK_ADAPTER = "192.168.43.14";
     public static final String LOCALHOST = "localhost";
-//    public static final String LINK = "http://majiddehghan74.ir";
-//    public static final String LINK_ADAPTER2 = "majiddehghan74.ir";
+    public static final String LINK = "https://majiddd74.000webhostapp.com";
+    public static final String LINK_ADAPTER2 = "majiddd74.000webhostapp.com";
 
-    public static final String LINK_FONT_VAZIR = "vazi_medium.ttf";
+    public static final String LINK_FONT_VAZIR = "Vazir-Medium-FD-WOL.ttf";
 
     static final String REGISTER_URL = Link_HOST + "/samed_bookstore/register.php";
-    static final String REGISTER_URL_WITHOUT_IMAGE = Link_HOST + "/samed_bookstore/registerWithoutImage.php";
     static final String LOGIN_URL = Link_HOST + "/samed_bookstore/login.php";
-    static final String FORGOT_PASS = Link_HOST + "/samed_bookstore/forgetpassword.php";
     static final String EDIT_INFORMATION = Link_HOST + "/samed_bookstore/profile.php";
 
     public static final String GET_CAT = Link_HOST + "/samed_bookstore/getcategory.php";
     static final String GET_PERSONAL_INFORMATION = Link_HOST + "/samed_bookstore/getPersonalInformation.php";
-    public static final String GET_OFF = Link_HOST + "/samed_bookstore/getOff.php";
-    public static final String GET_ONLY = Link_HOST + "/samed_bookstore/getOnly.php";
-    public static final String GET_MOST_VISIT = Link_HOST + "/samed_bookstore/getMostVisit.php";
-    public static final String GET_MOST_SOLD = Link_HOST + "/samed_bookstore/getNumSold.php";
+    static final String GET_OFF = Link_HOST + "/samed_bookstore/getOff.php";
+    static final String GET_ONLY = Link_HOST + "/samed_bookstore/getOnly.php";
+    static final String GET_MOST_VISIT = Link_HOST + "/samed_bookstore/getMostVisit.php";
+    static final String GET_MOST_SOLD = Link_HOST + "/samed_bookstore/getNumSold.php";
     static final String GET_IMAGE_PRODUCT = Link_HOST + "/samed_bookstore/getImageProduct.php";
     static final String GET_DATA_PRODUCT = Link_HOST + "/samed_bookstore/getDataProduct.php";
     static final String GET_COUNT = Link_HOST + "/samed_bookstore/getcount.php";
@@ -34,12 +32,6 @@ public class Links {
     static final String ADD_TO_SHOP_CART = Link_HOST + "/samed_bookstore/addToShopCart.php";
     static final String LINK_DELETE_CART = Link_HOST + "/samed_bookstore/deleteFromCart.php";
     static final String GET_CART = Link_HOST + "/samed_bookstore/getbasket.php";
-
-    static final String GET_BANNER = Link_HOST + "/samed_bookstore/getBanner.php";
-    static final String GET_BANNER_BIG = Link_HOST + "/samed_bookstore/getBannerBig.php";
-    static final String GET_BANNER_ITEM = Link_HOST + "/samed_bookstore/getBannerItem(new).php";
-
-    static final String GET_LIKES = Link_HOST + "/samed_bookstore/likeproduct.php";
 
     static final String FILTER_ITEM = Link_HOST + "/samed_bookstore/filter.php";
 

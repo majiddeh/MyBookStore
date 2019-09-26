@@ -248,7 +248,7 @@ public class ShowActivity extends AppCompatActivity {
                 catt=cat;
                 txtPriceOff.setVisibility(View.GONE);
                 if (!offPrice.equals("0")){
-                    txtPriceOff.setText(decimalFormat.format(Integer.valueOf(offPrice))+" "+"تومان");
+                    txtPriceOff.setText(decimalFormat.format(Float.valueOf(offPrice))+" "+"تومان");
                     txtPriceOff.setVisibility(View.VISIBLE);
                     txtPrice.setTextColor(Color.RED);
                     txtPrice.setPaintFlags(txtPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -287,15 +287,15 @@ public class ShowActivity extends AppCompatActivity {
             }
         });
 
-        apiServices.MostvisitReceived(Links.GET_MOST_SOLD,new ApiServices.OnMostVisitReceived() {
-            @Override
-            public void onMostVisit(List<ModelOff_Only_MostVisit> modelMostVisit) {
-//                Toast.makeText(ShowActivity.this, "most", Toast.LENGTH_SHORT).show();
-                AdapterProduct adapterProduct = new AdapterProduct(getApplicationContext(),modelMostVisit);
-                recyclerViewSimilar.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
-                recyclerViewSimilar.setAdapter(adapterProduct);
-            }
-        });
+//        apiServices.MostvisitReceived(Links.GET_MOST_SOLD,new ApiServices.OnMostVisitReceived() {
+//            @Override
+//            public void onMostVisit(List<ModelOff_Only_MostVisit> modelMostVisit) {
+////                Toast.makeText(ShowActivity.this, "most", Toast.LENGTH_SHORT).show();
+//                AdapterProduct adapterProduct = new AdapterProduct(getApplicationContext(),modelMostVisit);
+//                recyclerViewSimilar.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+//                recyclerViewSimilar.setAdapter(adapterProduct);
+//            }
+//        });
 
 
     }
@@ -391,7 +391,7 @@ public class ShowActivity extends AppCompatActivity {
         imgBack = findViewById(R.id.imgback_showactivity);
         imgShopCart = findViewById(R.id.img_shop_cart_showactivity);
         recyclerViewOthers=findViewById(R.id.recycler_similar);
-        recyclerViewSimilar=findViewById(R.id.recycler_others);
+//        recyclerViewSimilar=findViewById(R.id.recycler_others);
         ratingBar = findViewById(R.id.ratingbar);
         txtRate = findViewById(R.id.txt_rate);
         imgFav = findViewById(R.id.img_favorite);

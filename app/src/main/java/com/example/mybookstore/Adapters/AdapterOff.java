@@ -46,7 +46,7 @@ public class AdapterOff extends RecyclerView.Adapter<AdapterOff.viewHolder> {
     public void onBindViewHolder(@NonNull final AdapterOff.viewHolder viewHolder, final int i) {
 
         DecimalFormat decimalFormat = new DecimalFormat("###,###");
-        viewHolder.txtPrice.setText(decimalFormat.format(Integer.valueOf(modelOffOnlies.get(i).getOffPrice()))+" "+"تومان");
+        viewHolder.txtPrice.setText(decimalFormat.format(Float.valueOf(modelOffOnlies.get(i).getOffPrice()))+" "+"تومان");
 
         viewHolder.txtVisit.setText(modelOffOnlies.get(i).getVisit());
         viewHolder.txtTitle.setText(modelOffOnlies.get(i).getTitle());

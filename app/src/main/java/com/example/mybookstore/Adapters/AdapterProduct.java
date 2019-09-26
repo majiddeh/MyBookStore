@@ -47,7 +47,7 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.viewHold
         DecimalFormat decimalFormat = new DecimalFormat("###,###");
 
         if (Integer.valueOf(modelProduct.get(i).getLable()) > 0){
-            viewHolder.txtPrice.setText(decimalFormat.format(Integer.valueOf(modelProduct.get(i).getOffPrice()))+" "+"تومان");
+            viewHolder.txtPrice.setText(decimalFormat.format(Float.valueOf(modelProduct.get(i).getOffPrice()))+" "+"تومان");
             viewHolder.txtVisit.setText(modelProduct.get(i).getVisit());
             viewHolder.txtTitle.setText(modelProduct.get(i).getTitle());
             viewHolder.triangleLabelView.setSecondaryText(modelProduct.get(i).getLable());
