@@ -3,6 +3,7 @@ package com.example.mybookstore.Activities;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
 import com.example.mybookstore.Utils.ImageGallery;
+import com.example.mybookstore.Utils.Links;
 import com.example.mybookstore.Utils.Put;
 import com.example.mybookstore.Utils.RuntimePermissionsActivity;
 import com.example.mybookstore.Utils.UserSharedPrefrences;
@@ -45,7 +47,21 @@ public class RegisterActivity extends RuntimePermissionsActivity {
 
         findViews();
         chkpass.setChecked(true);
-        onClicks();
+//        onClicks();
+
+        cardRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ApiServices apiServices = new ApiServices(RegisterActivity.this);
+                apiServices.registerUserWithOutImage(edAddres.getText().toString().trim(), new ApiServices.OnSignUpComplete() {
+                    @Override
+                    public void onSignUp(int responseStatus) {
+                        Toast.makeText(RegisterActivity.this, responseStatus+"", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
     }
 
     private void onClicks() {
@@ -126,12 +142,17 @@ public class RegisterActivity extends RuntimePermissionsActivity {
 
     }
 
+
+
+
+
     private void findViews() {
         edAddres = findViewById(R.id.ed_address_register);
         edEmail = findViewById(R.id.ed_email_register);
         edPass = findViewById(R.id.ed_password_register);
         edPhone = findViewById(R.id.ed_phone_register);
         chkpass = findViewById(R.id.chk_show_pass_register);
+        chkpass.setTypeface(Typeface.createFromAsset(getAssets(), Links.LINK_FONT_VAZIR));
         txtTitle = findViewById(R.id.txt_title_toolbar_second);
         txtTitle.setText("ثبت نام");
         cardRegister = findViewById(R.id.card_Register);

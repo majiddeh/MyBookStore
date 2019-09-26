@@ -17,4 +17,8 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="tablayout_font" parent="@android:style/TextAppearance.Widget.TabWidget" >
+        <item name="android:fontFamily">@font/vazir_medium</item>
+    </style>
+
 </resources>

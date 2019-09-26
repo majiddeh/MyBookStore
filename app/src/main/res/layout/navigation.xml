@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="right"
+    android:layoutDirection="rtl"
+    android:layout_width="250dp"
+
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.NavigationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="right">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray_light"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/colorPrimary">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/img_circle_nav_header"
+                    tools:src="@drawable/avatar"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:padding="5dp"
+                    android:id="@+id/txt_nav_login"
+                    android:textSize="@dimen/txt_size_navigation_items"
+                    android:textColor="@color/white"
+                    android:text="@string/login_register"
+                    android:fontFamily="@font/vazir_medium"/>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginTop="16dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/txt_size_navigation_items"
+                android:id="@+id/nav_list_category"
+                android:fontFamily="@font/vazir_medium"
+                android:text="@string/category"
+                android:layout_marginStart="5dp"
+                android:drawableTint="@color/gray"
+                android:drawableStart="@drawable/ic_list_black_24dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginTop="16dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/txt_size_navigation_items"
+                android:id="@+id/nav_favorite"
+                android:fontFamily="@font/vazir_medium"
+                android:text="@string/favorite"
+                android:layout_marginStart="5dp"
+                android:drawableTint="@color/gray"
+                android:drawableStart="@drawable/ic_favorite_black_24dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginTop="16dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/txt_size_navigation_items"
+                android:fontFamily="@font/vazir_medium"
+                android:id="@+id/nav_account"
+                android:text="@string/account"
+                android:layout_marginStart="5dp"
+                android:drawableTint="@color/gray"
+                android:drawableStart="@drawable/ic_account_circle_black_24dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginTop="16dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/txt_size_navigation_items"
+                android:id="@+id/nav_basket"
+                android:fontFamily="@font/vazir_medium"
+                android:text="@string/cart"
+                android:layout_marginStart="5dp"
+                android:drawableTint="@color/gray"
+                android:drawableStart="@drawable/ic_shopping_cart_black_24dp"
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginTop="16dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/txt_size_navigation_items"
+                android:id="@+id/nav_about"
+                android:fontFamily="@font/vazir_medium"
+                android:text="@string/about"
+                android:layout_marginStart="5dp"
+                android:drawableTint="@color/gray"
+                android:drawableStart="@drawable/ic_info_black_24dp"
+                />
+
+
+
+
+        </LinearLayout>
+    </android.support.design.widget.NavigationView>
+</LinearLayout>

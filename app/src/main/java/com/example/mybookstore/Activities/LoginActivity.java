@@ -1,6 +1,7 @@
 package com.example.mybookstore.Activities;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.Image;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -18,11 +19,12 @@ import android.widget.Toast;
 
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
+import com.example.mybookstore.Utils.Links;
 import com.example.mybookstore.Utils.Put;
 import com.example.mybookstore.Utils.UserSharedPrefrences;
 
 public class LoginActivity extends AppCompatActivity {
-    private TextView txtTitle,txtRegister;
+    private TextView txtTitle,txtRegister,txtForgot;
     private ImageView imgBackButton;
     private EditText edPass,edphone;
     private CardView cardLogin;
@@ -39,10 +41,17 @@ public class LoginActivity extends AppCompatActivity {
 
     private void onClicks() {
 
+        txtForgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,ForgetPassActivity.class));
+            }
+        });
+
         imgBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
 
@@ -109,7 +118,10 @@ public class LoginActivity extends AppCompatActivity {
         edPass = findViewById(R.id.ed_pass_login);
         edphone = findViewById(R.id.ed_phone_login);
         chkpass = findViewById(R.id.chk_show_pass_login);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), Links.LINK_FONT_VAZIR);
+        chkpass.setTypeface(typeface);
         cardLogin = findViewById(R.id.card_login);
+        txtForgot = findViewById(R.id.txt_forgot_password);
 
 
     }

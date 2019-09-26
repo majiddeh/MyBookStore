@@ -40,7 +40,7 @@ public class Put {
 
     static final String params = "param";
 
-
+    public static final String links = "links";
 
     public static final String record = "record";
 }

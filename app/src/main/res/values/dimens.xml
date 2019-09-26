@@ -12,4 +12,11 @@
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="standard_elevation">6dp</dimen>
     <dimen name="margin_itemshow_product">4dp</dimen>
+    <dimen name="width_icon_visit">15dp</dimen>
+    <dimen name="txt_size_num_visit">10sp</dimen>
+    <dimen name="txt_size_title_item_shows">10sp</dimen>
+    <dimen name="txt_size_price_item_show_product">10sp</dimen>
+    <dimen name="txt_size_app_name_toolbar">12sp</dimen>
+    <dimen name="txt_size_navigation_items">14sp</dimen>
+    <dimen name="txt_size_title_activity_show">14sp</dimen>
 </resources>

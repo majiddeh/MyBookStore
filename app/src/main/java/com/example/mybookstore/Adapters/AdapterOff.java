@@ -84,7 +84,6 @@ public class AdapterOff extends RecyclerView.Adapter<AdapterOff.viewHolder> {
         TriangleLabelView triangleLabelView;
         ImageView imgOff;
         TextView txtTitle,txtVisit,txtPrice,txtoffPrice;
-        Typeface typeface = Typeface.createFromAsset(itemView.getContext().getAssets(),"Vazir-Medium-FD-WOL.ttf");
 
         viewHolder(@NonNull View itemView) {
             super(itemView);
@@ -93,13 +92,9 @@ public class AdapterOff extends RecyclerView.Adapter<AdapterOff.viewHolder> {
             triangleLabelView = itemView.findViewById(R.id.triangle_product);
             imgOff = itemView.findViewById(R.id.img_product);
             txtTitle = itemView.findViewById(R.id.txt_title_product);
-            txtTitle.setTypeface(typeface);
             txtPrice = itemView.findViewById(R.id.txt_price_product);
-            txtPrice.setTypeface(typeface);
             txtVisit = itemView.findViewById(R.id.txt_visit_product);
-            txtVisit.setTypeface(typeface);
             txtoffPrice = itemView.findViewById(R.id.txt_price_off);
-            txtoffPrice.setTypeface(typeface);
         }
     }
 

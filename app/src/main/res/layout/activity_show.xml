@@ -10,7 +10,6 @@
     tools:context=".Activities.ShowActivity">
 
     <android.support.design.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
@@ -48,6 +47,7 @@
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
+            android:id="@+id/scrolview_show_activity"
             android:layout_height="match_parent"
             android:background="@color/gray_light_for_bg_activity"
             android:clipToPadding="false"
@@ -71,13 +71,14 @@
                             android:layout_width="0dp"
                             android:id="@+id/txt_title_show_activity"
                             android:layout_weight="0.5"
+                            android:fontFamily="@font/vazir_medium"
+
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:textAlignment="center"
                             tools:text="نخل و نارنج"
                             android:layout_marginStart="@dimen/standard_margin"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/text_size_big"/>
+                            android:textSize="@dimen/txt_size_title_activity_show"/>
 
                         <ImageView
                             android:layout_width="40dp"
@@ -101,12 +102,16 @@
                         android:layout_margin="@dimen/standard_margin"
                         android:layout_weight=".5"
                         android:layout_height="match_parent">
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:fontFamily="@font/vazir_medium"
                             android:gravity="center"
                             android:padding="@dimen/standard_margin"
-                            android:text="@string/product_information"/>
+
+                            android:text="@string/product_information"
+                            android:textSize="12sp" />
                     </android.support.v7.widget.CardView>
                     <android.support.v7.widget.CardView
                         android:layout_width="0dp"
@@ -115,12 +120,16 @@
                         android:layout_weight=".5"
                         android:elevation="1dp"
                         android:layout_height="match_parent">
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:fontFamily="@font/vazir_medium"
                             android:gravity="center"
                             android:padding="@dimen/standard_margin"
-                            android:text="@string/comments"/>
+
+                            android:text="@string/comments"
+                            android:textSize="12sp" />
                     </android.support.v7.widget.CardView>
 
                 </LinearLayout>
@@ -139,23 +148,29 @@
                             android:layout_margin="@dimen/small_margin"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="wrap_content"
-                                android:layout_marginStart="@dimen/small_margin"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/black"
+                                android:layout_marginStart="@dimen/small_margin"
                                 android:layout_marginTop="@dimen/small_margin"
-                                android:textSize="@dimen/text_size_standard"
-                                android:text="@string/publisher"/>
+                                android:fontFamily="@font/vazir_medium"
+                                android:text="@string/publisher"
+
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
+
                             <TextView
-                                android:layout_width="wrap_content"
                                 android:id="@+id/txt_publisher_show"
-                                android:layout_marginStart="@dimen/small_margin"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/black"
-                                tools:text="نسل روشن"
+                                android:layout_marginStart="@dimen/small_margin"
                                 android:layout_marginTop="@dimen/small_margin"
-                                android:textSize="@dimen/text_size_standard" />
+                                android:fontFamily="@font/vazir_medium"
+
+                                android:textColor="@color/black"
+                                android:textSize="12sp"
+                                tools:text="نسل روشن" />
 
                         </LinearLayout>
                         <LinearLayout
@@ -163,23 +178,29 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="wrap_content"
-                                android:layout_marginStart="@dimen/small_margin"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/black"
+                                android:layout_marginStart="@dimen/small_margin"
                                 android:layout_marginTop="@dimen/small_margin"
-                                android:textSize="@dimen/text_size_standard"
-                                android:text="@string/author"/>
+                                android:fontFamily="@font/vazir_medium"
+                                android:text="@string/author"
+
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
+
                             <TextView
-                                android:layout_width="wrap_content"
                                 android:id="@+id/txt_author_show"
-                                tools:text="وحید یامین پور"
-                                android:layout_marginStart="@dimen/small_margin"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/black"
+                                android:layout_marginStart="@dimen/small_margin"
                                 android:layout_marginTop="@dimen/small_margin"
-                                android:textSize="@dimen/text_size_standard" />
+                                android:fontFamily="@font/vazir_medium"
+                                android:textColor="@color/black"
+
+                                android:textSize="12sp"
+                                tools:text="وحید یامین پور" />
 
                         </LinearLayout>
 
@@ -197,29 +218,34 @@
                             android:orientation="horizontal"
                             android:gravity="center|center_vertical"
                             android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_weight=".5"
-                                android:textSize="18sp"
-                                android:textAlignment="center"
-                                android:id="@+id/txt_price_show_activirt"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="@dimen/standard_margin"
-                                android:gravity="end"
-                                android:textColor="@color/green"
-                                tools:text="200000 تومان"/>
 
                             <TextView
+                                android:id="@+id/txt_price_show_activirt"
                                 android:layout_width="0dp"
-                                android:layout_weight=".5"
-                                android:textAlignment="center"
-                                android:textSize="22sp"
-                                android:id="@+id/txt_price_off_show_activirt"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/standard_margin"
+                                android:layout_weight=".5"
+
+                                android:fontFamily="@font/vazir_medium"
                                 android:gravity="end"
+                                android:textAlignment="center"
                                 android:textColor="@color/green"
-                                tools:text="200000 تومان"/>
+                                android:textSize="14sp"
+                                tools:text="200000 تومان" />
+
+                            <TextView
+                                android:id="@+id/txt_price_off_show_activirt"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+
+                                android:layout_margin="@dimen/standard_margin"
+                                android:layout_weight=".5"
+                                android:fontFamily="@font/vazir_medium"
+                                android:gravity="end"
+                                android:textAlignment="center"
+                                android:textColor="@color/green"
+                                android:textSize="16sp"
+                                tools:text="200000 تومان" />
 
 
                         </LinearLayout>
@@ -248,13 +274,16 @@
                                     android:layout_height="30dp"
                                     app:srcCompat="@drawable/ic_shopping_cart_black_24dp"
                                     tools:ignore="VectorDrawableCompat" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
-                                    android:textColor="@color/white"
-                                    android:gravity="center"
-                                    android:layout_marginStart="8dp"
                                     android:layout_height="match_parent"
-                                    android:text="@string/add_to_shopcart"/>
+                                    android:layout_marginStart="8dp"
+                                    android:fontFamily="@font/vazir_medium"
+                                    android:gravity="center"
+                                    android:text="@string/add_to_shopcart"
+                                    android:textColor="@color/white"
+                                    android:textSize="12sp" />
 
 
 
@@ -277,16 +306,17 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:ellipsize="end"
-                            android:lines="2"
-                            android:layout_width="match_parent"
                             android:id="@+id/txt_desc_show"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/vazir_medium"
+                            android:lines="2"
+
+                            android:padding="@dimen/standard_margin"
                             android:textAlignment="center"
-                            android:textSize="@dimen/text_size_small"
-                            android:textColor="@color/black"
-                            tools:text="@string/lorem"
-                            android:padding="@dimen/standard_margin"/>
+                            android:textSize="12sp"
+                            tools:text="@string/lorem" />
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
@@ -295,15 +325,18 @@
                             android:layout_marginEnd="@dimen/standard_margin"
                             android:layout_marginTop="@dimen/standard_margin"
                             android:layout_marginBottom="@dimen/small_margin"/>
+
                         <TextView
-                            android:layout_width="match_parent"
                             android:id="@+id/txt_continue"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/continue_reading"
-                            android:textSize="@dimen/text_size_standard"
-                            android:textColor="@color/gray"
+                            android:layout_margin="@dimen/standard_margin"
+                            android:fontFamily="@font/vazir_medium"
+
                             android:gravity="center"
-                            android:layout_margin="@dimen/standard_margin"/>
+                            android:text="@string/continue_reading"
+                            android:textColor="@color/gray"
+                            android:textSize="14sp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
@@ -322,16 +355,29 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:id="@+id/txt_rate"
+                            android:fontFamily="@font/vazir_medium"
+                            android:textColor="@color/black"
                             android:layout_height="wrap_content"
                             android:text="3 از 5" />
-                        <RatingBar
+                        <com.willy.ratingbar.ScaleRatingBar
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
                             android:id="@+id/ratingbar"
-                            android:layout_marginStart="@dimen/standard_margin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:numStars="5"
-
-                            />
+                            app:srb_numStars="5"
+                            app:srb_minimumStars="0"
+                            app:srb_rating="0"
+                            app:srb_starWidth="30dp"
+                            app:srb_starHeight="30dp"
+                            app:srb_starPadding="5dp"
+                            app:srb_stepSize="0.5"
+                            app:srb_isIndicator="true"
+                            app:srb_clickable="true"
+                            app:srb_scrollable="true"
+                            app:srb_clearRatingEnabled="true"
+                            app:srb_drawableEmpty="@drawable/empty"
+                            app:srb_drawableFilled="@drawable/filled">
+                        </com.willy.ratingbar.ScaleRatingBar>
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
@@ -348,13 +394,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
                         android:layout_marginStart="4dp"
+                        android:layout_marginTop="12dp"
+
                         android:layout_marginBottom="12dp"
+                        android:fontFamily="@font/vazir_medium"
                         android:text="@string/similar_products"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        />
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
@@ -378,13 +425,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
                         android:layout_marginStart="4dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginBottom="12dp"
+                        android:fontFamily="@font/vazir_medium"
                         android:text="@string/others_buy"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        />
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
 

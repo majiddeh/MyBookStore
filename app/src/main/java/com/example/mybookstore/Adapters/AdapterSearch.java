@@ -97,7 +97,6 @@ public class AdapterSearch extends RecyclerView.Adapter<AdapterSearch.viewHolder
     }
 
     public class viewHolder extends RecyclerView.ViewHolder{
-        Typeface typeface = Typeface.createFromAsset(itemView.getContext().getAssets(),Links.LINK_FONT_VAZIR);
         CardView cardView;
         ImageView imageViewSearch;
         TextView txtTitle,txtPrice,txtDesc,txtVisit,txtOffPrice;
@@ -111,11 +110,6 @@ public class AdapterSearch extends RecyclerView.Adapter<AdapterSearch.viewHolder
             txtDesc=itemView.findViewById(R.id.txtdescription_search);
             txtVisit=itemView.findViewById(R.id.txt_visit_item_search);
             txtOffPrice=itemView.findViewById(R.id.txtprice_off_item_search);
-            txtOffPrice.setTypeface(typeface);
-            txtDesc.setTypeface(typeface);
-            txtVisit.setTypeface(typeface);
-            txtPrice.setTypeface(typeface);
-            txtTitle.setTypeface(typeface);
 
         }
     }

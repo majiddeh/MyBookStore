@@ -1,6 +1,5 @@
 package com.example.mybookstore.Activities;
 
-import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,12 +16,13 @@ import com.example.mybookstore.Utils.ApiServices;
 import com.example.mybookstore.Utils.Links;
 import com.example.mybookstore.Utils.Put;
 import com.example.mybookstore.Utils.UserSharedPrefrences;
+import com.willy.ratingbar.ScaleRatingBar;
 
 import java.lang.reflect.Type;
 
 public class SendCommentActivity extends AppCompatActivity {
 
-    RatingBar ratingBar;
+    ScaleRatingBar ratingBar;
     EditText edInsert,edPositive,edNegative;
     Button btnSubmit;
     TextView txtTollbar;
@@ -79,7 +79,6 @@ public class SendCommentActivity extends AppCompatActivity {
     }
 
     private void findViews() {
-        Typeface typeface = Typeface.createFromAsset(getAssets(), Links.LINK_FONT_VAZIR);
 
         ratingBar = findViewById(R.id.rating_insert_comment);
         edInsert = findViewById(R.id.ed_comment_input);
@@ -89,7 +88,6 @@ public class SendCommentActivity extends AppCompatActivity {
 
         txtTollbar = findViewById(R.id.txt_title_toolbar_second);
         txtTollbar.setText(R.string.insert_comment);
-        txtTollbar.setTypeface(typeface);
 
         imgBack = findViewById(R.id.img_back_second_toolbar);
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">فروشگاه کتاب صامد</string>
+    <string name="app_name">باشگاه کتاب خوانی صامد</string>
     <string name="navigation_drawer_open">باز کردن پنل</string>
     <string name="navigation_drawer_close">بستن پنل</string>
     <string name="nav_header_title">Android Studio</string>
@@ -7,12 +7,11 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">تنظیمات</string>
 
-    <string name="menu_home">دسته بندی محصولات</string>
-    <string name="menu_gallery">سبد خرید</string>
-    <string name="menu_slideshow">گالری عکس</string>
-    <string name="menu_tools">تنظیمات</string>
-    <string name="menu_share">درباره ما</string>
-    <string name="menu_send"> ارسال نرم افزار به دوستان</string>
+    <string name="cart">سبد خرید</string>
+    <string name="gallery">گالری عکس</string>
+    <string name="settings">تنظیمات</string>
+    <string name="about">درباره ما</string>
+    <string name="send"> ارسال نرم افزار به دوستان</string>
     <string name="nav_communicate">ارتباطات</string>
     <string name="login">ورود</string>
     <string name="register">عضویت در فروشگاه</string>
@@ -60,4 +59,8 @@
     <string name="negative_point">نقاط ضعف</string>
     <string name="insert_comment">ثبت دیدگاه</string>
     <string name="fav_list">لیست علاقه مندی ها</string>
+    <string name="recovery_password">بازیابی رمز عبور</string>
+    <string name="please_enter_email">لطفا پست الکترونیک خود را وارد کنید</string>
+    <string name="forget_password">فراموشی رمز عبور</string>
+    <string name="full_list">لیست کامل</string>
 </resources>

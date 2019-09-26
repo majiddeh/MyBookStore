@@ -18,10 +18,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.mybookstore.Models.ModelBanner;
 import com.example.mybookstore.Models.ModelBasket;
 import com.example.mybookstore.Models.ModelCategory;
 import com.example.mybookstore.Models.ModelComment;
 import com.example.mybookstore.Models.ModelItemProduct;
+import com.example.mybookstore.Models.ModelLikes;
 import com.example.mybookstore.Models.ModelOff_Only_MostVisit;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -52,6 +54,7 @@ public class ApiServices {
         StringRequest request = new StringRequest(Request.Method.POST, Links.REGISTER_URL , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.i("registerapi",response.toString());
                 if (response.equals("218")||response.equals("214")||response.equals("0")){
                     int responseStatus = Integer.valueOf(response) ;
                     onSignUpComplete.onSignUp(responseStatus);
@@ -63,6 +66,7 @@ public class ApiServices {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.i("registerapierror",error.toString());
 
                 onSignUpComplete.onSignUp(Put.STATUS_FAILED);
                 Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
@@ -77,6 +81,45 @@ public class ApiServices {
                 map.put(Put.phone,phone);
                 map.put(Put.password,password);
                 map.put(Put.image,image);
+                return map;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(request);
+
+
+    }
+
+    public void registerUserWithOutImage(final String phone, final OnSignUpComplete onSignUpComplete) {
+
+
+        StringRequest request = new StringRequest(Request.Method.POST, Links.REGISTER_URL_WITHOUT_IMAGE , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("registerapi",response.toString());
+                if (response.equals("218")||response.equals("214")||response.equals("0")){
+                    int responseStatus = Integer.valueOf(response) ;
+                    onSignUpComplete.onSignUp(responseStatus);
+                }else {
+                    Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Log.i("registerapierror",error.toString());
+
+                onSignUpComplete.onSignUp(Put.STATUS_FAILED);
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map = new HashMap<>();
+                map.put(Put.phone,phone);
                 return map;
             }
         };
@@ -101,13 +144,13 @@ public class ApiServices {
                     Toast.makeText(context, "نام کاربری یا رمز عبور اشتباه است", Toast.LENGTH_SHORT).show();
                 }else Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
 
-                Log.i("login",response.toString());
+                Log.i("apiii",response.toString());
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-                Log.i("login",error.toString());
+                Log.i("apiii",error.toString());
             }
         }){
 
@@ -193,7 +236,7 @@ public class ApiServices {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-                Log.i("informationedit",error.toString());
+                Log.i("apiii",error.toString());
 
             }
         });
@@ -228,10 +271,42 @@ public class ApiServices {
         MySingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
     }
 
-    public void offReceived(final OnOffReceived onOffReceived){
+    public void categoryReceiveViewPager(final OnCatStringReceived onCatStringReceived){
 
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(0, Links.GET_OFF, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(0, Links.GET_CAT, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                List<String> strings =new ArrayList<>();
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        strings.add(jsonObject.getString("title_category"));
+                    }
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+
+                onCatStringReceived.onCatReceived(strings);
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
+    }
+
+    public void offReceived(String link,final OnOffReceived onOffReceived){
+
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(0, link, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 List<ModelOff_Only_MostVisit> modelOffOnlies = new ArrayList<>();
@@ -260,7 +335,7 @@ public class ApiServices {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
-                Log.i("errorOff",error.toString());
+                Log.i("apiii",error.toString());
 
             }
         });
@@ -270,12 +345,13 @@ public class ApiServices {
 
     }
 
-    public void onlyReceived(final OnOnlyReceived onOnlyReceived){
+    public void onlyReceived(String link,final OnOnlyReceived onOnlyReceived){
 
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(0, Links.GET_ONLY, null, new Response.Listener<JSONArray>() {
+        final JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(0,link , null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                Log.i("apiii",response.toString());
                 List<ModelOff_Only_MostVisit> modelOnlies = new ArrayList<>();
                 for (int i = 0; i < response.length(); i++) {
                     ModelOff_Only_MostVisit modelOnly = new ModelOff_Only_MostVisit();
@@ -302,7 +378,7 @@ public class ApiServices {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
-                Log.i("errorOnly",error.toString());
+                Log.i("apiii",error.toString());
 
             }
         });
@@ -312,10 +388,10 @@ public class ApiServices {
 
     }
 
-    public void MostvisitReceived(final OnMostVisitReceived onMostVisitReceived){
+    public void MostvisitReceived(String link,final OnMostVisitReceived onMostVisitReceived){
 
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(0, Links.GET_MOST_VISIT, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(0,link, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 List<ModelOff_Only_MostVisit> modeMostVisits = new ArrayList<>();
@@ -344,7 +420,7 @@ public class ApiServices {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
-                Log.i("errorOnly",error.toString());
+                Log.i("apiii",error.toString());
 
             }
         });
@@ -354,11 +430,11 @@ public class ApiServices {
 
     }
 
-    public void MostSoldReceived(final OnMostSoldReceived onMostSoldReceived){
+    public void MostSoldReceived(String link,final OnMostSoldReceived onMostSoldReceived){
 
 
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(0, Links.GET_MOST_SOLD, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(0,link, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 List<ModelOff_Only_MostVisit> modelMostSolds = new ArrayList<>();
@@ -387,7 +463,7 @@ public class ApiServices {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
-                Log.i("errorOnly",error.toString());
+                Log.i("apiii",error.toString());
 
             }
         });
@@ -457,13 +533,14 @@ public class ApiServices {
                     String publisher =(jsonObject.getString(Put.publisher));
                     String desc =(jsonObject.getString(Put.desc));
                     String finalrating = String.valueOf((jsonObject.getInt(Put.finalrating)));
+                    String cat = jsonObject.getString(Put.cat);
 //                        int id =(jsonObject.getInt(Put.id));
 //                        String lable = (jsonObject.getString(Put.lable));
 //                        String offPrice =(jsonObject.getString(Put.offPrice));
 //                        String date =(jsonObject.getString(Put.date));
 //                        String only =(jsonObject.getString(Put.only));
 //                        String num_sold =(jsonObject.getString(Put.num_sold));
-                    onProductInfoReceived.onInfoReceived(desc,title,visit,price,finalrating,publisher,author,image,lable);
+                    onProductInfoReceived.onInfoReceived(desc,title,visit,price,finalrating,publisher,author,image,lable,cat);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -476,7 +553,7 @@ public class ApiServices {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
-                Log.i("errorInfo",error.toString());
+                Log.i("apiii",error.toString());
 
             }
         }){
@@ -571,7 +648,7 @@ public class ApiServices {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
-                Log.i("errorGetBasket",error.toString());
+                Log.i("apiii",error.toString());
             }
         }){
 
@@ -624,12 +701,12 @@ public class ApiServices {
             public void onResponse(String response) {
 
                 onCountReceived.onCount(response);
-                Log.i("errorCount",response.toString());
+                Log.i("apiii",response.toString());
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("errorCount",error.toString());
+                Log.i("apiii",error.toString());
             }
         }){
             @Override
@@ -768,7 +845,7 @@ public class ApiServices {
 //                    modelComments.add(comments[i]);
 //                    onCommentReceived.onComment(modelComments);
 //                }
-                Log.i("rresponseComment",response);
+                Log.i("apiii",response);
                 List<ModelComment> modelComment = new ArrayList<>();
                 try {
                     JSONArray jsonArray = new JSONArray(response);
@@ -794,7 +871,7 @@ public class ApiServices {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("rresponseComment",error.toString());
+                Log.i("apiii",error.toString());
 
             }
         })
@@ -818,7 +895,7 @@ public class ApiServices {
         StringRequest stringRequest = new StringRequest(1,Links.SEND_COMMENT, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i("ressss",response);
+                Log.i("apiii",response);
                 if (response.equals("218")){
                     onCommentSend.onSend(Integer.valueOf(response));
                 }else Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
@@ -829,7 +906,7 @@ public class ApiServices {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-                Log.i("errrrrr",error.toString());
+                Log.i("apiii",error.toString());
             }
         })
         {
@@ -902,6 +979,230 @@ public class ApiServices {
 
     }
 
+    public void GetBanners(final OnBannerReceived onBannerReceived){
+
+        StringRequest stringRequest = new StringRequest(0, Links.GET_BANNER, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    List<ModelBanner> modelBanners = new ArrayList<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        ModelBanner modelBanner = new ModelBanner();
+
+                        modelBanner.setId(jsonObject.getInt(Put.id));
+                        modelBanner.setImage(jsonObject.getString(Put.image));
+
+                        modelBanners.add(modelBanner);
+                    }
+                    onBannerReceived.onBanner(modelBanners);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(stringRequest);
+    }
+
+    public void GetBannerBig(final OnBannerReceived onBannerReceived){
+
+        StringRequest stringRequest = new StringRequest(0, Links.GET_BANNER_BIG, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    List<ModelBanner> modelBanners = new ArrayList<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        ModelBanner modelBanner = new ModelBanner();
+
+                        modelBanner.setId(jsonObject.getInt(Put.id));
+                        modelBanner.setImage(jsonObject.getString(Put.image));
+
+                        modelBanners.add(modelBanner);
+                    }
+                    onBannerReceived.onBanner(modelBanners);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(stringRequest);
+    }
+
+    public void GetItemBanner(final String id , final OnItemBannerReceived onItemBannerReceived){
+//        ProgressBar progressBar = new ProgressBar(context, null, android.R.attr.progressBarStyleSmall);
+//        progressBar.setVisibility(View.VISIBLE);  //To show ProgressBar
+
+        StringRequest stringRequest = new StringRequest(1, Links.GET_BANNER_ITEM, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    List<ModelItemProduct> modelItemProduct = new ArrayList<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        ModelItemProduct modelItemProduct1 = new ModelItemProduct();
+
+                        modelItemProduct1.setDesc(jsonObject.getString(Put.desc));
+                        modelItemProduct1.setId(jsonObject.getInt(Put.id));
+                        modelItemProduct1.setImage(jsonObject.getString(Put.image));
+                        modelItemProduct1.setLable(jsonObject.getString(Put.lable));
+                        modelItemProduct1.setOffPrice(jsonObject.getString(Put.offPrice));
+                        modelItemProduct1.setTitle(jsonObject.getString(Put.title));
+                        modelItemProduct1.setPrice(jsonObject.getString(Put.price));
+                        modelItemProduct1.setVisit(jsonObject.getString(Put.visit));
+                        modelItemProduct1.setAuthor(jsonObject.getString(Put.author));
+                        modelItemProduct1.setPublisher(jsonObject.getString(Put.publisher));
+
+
+                        modelItemProduct.add(modelItemProduct1);
+                    }
+                    onItemBannerReceived.onItemReceived(modelItemProduct);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map = new HashMap<>();
+                map.put(Put.id,id);
+                return map;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(stringRequest);
+
+    }
+
+    public void GetLikeProduct(final String cat, final OnLikeReceived onLikeReceived){
+
+        StringRequest stringRequest = new StringRequest(0, Links.GET_LIKES, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                List<ModelLikes> modelLikes = new ArrayList<>();
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        ModelLikes modelLikes1 = new ModelLikes();
+
+                        modelLikes1.setId(jsonObject.getInt(Put.id));
+                        modelLikes1.setImage(jsonObject.getString(Put.image));
+                        modelLikes1.setLable(jsonObject.getString(Put.lable));
+                        modelLikes1.setTitle(jsonObject.getString(Put.title));
+                        modelLikes1.setPrice(jsonObject.getString(Put.price));
+                        modelLikes1.setVisit(jsonObject.getString(Put.visit));
+
+
+                        modelLikes.add(modelLikes1);
+                    }
+                    onLikeReceived.onLike(modelLikes);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+//                try {
+//                    JSONArray jsonArray = new JSONArray(response);
+//                    List<ModelOff_Only_MostVisit> modelOffOnlyMostVisits =new ArrayList<>();
+//                    Gson gson = new Gson();
+//                    ModelOff_Only_MostVisit[] modelOffOnlyMostVisits1 = gson.fromJson(jsonArray.toString(),ModelOff_Only_MostVisit[].class);
+//                    for (int i = 0; i < modelOffOnlyMostVisits1.length; i++) {
+//                        modelOffOnlyMostVisits.add(modelOffOnlyMostVisits1[i]);
+//                        onLikeReceived.onLike(modelOffOnlyMostVisits);
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+
+            }
+        })
+        {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map = new HashMap<>();
+                map.put(Put.cat,cat);
+                return map;
+            }
+        }
+        ;
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(stringRequest);
+
+    }
+
+    public void ForgetPass(final String email, final OnForgetPass onForgetPass){
+
+        StringRequest request = new StringRequest(Request.Method.POST, Links.FORGOT_PASS, new Response.Listener<String>() {
+            @Override
+
+            public void onResponse(String response) {
+                if (response.equals("218")||response.equals("0")){
+                    int responseStatus = Integer.valueOf(response);
+                    onForgetPass.OnForget(responseStatus);
+                }else Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
+
+                Log.i("apiii",response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                Log.i("apiii",error.toString());
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map =new HashMap<>();
+                map.put(Put.email,email);
+                return map;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(18000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(request);
+
+    }
+
 
 
 
@@ -937,7 +1238,7 @@ public class ApiServices {
     }
     public interface OnProductInfoReceived{
         void onInfoReceived(String desc,String title,String visit,String price,
-                            String finalrating,String publisher,String author,String image,String lable) ;
+                            String finalrating,String publisher,String author,String image,String lable,String cat) ;
     }
     public interface OnShopCartAdd{
         void onShopCart(int responseStatus);
@@ -965,6 +1266,21 @@ public class ApiServices {
     }
     public interface OnFilterItem{
         void onFilter(List<ModelItemProduct> modelItemProducts);
+    }
+    public interface OnBannerReceived{
+        void onBanner(List<ModelBanner> modelBanners);
+    }
+    public interface OnItemBannerReceived{
+        void onItemReceived(List<ModelItemProduct> modelItemProducts);
+    }
+    public interface OnLikeReceived{
+        void onLike(List<ModelLikes> modelLikes);
+    }
+    public interface OnForgetPass{
+        void OnForget(int responseStatus);
+    }
+    public interface OnCatStringReceived{
+        void onCatReceived(List<String> strings);
     }
 
 

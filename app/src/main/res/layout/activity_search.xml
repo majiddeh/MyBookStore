@@ -26,6 +26,8 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:inputType="text"
+                android:fontFamily="@font/vazir_medium"
+                android:textSize="@dimen/txt_size_title_activity_show"
                 android:imeOptions="actionSearch"
                 android:id="@+id/edsearch"
                 android:layout_marginBottom="2dp"

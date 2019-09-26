@@ -18,6 +18,7 @@
             android:layout_width="wrap_content"
             android:padding="5dp"
             android:text="محبوب ترین "
+            android:fontFamily="@font/vazir_medium"
             android:layout_height="wrap_content"
             android:id="@+id/rd1"/>
         <View
@@ -30,6 +31,7 @@
             android:layout_width="wrap_content"
             android:padding="5dp"
             android:text="پر فروش ترین ها"
+            android:fontFamily="@font/vazir_medium"
             android:layout_height="wrap_content"
             android:id="@+id/rd2"/>
         <View
@@ -42,6 +44,7 @@
             android:layout_width="wrap_content"
             android:padding="5dp"
             android:text="قیمت کم به زیاد"
+            android:fontFamily="@font/vazir_medium"
             android:layout_height="wrap_content"
             android:id="@+id/rd3"/>
         <View
@@ -54,6 +57,7 @@
             android:layout_width="wrap_content"
             android:padding="5dp"
             android:text="قیمت زیاد به کم"
+            android:fontFamily="@font/vazir_medium"
             android:layout_height="wrap_content"
             android:id="@+id/rd4"/>
 

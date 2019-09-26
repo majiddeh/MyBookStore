@@ -20,6 +20,8 @@
         android:layout_height="100dp" >
         <EditText
             android:layout_width="match_parent"
+            android:fontFamily="@font/vazir_medium"
+
             android:layout_height="match_parent"
             android:id="@+id/ed_comment_input"
             android:hint="@string/insert_comment"
@@ -43,6 +45,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/positive_points"
+                android:fontFamily="@font/vazir_medium"
+
                 android:id="@+id/ed_positive"
                 android:background="@color/gray_light"/>
         </android.support.design.widget.TextInputLayout>
@@ -50,6 +54,8 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:fontFamily="@font/vazir_medium"
+
             android:layout_weight=".3"
             android:gravity="center_vertical|start"
             android:textColor="@color/green"
@@ -72,6 +78,8 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/vazir_medium"
+
                 android:hint="@string/negative_point"
                 android:id="@+id/ed_negative"
                 android:background="@color/gray_light"/>
@@ -80,6 +88,8 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:fontFamily="@font/vazir_medium"
+
             android:layout_weight=".3"
             android:gravity="center_vertical|start"
             android:textColor="@color/red"
@@ -87,15 +97,32 @@
 
     </LinearLayout>
 
-    <RatingBar
+
+    <com.willy.ratingbar.ScaleRatingBar
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/rating_insert_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/rating_insert_comment"
-        android:numStars="5"
-        android:layout_gravity="center_horizontal"/>
+        app:srb_numStars="5"
+        android:layout_gravity="center_horizontal"
+        app:srb_minimumStars="0"
+        app:srb_rating="0"
+        app:srb_starWidth="30dp"
+        app:srb_starHeight="30dp"
+        app:srb_starPadding="10dp"
+        app:srb_stepSize="0.5"
+        app:srb_isIndicator="false"
+        app:srb_clickable="true"
+        app:srb_scrollable="true"
+        app:srb_clearRatingEnabled="true"
+        app:srb_drawableEmpty="@drawable/empty"
+        app:srb_drawableFilled="@drawable/filled">
+    </com.willy.ratingbar.ScaleRatingBar>
 
     <Button
         android:layout_width="200dp"
+        android:fontFamily="@font/vazir_medium"
+
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:text="@string/insert_comment"
