@@ -68,10 +68,6 @@ public class BasketActivity extends AppCompatActivity {
         });
 
 
-        Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),"Vazir-Medium-FD-WOL.ttf");
-        txttotal.setTypeface(typeface);
-
-
     }
 
     private void onClicks() {

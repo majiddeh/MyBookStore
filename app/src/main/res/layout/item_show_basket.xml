@@ -40,7 +40,10 @@
                 android:layout_height="match_parent">
                 <TextView
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/text_size_small"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:textSize="@dimen/txt_size_title_item_shows"
+                    android:fontFamily="@font/vazir_medium"
                     android:id="@+id/txttitlebasket"
                     android:layout_marginStart="@dimen/standard_margin"
                     android:gravity="center_vertical|start"
@@ -55,20 +58,22 @@
                     android:background="@color/gray_for_littile_view"/>
                 <TextView
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/text_size_small"
+                    android:textSize="@dimen/txt_size_title_item_shows"
                     android:layout_marginStart="@dimen/standard_margin"
                     android:gravity="center_vertical|start"
+                    android:fontFamily="@font/vazir_medium"
                     android:text="@string/number"
                     android:layout_marginTop="5dp"
                     android:layout_height="0dp"
                     android:layout_weight=".2"/>
                 <TextView
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/text_size_small"
+                    android:textSize="@dimen/txt_size_title_item_shows"
                     android:id="@+id/txtnumberbasket"
                     android:layout_marginStart="8dp"
                     android:gravity="center_vertical|start"
                     tools:text="5 "
+                    android:fontFamily="@font/vazir_medium"
                     android:layout_height="0dp"
                     android:layout_weight=".3"/>
                 <View
@@ -89,6 +94,8 @@
             <TextView
                 android:layout_width="0dp"
                 android:gravity="center_vertical|start"
+                android:fontFamily="@font/vazir_medium"
+                android:textSize="@dimen/txt_size_title_item_shows"
                 android:layout_marginStart="@dimen/large_margin"
                 android:text="@string/product_price"
                 android:layout_height="match_parent"
@@ -96,6 +103,8 @@
             <TextView
                 android:layout_width="0dp"
                 android:gravity="center_vertical|start"
+                android:textSize="@dimen/txt_size_title_item_shows"
+                android:fontFamily="@font/vazir_medium"
                 android:id="@+id/txtpricebasket"
                 android:layout_marginStart="5dp"
                 android:textColor="#9E0E0E"
@@ -119,12 +128,16 @@
                 android:gravity="center_vertical|start"
                 android:text="@string/totallprice"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/txt_size_title_item_shows"
                 android:layout_marginStart="@dimen/large_margin"
+                android:fontFamily="@font/vazir_medium"
                 android:layout_weight=".5"/>
             <TextView
                 android:layout_width="0dp"
                 android:gravity="center_vertical|start"
                 android:layout_marginStart="5dp"
+                android:fontFamily="@font/vazir_medium"
+                android:textSize="@dimen/txt_size_title_item_shows"
                 android:id="@+id/txtpricetotalbasket"
                 android:textColor="#409E0E"
                 tools:text="2000000"
@@ -143,6 +156,7 @@
             android:layout_weight="0.15"
             android:id="@+id/txtdeletefrombasket"
             android:text="@string/delete"
+            android:fontFamily="@font/vazir_medium"
             android:gravity="center_vertical|end"
             android:layout_marginEnd="8dp"
             android:textSize="@dimen/text_size_small"

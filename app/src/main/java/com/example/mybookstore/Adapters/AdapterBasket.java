@@ -106,20 +106,14 @@ public class AdapterBasket extends RecyclerView.Adapter<AdapterBasket.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageBasket;
         TextView txtTitile,txtNumber,txtPrice,txtTotalPrice,txtDelete;
-        Typeface typeface = Typeface.createFromAsset(itemView.getContext().getAssets(),"Vazir-Medium-FD-WOL.ttf");
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtDelete=itemView.findViewById(R.id.txtdeletefrombasket);
-            txtDelete.setTypeface(typeface);
             txtNumber=itemView.findViewById(R.id.txtnumberbasket);
-            txtNumber.setTypeface(typeface);
             txtPrice=itemView.findViewById(R.id.txtpricebasket);
-            txtPrice.setTypeface(typeface);
             txtTitile=itemView.findViewById(R.id.txttitlebasket);
-            txtTitile.setTypeface(typeface);
             txtTotalPrice=itemView.findViewById(R.id.txtpricetotalbasket);
-            txtTotalPrice.setTypeface(typeface);
             imageBasket=itemView.findViewById(R.id.imgbasket);
         }
     }

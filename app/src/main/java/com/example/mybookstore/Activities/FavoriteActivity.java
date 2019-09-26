@@ -29,6 +29,8 @@ public class FavoriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
 
+        dbSqlite = new DbSqlite(FavoriteActivity.this);
+
         findViews();
         onClicks();
         recyvlerInit();
@@ -36,14 +38,10 @@ public class FavoriteActivity extends AppCompatActivity {
 
     private void recyvlerInit() {
 
-        dbSqlite = new DbSqlite(FavoriteActivity.this);
-        modelFavs = dbSqlite.showData();
-
-
-        adapterFav = new AdapterFav(FavoriteActivity.this, modelFavs);
-        recyclerView.setLayoutManager(new LinearLayoutManager(FavoriteActivity.this));
-        recyclerView.setAdapter(adapterFav);
-        recyclerView.hasFixedSize();
+//        adapterFav = new AdapterFav(FavoriteActivity.this, modelFavs);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(FavoriteActivity.this));
+//        recyclerView.setAdapter(adapterFav);
+//        recyclerView.hasFixedSize();
     }
 
     private void onClicks() {
@@ -61,5 +59,22 @@ public class FavoriteActivity extends AppCompatActivity {
         imgBackButton = findViewById(R.id.img_back_second_toolbar);
         recyclerView = findViewById(R.id.recycler_fav);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        modelFavs = dbSqlite.showData();
+        adapterFav = new AdapterFav(FavoriteActivity.this, modelFavs);
+        recyclerView.setLayoutManager(new LinearLayoutManager(FavoriteActivity.this));
+        recyclerView.setAdapter(adapterFav);
+        recyclerView.hasFixedSize();
+
+    }
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

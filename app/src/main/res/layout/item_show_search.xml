@@ -39,8 +39,9 @@
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
-                android:textColor="@color/black"
+                android:textSize="@dimen/txt_size_title_item_shows"
                 android:ellipsize="end"
+                android:fontFamily="@font/vazir_medium"
                 android:layout_marginTop="@dimen/margin_itemshow_product"
                 android:maxLines="1"
                 android:id="@+id/txttitle_search"
@@ -52,18 +53,19 @@
                 android:layout_weight=".5"/>
             <TextView
                 android:layout_width="wrap_content"
-                android:textColor="@color/black"
                 android:ellipsize="end"
                 android:layout_marginTop="@dimen/margin_itemshow_product"
+                android:textSize="@dimen/txt_size_num_visit"
                 android:maxLines="1"
                 android:id="@+id/txt_visit_item_search"
+                android:fontFamily="@font/vazir_medium"
                 android:layout_marginBottom="@dimen/margin_itemshow_product"
                 android:layout_marginEnd="@dimen/small_margin"
                 tools:text="110"
                 android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content"/>
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/width_icon_visit"
                 android:src="@drawable/ic_visibility_black_24dp"
                 android:layout_marginTop="@dimen/margin_itemshow_product"
                 android:layout_marginBottom="@dimen/margin_itemshow_product"
@@ -134,7 +136,9 @@
                 android:layout_weight="0.5"
                 android:textColor="@color/green"
                 android:ellipsize="end"
+                android:textSize="@dimen/txt_size_title_item_shows"
                 android:maxLines="1"
+                android:fontFamily="@font/vazir_medium"
                 android:textAlignment="center"
                 android:layout_marginTop="@dimen/margin_itemshow_product"
                 android:layout_marginBottom="@dimen/margin_itemshow_product"
@@ -148,8 +152,10 @@
                 android:layout_weight="0.5"
                 android:textColor="@color/green"
                 android:ellipsize="end"
+                android:fontFamily="@font/vazir_medium"
                 android:maxLines="1"
                 android:textAlignment="center"
+                android:textSize="@dimen/txt_size_title_item_shows"
                 android:layout_marginTop="@dimen/margin_itemshow_product"
                 android:layout_marginBottom="@dimen/margin_itemshow_product"
                 android:id="@+id/txtprice_off_item_search"
@@ -163,10 +169,12 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:textColor="@color/black"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="1"
             android:id="@+id/txtdescription_search"
+            android:fontFamily="@font/vazir_medium"
+            android:layout_marginStart="4dp"
+            android:textSize="@dimen/txt_size_title_item_shows"
             android:layout_marginBottom="@dimen/margin_itemshow_product"
             android:layout_marginEnd="10dp"
             tools:text="نخل ونارنج نوشته وحید یامین پور در باره شیخ مرتضی انصاری"

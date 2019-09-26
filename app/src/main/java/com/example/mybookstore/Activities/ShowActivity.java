@@ -1,30 +1,37 @@
 package com.example.mybookstore.Activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
+import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.example.mybookstore.Adapters.AdapterLikes;
 import com.example.mybookstore.Adapters.AdapterProduct;
 import com.example.mybookstore.Models.ModelFav;
-import com.example.mybookstore.Models.ModelItemProduct;
+import com.example.mybookstore.Models.ModelLikes;
 import com.example.mybookstore.Models.ModelOff_Only_MostVisit;
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
@@ -32,6 +39,7 @@ import com.example.mybookstore.Utils.DbSqlite;
 import com.example.mybookstore.Utils.Links;
 import com.example.mybookstore.Utils.Put;
 import com.example.mybookstore.Utils.UserSharedPrefrences;
+import com.willy.ratingbar.ScaleRatingBar;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -41,15 +49,19 @@ public class ShowActivity extends AppCompatActivity {
     private SliderLayout sliderLayout;
     private AppBarLayout appBarLayout;
     private ImageView imgBack,imgShopCart,imgFav;
-    private TextView txtTitle,txtAuthor,txtPublisher,txtDesc,txtPrice,txtNext,txtPriceOff,txtCounCart,txtRate;
+    private TextView txtTitle,txtAuthor,txtPublisher,txtDesc,
+            txtTitleToolbar,txtPrice,txtNext,txtPriceOff,txtCounCart,txtRate;
     private ApiServices apiServices = new ApiServices(ShowActivity.this);
     private CardView addToShoCart,cardComments;
-    private String id,titlee,imagee,pricee,phone,offPrice,visitt,lablee;
+    private String id,titlee,imagee,pricee,phone,offPrice,visitt,lablee,catt;
+    private NestedScrollView scrollView;
     private RecyclerView recyclerViewSimilar,recyclerViewOthers;
-    private RatingBar ratingBar;
+    private ScaleRatingBar ratingBar;
     private int counter;
     private boolean b =true;
     private boolean fav =true;
+    private boolean checkUp =true;
+    private boolean checkDown =true;
     private DbSqlite dbSqlite;
 
     @Override
@@ -61,8 +73,8 @@ public class ShowActivity extends AppCompatActivity {
         phone = userSharedPrefrences.getUserPhone();
 
         findViews();
-        appBarLayoutEdit();
         initializePage();
+        appBarLayoutEdit();
         sliderInitialize();
         onClicks();
         dbSQLite();
@@ -73,7 +85,7 @@ public class ShowActivity extends AppCompatActivity {
         Cursor cursor = dbSqlite.cu(Integer.parseInt(id));
 
         if (cursor.getCount() == 1){
-            imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.red));
+            imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.gold));
             imgFav.setImageResource(R.drawable.ic_star_black_24dp);
             fav=false;
         }else {
@@ -175,17 +187,31 @@ public class ShowActivity extends AppCompatActivity {
             }
         });
 
+        //TODO  publisher & Description & Author be Complete
+
         imgFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (fav){
-                    boolean isInsert=dbSqlite.insertFav(new ModelFav(Integer.valueOf(id),imagee,titlee,visitt,pricee,lablee,offPrice,"sdasd","dasd","dfgd"));
-                    imgFav.setImageResource(R.drawable.ic_star_black_24dp);
-                    imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.red));
-                    fav=false;
-                    if (isInsert){
-                        Toast.makeText(ShowActivity.this, "به لیست علاقه مندی ها اضافه شد", Toast.LENGTH_SHORT).show();
+                    if (!offPrice.equals("")){
+                        boolean isInsert=dbSqlite.insertFav(new ModelFav(Integer.valueOf(id),imagee,titlee,visitt,pricee,lablee,offPrice,"sdasd","dasd","dfgd"));
+                        imgFav.setImageResource(R.drawable.ic_star_black_24dp);
+                        imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.gold));
+                        fav=false;
+                        if (isInsert){
+                            Toast.makeText(ShowActivity.this, "به لیست علاقه مندی ها اضافه شد", Toast.LENGTH_SHORT).show();
+                        }
+                    }else {
+
+                        boolean isInsert=dbSqlite.insertFav(new ModelFav(Integer.valueOf(id),imagee,titlee,visitt,pricee,lablee,pricee,"sdasd","dasd","dfgd"));
+                        imgFav.setImageResource(R.drawable.ic_star_black_24dp);
+                        imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.gold));
+                        fav=false;
+                        if (isInsert) {
+                            Toast.makeText(ShowActivity.this, "به لیست علاقه مندی ها اضافه شد", Toast.LENGTH_SHORT).show();
+                        }
                     }
+
                 }else {
                     boolean isDelete=dbSqlite.deleteFav(Integer.parseInt(id));
                     if (isDelete){
@@ -200,15 +226,11 @@ public class ShowActivity extends AppCompatActivity {
     }
 
     private void initializePage() {
-        final Typeface typeface = Typeface.createFromAsset(getAssets(),Links.LINK_FONT_VAZIR);
-
         apiServices.GetCount(phone, new ApiServices.OnCountReceived() {
             @Override
             public void onCount(String count) {
                 txtCounCart.setText(count);
-                txtCounCart.setTypeface(typeface);
                 counter= Integer.parseInt(count);
-                txtRate.setTypeface(typeface);
             }
         });
 
@@ -216,50 +238,59 @@ public class ShowActivity extends AppCompatActivity {
         apiServices.GetProductInfo(id, new ApiServices.OnProductInfoReceived() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onInfoReceived(String desc, String title, String visit, String price, String finalrating, String publisher, String author, String image,String lable) {
+            public void onInfoReceived(String desc, String title, String visit, String price, String finalrating, String publisher, String author, String image,String lable,String cat) {
                 DecimalFormat decimalFormat = new DecimalFormat("###,###");
                 titlee= title;
                 imagee = image;
                 pricee = price;
                 visitt=visit;
                 lablee=lable;
+                catt=cat;
                 txtPriceOff.setVisibility(View.GONE);
                 if (!offPrice.equals("0")){
                     txtPriceOff.setText(decimalFormat.format(Integer.valueOf(offPrice))+" "+"تومان");
-                    txtPriceOff.setTypeface(typeface);
                     txtPriceOff.setVisibility(View.VISIBLE);
                     txtPrice.setTextColor(Color.RED);
                     txtPrice.setPaintFlags(txtPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 }
                 txtPrice.setText(decimalFormat.format(Integer.valueOf(pricee))+" "+"تومان");
-                txtPrice.setTypeface(typeface);
                 txtTitle.setText(titlee);
-                txtTitle.setTypeface(typeface);
                 txtPublisher.setText(publisher);
                 ratingBar.setRating(Float.parseFloat(finalrating));
-                txtPublisher.setTypeface(typeface);
                 txtDesc.setText(desc);
-                txtDesc.setTypeface(typeface);
                 txtAuthor.setText(author);
-                txtAuthor.setTypeface(typeface);
                 txtRate.setText(finalrating+" از "+"5");
 
             }
         });
 
-        ApiServices apiServices = new ApiServices(ShowActivity.this);
-        apiServices.MostvisitReceived(new ApiServices.OnMostVisitReceived() {
+
+
+//        apiServices.GetLikeProduct( new ApiServices.OnLikeReceived() {
+//            @Override
+//            public void onLike(List<ModelOff_Only_MostVisit> modelOff_only_mostVisits) {
+//                Toast.makeText(ShowActivity.this, "like", Toast.LENGTH_SHORT).show();
+//                AdapterProduct adapterProduct = new AdapterProduct(ShowActivity.this,modelOff_only_mostVisits);
+//                recyclerViewOthers.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+//                recyclerViewOthers.setAdapter(adapterProduct);
+//            }
+//        });
+
+        // TODO eslah jeddi niaz dard aslan dorost kar nemikonad fuuuuuuuuuuuck
+        apiServices.GetLikeProduct(catt,new ApiServices.OnLikeReceived() {
             @Override
-            public void onMostVisit(List<ModelOff_Only_MostVisit> modelMostVisit) {
-                AdapterProduct adapterProduct = new AdapterProduct(getApplicationContext(),modelMostVisit);
+            public void onLike(List<ModelLikes> modelLikes) {
+//                Toast.makeText(ShowActivity.this, "like", Toast.LENGTH_SHORT).show();
+                AdapterLikes adapterLikes = new AdapterLikes(ShowActivity.this,modelLikes);
                 recyclerViewOthers.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
-                recyclerViewOthers.setAdapter(adapterProduct);
+                recyclerViewOthers.setAdapter(adapterLikes);
             }
         });
 
-        apiServices.MostvisitReceived(new ApiServices.OnMostVisitReceived() {
+        apiServices.MostvisitReceived(Links.GET_MOST_SOLD,new ApiServices.OnMostVisitReceived() {
             @Override
             public void onMostVisit(List<ModelOff_Only_MostVisit> modelMostVisit) {
+//                Toast.makeText(ShowActivity.this, "most", Toast.LENGTH_SHORT).show();
                 AdapterProduct adapterProduct = new AdapterProduct(getApplicationContext(),modelMostVisit);
                 recyclerViewSimilar.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
                 recyclerViewSimilar.setAdapter(adapterProduct);
@@ -287,6 +318,52 @@ public class ShowActivity extends AppCompatActivity {
 
             }
         });
+
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                Log.i("scrolll",scrollView.getScrollY()+"");
+//                int dpSize = convertPX(scrollView.getScrollY(),ShowActivity.this);
+//                Log.i("scroldp",dpSize+"");
+                if (scrollView.getScrollY() >= 80){
+                    if (checkUp){
+                        Animation animation = AnimationUtils.loadAnimation(ShowActivity.this,R.anim.toolbar_title_going_up);
+                        txtTitleToolbar.startAnimation(animation);
+                        txtTitleToolbar.setText(titlee);
+                        checkUp =false;
+                        checkDown=true;
+                    }
+
+                }else {
+                    txtTitleToolbar.setText("");
+                    checkUp=true;
+                    //TODO animation goingDown dorost kar nemikone hatman barrassi shavad...
+//                    if (checkDown){
+//                        Animation animation = AnimationUtils.loadAnimation(ShowActivity.this,R.anim.toolbar_title_going_down);
+//                        txtTitleToolbar.startAnimation(animation);
+//                        Handler handler = new Handler();
+//                        handler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                txtTitleToolbar.setText("");
+//                            }
+//                        },1000);
+//
+//                        checkUp =true;
+//                        checkDown=false;
+//                    }
+
+
+                }
+            }
+        });
+    }
+
+    public static int convertPX (float px, Context context){
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float dp = px /((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return (int)dp;
     }
 
     private void findViews() {
@@ -296,6 +373,7 @@ public class ShowActivity extends AppCompatActivity {
         txtCounCart=findViewById(R.id.txt_count_cart);
         addToShoCart=findViewById(R.id.card_addto_shopcart);
         id= getIntent().getStringExtra(Put.id);
+
         txtNext = findViewById(R.id.txt_continue);
         txtAuthor = findViewById(R.id.txt_author_show);
         txtPrice = findViewById(R.id.txt_price_show_activirt);
@@ -303,8 +381,13 @@ public class ShowActivity extends AppCompatActivity {
         txtPublisher = findViewById(R.id.txt_publisher_show);
         txtTitle = findViewById(R.id.txt_title_show_activity);
         txtDesc = findViewById(R.id.txt_desc_show);
+        txtTitleToolbar = findViewById(R.id.txt_title_book_toolbar_show);
+
+
         sliderLayout = findViewById(R.id.slider_activity_show);
         appBarLayout=findViewById(R.id.app_bar_layout_show_activity);
+        scrollView = findViewById(R.id.scrolview_show_activity);
+
         imgBack = findViewById(R.id.imgback_showactivity);
         imgShopCart = findViewById(R.id.img_shop_cart_showactivity);
         recyclerViewOthers=findViewById(R.id.recycler_similar);

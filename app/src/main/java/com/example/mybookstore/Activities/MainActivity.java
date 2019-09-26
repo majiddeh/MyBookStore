@@ -3,42 +3,45 @@ package com.example.mybookstore.Activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.example.mybookstore.Adapters.AdapterBanner;
 import com.example.mybookstore.Adapters.AdapterCategory;
+import com.example.mybookstore.Adapters.AdapterCategoryLittleView;
 import com.example.mybookstore.Adapters.AdapterOff;
 import com.example.mybookstore.Adapters.AdapterProduct;
+import com.example.mybookstore.Models.ModelBanner;
 import com.example.mybookstore.Models.ModelCategory;
 import com.example.mybookstore.Models.ModelOff_Only_MostVisit;
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
 import com.example.mybookstore.Utils.Links;
-import com.example.mybookstore.Utils.MySingleton;
 import com.example.mybookstore.Utils.Put;
 import com.example.mybookstore.Utils.UserSharedPrefrences;
 import com.squareup.picasso.Picasso;
@@ -49,18 +52,19 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, BaseSliderView.OnSliderClickListener {
+        implements  BaseSliderView.OnSliderClickListener {
     DrawerLayout drawer;
     Toolbar toolbar;
     ImageView imgShopCart,imgSearch;
     CircleImageView circleImageView;
     SliderLayout sliderLayout;
     CardView cardCategory;
-    RecyclerView recyclerOff, recyclerCategory,recyclerOnly,recyclerMostVisit,recyclerMostSold;
+    RecyclerView recyclerOff, recyclerCategory,recyclerOnly,
+            recyclerMostVisit,recyclerMostSold,recycBanner,recyBannerBig,recycCatLittle;
     AdapterOff adapterOff;
-    TextView txtNaviLogin,txtCount;
+    TextView txtNaviLogin,txtCount,navAbout, navCat,navBasket,navAccount,
+            navFav,txtListOffs,txtListOnly,txtListMostVisit,txtListMostSold;
     LinearLayout specialOffersLable;
-    NavigationView navigationView;
     String phone;
     ApiServices apiServices = new ApiServices(MainActivity.this);
     UserSharedPrefrences userSharedPrefrences;
@@ -71,11 +75,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        api();
         init();
-
-
-
 
     }
 
@@ -85,11 +85,10 @@ public class MainActivity extends AppCompatActivity
         sliderInitialize();
         recyclerInitialize();
         onCliclks();
-        txtNaviLoginInitial();
+        setUpNavigation();
     }
 
     private void findViews() {
-        Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),Links.LINK_FONT_VAZIR);
         userSharedPrefrences = new UserSharedPrefrences(MainActivity.this);
 
         phone = userSharedPrefrences.getUserPhone();
@@ -102,19 +101,32 @@ public class MainActivity extends AppCompatActivity
         recyclerOnly = findViewById(R.id.recycler_only);
         recyclerMostVisit = findViewById(R.id.recycler_most_visited);
         recyclerMostSold = findViewById(R.id.recycler_most_sold);
+        recycCatLittle = findViewById(R.id.recyc_cat_little);
         txtCount=findViewById(R.id.txt_count_cart);
         drawer = findViewById(R.id.drawer_layout);
         imgShopCart=findViewById(R.id.img_shop_cart);
         imgSearch=findViewById(R.id.img_search);
-        navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
-        txtCount.setTypeface(typeface);
+
+        txtListMostSold = findViewById(R.id.txt_list_most_sold);
+        txtListMostVisit = findViewById(R.id.txt_list_most_visit);
+        txtListOnly = findViewById(R.id.txt_list_only);
+        txtListOffs = findViewById(R.id.txt_list_offs);
+
+        recycBanner = findViewById(R.id.recycler_banner);
+        recyBannerBig = findViewById(R.id.recycler_banner_big);
+
+        navAbout = findViewById(R.id.nav_about);
+        navBasket = findViewById(R.id.nav_basket);
+        navCat = findViewById(R.id.nav_list_category);
+        navAccount = findViewById(R.id.nav_account);
+        navFav = findViewById(R.id.nav_favorite);
+        drawer = findViewById(R.id.drawer_layout);
 
 
-        View navi = navigationView.getHeaderView(0);
-        circleImageView = navi.findViewById(R.id.img_circle_nav_header);
+        circleImageView = findViewById(R.id.img_circle_nav_header);
         if (userSharedPrefrences.getUserImaje().equals("")){
-                    Picasso.with(getApplicationContext()).load(R.drawable.banner2).
+                    Picasso.with(getApplicationContext()).load(R.drawable.avatar).
                 error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder)
                 .into(circleImageView);
@@ -125,25 +137,79 @@ public class MainActivity extends AppCompatActivity
                     .into(circleImageView);
         }
 
-        txtNaviLogin = navi.findViewById(R.id.txt_nav_login);
+        txtNaviLogin = findViewById(R.id.txt_nav_login);
         txtNaviLogin.setText(phone);
-        txtNaviLogin.setTypeface(typeface);
 
 
 
 
     }
 
-    private void txtNaviLoginInitial() {
+    private void setUpNavigation() {
 
         if (!phone.isEmpty()) {
             txtNaviLogin.setText(phone);
         }
+        navAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (txtNaviLogin.getText().equals("ورود/عضویت")) {
+                    startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), Put.REQUEST_CODE);
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                    drawer.closeDrawer(GravityCompat.START);
+                    } else {
+                    startActivityForResult(new Intent(MainActivity.this, ProfileActivity.class), Put.REQUEST_EXIT);
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                    drawer.closeDrawer(GravityCompat.START);
+                    }
+
+            }
+        });
+        navCat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,CategoryActivity.class));
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
+        navBasket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (txtNaviLogin.getText().equals("ورود/عضویت")) {
+                    drawer.closeDrawer(GravityCompat.START);
+                    Toast.makeText(MainActivity.this, "لطفا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
+                } else {
+                        startActivity(new Intent(MainActivity.this, BasketActivity.class));
+                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                    drawer.closeDrawer(GravityCompat.START);
+                    }
+
+            }
+        });
+        navAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,AboutActivity.class));
+                drawer.closeDrawer(GravityCompat.START);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
+            }
+        });
+        navFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,FavoriteActivity.class));
+                drawer.closeDrawer(GravityCompat.START);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            }
+        });
+
+
     }
 
     private void onCliclks() {
-
-
         txtNaviLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,7 +226,7 @@ public class MainActivity extends AppCompatActivity
         cardCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, CategoryActivity.class));
+                startActivity(new Intent(MainActivity.this, CatActivity_ViewPager.class));
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
@@ -186,11 +252,47 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        txtListOffs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,FullProductActivity.class);
+                intent.putExtra(Put.links,Links.GET_OFF);
+                startActivity(intent);
+            }
+        });
+
+        txtListOnly.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,FullProductActivity.class);
+                intent.putExtra(Put.links,Links.GET_ONLY);
+                startActivity(intent);
+            }
+        });
+
+        txtListMostVisit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,FullProductActivity.class);
+                intent.putExtra(Put.links,Links.GET_MOST_VISIT);
+                startActivity(intent);
+            }
+        });
+
+        txtListMostSold.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,FullProductActivity.class);
+                intent.putExtra(Put.links,Links.GET_MOST_VISIT);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void recyclerInitialize() {
 
-        apiServices.offReceived(new ApiServices.OnOffReceived() {
+        apiServices.offReceived(Links.GET_OFF,new ApiServices.OnOffReceived() {
             @Override
             public void onOffReceived(List<ModelOff_Only_MostVisit> modelOffOnlies) {
                 if (modelOffOnlies.size() == 0) {
@@ -208,13 +310,22 @@ public class MainActivity extends AppCompatActivity
         apiServices.categoryReceive(new ApiServices.OnCategoryReceived() {
             @Override
             public void onCatReceived(List<ModelCategory> modelCategories) {
+                AdapterCategoryLittleView adapterCategoryLittleView = new AdapterCategoryLittleView(MainActivity.this, modelCategories);
+                recycCatLittle.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+                recycCatLittle.setAdapter(adapterCategoryLittleView);
+            }
+        });
+
+        apiServices.categoryReceive(new ApiServices.OnCategoryReceived() {
+            @Override
+            public void onCatReceived(List<ModelCategory> modelCategories) {
                 AdapterCategory adapterCategory = new AdapterCategory(MainActivity.this, modelCategories);
                 recyclerCategory.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
                 recyclerCategory.setAdapter(adapterCategory);
             }
         });
 
-        apiServices.onlyReceived(new ApiServices.OnOnlyReceived() {
+        apiServices.onlyReceived(Links.GET_ONLY,new ApiServices.OnOnlyReceived() {
             @Override
             public void onOnlyReceived(List<ModelOff_Only_MostVisit> modelOnlies) {
                 AdapterProduct adapterProduct = new AdapterProduct(getApplicationContext(),modelOnlies);
@@ -223,7 +334,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        apiServices.MostvisitReceived(new ApiServices.OnMostVisitReceived() {
+        apiServices.MostvisitReceived(Links.GET_MOST_VISIT,new ApiServices.OnMostVisitReceived() {
             @Override
             public void onMostVisit(List<ModelOff_Only_MostVisit> modelMostVisit) {
                 AdapterProduct adapterProduct = new AdapterProduct(getApplicationContext(),modelMostVisit);
@@ -232,12 +343,30 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        apiServices.MostSoldReceived(new ApiServices.OnMostSoldReceived() {
+        apiServices.MostSoldReceived(Links.GET_MOST_SOLD,new ApiServices.OnMostSoldReceived() {
             @Override
             public void onSold(List<ModelOff_Only_MostVisit> modelSold) {
                 AdapterProduct adapterProduct = new AdapterProduct(getApplicationContext(),modelSold);
                 recyclerMostSold.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
                 recyclerMostSold.setAdapter(adapterProduct);
+            }
+        });
+
+        apiServices.GetBanners(new ApiServices.OnBannerReceived() {
+            @Override
+            public void onBanner(List<ModelBanner> modelBanners) {
+                AdapterBanner adapterBanner = new AdapterBanner(MainActivity.this,modelBanners);
+                recycBanner.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
+                recycBanner.setAdapter(adapterBanner);
+            }
+        });
+
+        apiServices.GetBannerBig(new ApiServices.OnBannerReceived() {
+            @Override
+            public void onBanner(List<ModelBanner> modelBanners) {
+                AdapterBanner adapterBanner = new AdapterBanner(MainActivity.this,modelBanners);
+                recyBannerBig.setLayoutManager(new GridLayoutManager(MainActivity.this,1));
+                recyBannerBig.setAdapter(adapterBanner);
             }
         });
 
@@ -277,7 +406,6 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
         if (phone != null && phone.equals("ورود/عضویت")){
             imgShopCart.setColorFilter(Color.rgb(170,170,170));
             txtCount.setVisibility(View.GONE);
@@ -286,31 +414,6 @@ public class MainActivity extends AppCompatActivity
 
 
     }
-
-
-    // TODO: 8/26/2019 remember to delete this.
-    private void api(){
-        StringRequest stringRequest = new StringRequest(0, "https://majiddd74.000webhostapp.com/majid.php", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Toast.makeText(MainActivity.this, response, Toast.LENGTH_SHORT).show();
-                Log.i("rrrrrr",response);
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-        MySingleton.getInstance(MainActivity.this).addToRequestQueue(stringRequest);
-    }
-
-
-
-
-
 
 
 
@@ -366,63 +469,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_category) {
-            startActivity(new Intent(MainActivity.this,CategoryActivity.class));
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_profile) {
-            if (txtNaviLogin.getText().equals("ورود/عضویت")) {
-                startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), Put.REQUEST_CODE);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-            } else {
-                startActivityForResult(new Intent(MainActivity.this, ProfileActivity.class), Put.REQUEST_EXIT);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-            }
-
-        } else if (id == R.id.nav_shop_cart) {
-            if (txtNaviLogin.getText().equals("ورود/عضویت")) {
-                Toast.makeText(this, "لطفا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
-            } else {
-                startActivity(new Intent(MainActivity.this, BasketActivity.class));
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-            }
-
-        } else if (id == R.id.nav_about) {
-            startActivity(new Intent(MainActivity.this,AboutActivity.class));
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-
-        } else if (id == R.id.nav_send) {
-
-        }else if (id == R.id.nav_favorite){
-            startActivity(new Intent(MainActivity.this,FavoriteActivity.class));
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 
     @Override
     public void onSliderClick(BaseSliderView slider) {

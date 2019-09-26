@@ -14,6 +14,7 @@ import com.example.mybookstore.Models.ModelComment;
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.Links;
 import com.squareup.picasso.Picasso;
+import com.willy.ratingbar.ScaleRatingBar;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -61,10 +62,9 @@ public class AdapterComment extends RecyclerView.Adapter<AdapterComment.viewHold
 
     class viewHolder extends RecyclerView.ViewHolder{
 
-        Typeface typeface = Typeface.createFromAsset(itemView.getContext().getAssets(), Links.LINK_FONT_VAZIR);
         TextView txtComment,txtUser,txtPositive,txtNegative;
         CircleImageView circleImageView;
-        RatingBar ratingBar;
+        ScaleRatingBar ratingBar;
 
         viewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,10 +74,6 @@ public class AdapterComment extends RecyclerView.Adapter<AdapterComment.viewHold
             txtUser=itemView.findViewById(R.id.txt_usercomment);
             circleImageView = itemView.findViewById(R.id.img_userComment);
             ratingBar = itemView.findViewById(R.id.rating_comment);
-            txtComment.setTypeface(typeface);
-            txtNegative.setTypeface(typeface);
-            txtPositive.setTypeface(typeface);
-            txtUser.setTypeface(typeface);
         }
     }
 }

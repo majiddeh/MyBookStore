@@ -19,8 +19,8 @@ public class EditInformation extends AppCompatActivity {
     private ImageView imgback;
     private TextView txtTitle;
     private Button btnEdit;
-    String phone;
-    ApiServices apiServices = new ApiServices(EditInformation.this);
+    private String phone;
+    private ApiServices apiServices = new ApiServices(EditInformation.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

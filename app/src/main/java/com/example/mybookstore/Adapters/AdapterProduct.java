@@ -92,7 +92,6 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.viewHold
         TriangleLabelView triangleLabelView;
         ImageView imgOnly;
         TextView txtTitle,txtVisit,txtPrice;
-        Typeface typeface = Typeface.createFromAsset(itemView.getContext().getAssets(),Links.LINK_FONT_VAZIR);
 
         viewHolder(@NonNull View itemView) {
             super(itemView);
@@ -101,11 +100,8 @@ public class AdapterProduct extends RecyclerView.Adapter<AdapterProduct.viewHold
             triangleLabelView = itemView.findViewById(R.id.triangle_product);
             imgOnly = itemView.findViewById(R.id.img_product);
             txtTitle = itemView.findViewById(R.id.txt_title_product);
-            txtTitle.setTypeface(typeface);
             txtPrice = itemView.findViewById(R.id.txt_price_product);
-            txtPrice.setTypeface(typeface);
             txtVisit = itemView.findViewById(R.id.txt_visit_product);
-            txtVisit.setTypeface(typeface);
         }
     }
 }

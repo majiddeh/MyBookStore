@@ -81,6 +81,8 @@ public class AdapterFav extends RecyclerView.Adapter<AdapterFav.viewHolder> {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
                 intent.putExtra(Put.id,modelFav.getId()+"");
+                //TODO In DBSQLITE add a column name cat to store cat for likes products
+//                intent.putExtra(Put.cat,modelFav.getcat());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 context.startActivity(intent);
@@ -100,26 +102,18 @@ public class AdapterFav extends RecyclerView.Adapter<AdapterFav.viewHolder> {
         TextView txtVisit,txtTitle,txtPrice,txtOffPrice,txtDesc,txtAuthor,txtPublisher;
         CardView cardView;
         ImageView imgProduct;
-        Typeface typeface = Typeface.createFromAsset(itemView.getContext().getAssets(),Links.LINK_FONT_VAZIR);
 
         viewHolder(@NonNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.card_item_product);
             txtTitle=itemView.findViewById(R.id.txt_title_item_product);
-            txtTitle.setTypeface(typeface);
             txtOffPrice=itemView.findViewById(R.id.txtprice_off_item_product);
-            txtOffPrice.setTypeface(typeface);
             txtPrice=itemView.findViewById(R.id.txtprice_item_product);
-            txtPrice.setTypeface(typeface);
             txtDesc=itemView.findViewById(R.id.txt_description_item_product);
-            txtDesc.setTypeface(typeface);
             txtVisit=itemView.findViewById(R.id.txt_visit_item_product);
-            txtVisit.setTypeface(typeface);
             imgProduct=itemView.findViewById(R.id.img_item_product);
             txtAuthor=itemView.findViewById(R.id.txt_authur_item_product);
             txtPublisher=itemView.findViewById(R.id.txt_publisher_item_product);
-            txtAuthor.setTypeface(typeface);
-            txtPublisher.setTypeface(typeface);
         }
     }
 }

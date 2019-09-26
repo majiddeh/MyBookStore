@@ -29,8 +29,8 @@
             <TextView
                 android:textSize="15sp"
                 android:id="@+id/txt_usercomment"
-                android:textColor="@color/black"
                 android:text="ali@yahoo.com"
+                android:fontFamily="@font/vazir_medium"
                 android:gravity="center_vertical|right"
                 android:layout_marginRight="5dp"
                 android:layout_width="wrap_content"
@@ -39,6 +39,7 @@
         <TextView
             android:id="@+id/txt_commnet"
             android:layout_margin="5dp"
+            android:fontFamily="@font/vazir_medium"
             tools:text="@string/lorem"
             android:textSize="13dp"
             android:textColor="@color/black"
@@ -61,6 +62,7 @@
                 android:textColor="@color/green"
                 android:textSize="15sp"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/vazir_medium"
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
@@ -79,15 +81,30 @@
                 android:textColor="@color/red"
                 android:textSize="15sp"
                 android:layout_width="wrap_content"
+                android:fontFamily="@font/vazir_medium"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <RatingBar
+        <com.willy.ratingbar.ScaleRatingBar
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/rating_comment"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:numStars="5"
-            android:id="@+id/rating_comment"/>
+            android:layout_height="wrap_content"
+            app:srb_numStars="5"
+            app:srb_minimumStars="0"
+            app:srb_rating="0"
+            app:srb_starWidth="30dp"
+            app:srb_starHeight="30dp"
+            app:srb_starPadding="10dp"
+            app:srb_stepSize="0.5"
+            app:srb_isIndicator="true"
+            app:srb_clickable="true"
+            app:srb_scrollable="true"
+            app:srb_clearRatingEnabled="true"
+            app:srb_drawableEmpty="@drawable/empty"
+            app:srb_drawableFilled="@drawable/filled">
+        </com.willy.ratingbar.ScaleRatingBar>
 
         <!--<com.willy.ratingbar.ScaleRatingBar-->
         <!--android:layout_gravity="center_horizontal"-->
