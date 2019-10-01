@@ -1,71 +1,38 @@
 package com.example.mybookstore.Activities;
 
-import android.Manifest;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Typeface;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.text.InputType;
-import android.util.Patterns;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
-import com.example.mybookstore.Utils.ImageGallery;
-import com.example.mybookstore.Utils.Links;
-import com.example.mybookstore.Utils.Put;
-import com.example.mybookstore.Utils.RuntimePermissionsActivity;
-import com.example.mybookstore.Utils.UserSharedPrefrences;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.example.mybookstore.Utils.Put.image;
-
-public class RegisterActivity extends RuntimePermissionsActivity {
-
+public class RegisterActivity extends AppCompatActivity {
+    EditText edUsername,edPassword;
+    TextView txtTitle;
     CardView cardRegister;
-    EditText edEmail,edPass,edPhone,edAddres;
-    CheckBox chkpass;
+    CheckBox checkBox;
     ImageView imgBack;
-    TextView txtTitle,txtImage;
-    private String imageEncode = "";
-    private CircleImageView circleImageView;
-
-
+    ApiServices apiServices;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_reg);
 
         findViews();
-        chkpass.setChecked(true);
-//        onClicks();
-
-        cardRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ApiServices apiServices = new ApiServices(RegisterActivity.this);
-                apiServices.registerUserWithOutImage(edAddres.getText().toString().trim(), new ApiServices.OnSignUpComplete() {
-                    @Override
-                    public void onSignUp(int responseStatus) {
-                        Toast.makeText(RegisterActivity.this, responseStatus+"", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
+        onClicks();
 
     }
 
     private void onClicks() {
-
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,136 +40,33 @@ public class RegisterActivity extends RuntimePermissionsActivity {
             }
         });
 
-
-        chkpass.setOnClickListener(new View.OnClickListener() {
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                if (chkpass.isChecked()){
-                    edPass.setInputType(InputType.TYPE_CLASS_TEXT);
-                }else {edPass.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_NUMBER);}
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    edPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }else {
+                    edPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
             }
         });
 
         cardRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String phone = edPhone.getText().toString().trim();
-                String email = edEmail.getText().toString().trim();
-                final String password = edPass.getText().toString().trim();
-                String address = edAddres.getText().toString().trim();
-
-                if (!email.isEmpty() && !password.isEmpty() && !phone.isEmpty() && !address.isEmpty()){
-                    if (phone.length() == 11){
-                        if (password.length() >= 4){
-                            if (isEmailValid(email)){
-                                if (!imageEncode.equals("")){
-                                    ApiServices apiServices = new ApiServices(RegisterActivity.this);
-                                    apiServices.registerUser(imageEncode,phone, email, password, address, new ApiServices.OnSignUpComplete() {
-                                        @Override
-                                        public void onSignUp(int responseStatus) {
-                                            switch (responseStatus){
-                                                case Put.STATUS_USER_EXIST:
-                                                    Toast.makeText(RegisterActivity.this,"کاربری با این این شماره تلفن موجود است",Toast.LENGTH_LONG).show();
-                                                    break;
-                                                case Put.STATUS_FAILED:
-                                                    Toast.makeText(RegisterActivity.this, "متاسفانه خطایی رخ داد", Toast.LENGTH_SHORT).show();
-                                                    break;
-                                                case Put.STATUS_SUCCESS:
-                                                    Toast.makeText(RegisterActivity.this, "ثبت نام با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
-                                                    Intent intent = new Intent();
-                                                    intent.putExtra(Put.phone,phone);
-                                                    intent.putExtra(Put.password,password);
-                                                    setResult(RESULT_OK,intent);
-                                                    finish();
-                                                    break;
-                                            }
-                                        }
-                                    });
-                                }else
-                                    Toast.makeText(RegisterActivity.this, "لطفا یک عکس انتخاب کنید", Toast.LENGTH_SHORT).show();
-
-                            }else Toast.makeText(RegisterActivity.this, "لطفا یک ایمیل معتبر وارد کنید", Toast.LENGTH_SHORT).show();
-
-                        }else Toast.makeText(RegisterActivity.this, "پسورد حداقل باید 4 کاراکتر باشد", Toast.LENGTH_SHORT).show();
-
-                    }else Toast.makeText(RegisterActivity.this, "لطفا شماره تلفن را به درستی وارد کنید", Toast.LENGTH_SHORT).show();
-                    
-                }else Toast.makeText(RegisterActivity.this, "تمامی فیلد هارا تکمیل کنید", Toast.LENGTH_SHORT).show();
+                apiServices.
             }
         });
-
-        txtImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RegisterActivity.super.requestAppPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},Put.EXTERNAL_STORAGE);
-            }
-        });
-
-
-
     }
 
-
-
-
-
     private void findViews() {
-        edAddres = findViewById(R.id.ed_address_register);
-        edEmail = findViewById(R.id.ed_email_register);
-        edPass = findViewById(R.id.ed_password_register);
-        edPhone = findViewById(R.id.ed_phone_register);
-        chkpass = findViewById(R.id.chk_show_pass_register);
-        chkpass.setTypeface(Typeface.createFromAsset(getAssets(), Links.LINK_FONT_VAZIR));
+        apiServices = new ApiServices(RegisterActivity.this);
         txtTitle = findViewById(R.id.txt_title_toolbar_second);
         txtTitle.setText("ثبت نام");
         cardRegister = findViewById(R.id.card_Register);
+        edPassword = findViewById(R.id.ed_password);
+        edUsername = findViewById(R.id.ed_phone);
         imgBack = findViewById(R.id.img_back_second_toolbar);
-        circleImageView = findViewById(R.id.img_user_register);
-        txtImage = findViewById(R.id.txt_image_user_register);
-    }
-
-    private  boolean isEmailValid(String email){
-       return Patterns.EMAIL_ADDRESS.matcher(email).matches();
-    }
-
-    private void getImage() {
-
-        ImageGallery.showImage(RegisterActivity.this,Put.CHOOSE_GALLERY);
-    }
-
-
-
-
-    @Override
-    public void onPermissionsGranted(int requestCode) {
-
-        if (requestCode == Put.EXTERNAL_STORAGE){
-            getImage();
-        }
-
-    }
-
-    @Override
-    public void onPermissionsDeny(int requestCode) {
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode ==Put.CHOOSE_GALLERY && resultCode == RESULT_OK){
-
-            Bitmap bitmap = ImageGallery.getBitmap(RegisterActivity.this,data.getData());
-            imageEncode = ImageGallery.getStringImage(bitmap,300);
-            circleImageView.setImageBitmap(bitmap);
-        }
-
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        checkBox = findViewById(R.id.checkbox_reg);
     }
 }

@@ -8,17 +8,17 @@ public class ModelLikes {
     String visit;
     String price;
     String lable;
-
-    public ModelLikes(int id, String image, String title, String visit, String price, String lable) {
-        this.id = id;
-        this.image = image;
-        this.title = title;
-        this.visit = visit;
-        this.price = price;
-        this.lable = lable;
-    }
+    String cat;
 
     public ModelLikes() {
+    }
+
+    public String getCat() {
+        return cat;
+    }
+
+    public void setCat(String cat) {
+        this.cat = cat;
     }
 
     public int getId() {

@@ -65,7 +65,7 @@ public class AdapterFav extends RecyclerView.Adapter<AdapterFav.viewHolder> {
 
         viewHolder.txtDesc.setText(modelFav.getDesc());
 
-        Picasso.with(context).load(modelFav.getImage().replace(Links.LOCALHOST,Links.LINK_ADAPTER))
+        Picasso.with(context).load(modelFav.getImage())
                 .error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder)
                 .into(viewHolder.imgProduct);
@@ -81,8 +81,7 @@ public class AdapterFav extends RecyclerView.Adapter<AdapterFav.viewHolder> {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
                 intent.putExtra(Put.id,modelFav.getId()+"");
-                //TODO In DBSQLITE add a column name cat to store cat for likes products
-//                intent.putExtra(Put.cat,modelFav.getcat());
+                intent.putExtra(Put.cat,modelFav.getCat());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 context.startActivity(intent);

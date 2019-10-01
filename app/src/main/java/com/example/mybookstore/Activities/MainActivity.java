@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,17 +11,10 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.SubMenu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -131,7 +123,7 @@ public class MainActivity extends AppCompatActivity
                 .placeholder(R.drawable.placeholder)
                 .into(circleImageView);
         }else {
-            Picasso.with(getApplicationContext()).load(userSharedPrefrences.getUserImaje().replace(Links.LOCALHOST,Links.LINK_ADAPTER)).
+            Picasso.with(getApplicationContext()).load(userSharedPrefrences.getUserImaje()).
                     error(R.drawable.placeholder)
                     .placeholder(R.drawable.placeholder)
                     .into(circleImageView);
@@ -200,9 +192,16 @@ public class MainActivity extends AppCompatActivity
         navFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,FavoriteActivity.class));
-                drawer.closeDrawer(GravityCompat.START);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                if (txtNaviLogin.getText().equals("ورود/عضویت")) {
+                    Toast.makeText(MainActivity.this, "وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    Intent intent = new Intent(MainActivity.this, FavoriteActivity.class);
+                    intent.putExtra(Put.phone,phone);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
+                }
             }
         });
 
@@ -429,7 +428,7 @@ public class MainActivity extends AppCompatActivity
                 String phone = data.getStringExtra(Put.phone);
                 String image = data.getStringExtra(Put.image);
                 txtNaviLogin.setText("خوش آمدید  " + phone);
-                Picasso.with(getApplicationContext()).load(image.replace(Links.LOCALHOST,Links.LINK_ADAPTER))
+                Picasso.with(getApplicationContext()).load(image)
                         .placeholder(R.drawable.avatar)
                         .error(R.drawable.avatar)
                         .into(circleImageView);

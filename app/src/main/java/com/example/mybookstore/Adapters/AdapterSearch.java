@@ -66,7 +66,7 @@ public class AdapterSearch extends RecyclerView.Adapter<AdapterSearch.viewHolder
 
         viewHolder.txtDesc.setText(modelSearch.getDesc());
 
-        Picasso.with(context).load(modelSearch.getImage().replace(Links.LOCALHOST,Links.LINK_ADAPTER))
+        Picasso.with(context).load(modelSearch.getImage())
                 .error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder)
                 .into(viewHolder.imageViewSearch);
@@ -82,6 +82,7 @@ public class AdapterSearch extends RecyclerView.Adapter<AdapterSearch.viewHolder
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
                 intent.putExtra(Put.id,modelSearch.getId()+"");
+                intent.putExtra(Put.cat,modelSearch.getCat());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 context.startActivity(intent);

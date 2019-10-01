@@ -4,10 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -29,14 +27,9 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.mybookstore.Adapters.AdapterLikes;
-import com.example.mybookstore.Adapters.AdapterProduct;
-import com.example.mybookstore.Models.ModelFav;
 import com.example.mybookstore.Models.ModelLikes;
-import com.example.mybookstore.Models.ModelOff_Only_MostVisit;
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
-import com.example.mybookstore.Utils.DbSqlite;
-import com.example.mybookstore.Utils.Links;
 import com.example.mybookstore.Utils.Put;
 import com.example.mybookstore.Utils.UserSharedPrefrences;
 import com.willy.ratingbar.ScaleRatingBar;
@@ -55,14 +48,13 @@ public class ShowActivity extends AppCompatActivity {
     private CardView addToShoCart,cardComments;
     private String id,titlee,imagee,pricee,phone,offPrice,visitt,lablee,catt;
     private NestedScrollView scrollView;
-    private RecyclerView recyclerViewSimilar,recyclerViewOthers;
+    private RecyclerView recyclerViewLikes;
     private ScaleRatingBar ratingBar;
     private int counter;
     private boolean b =true;
     private boolean fav =true;
     private boolean checkUp =true;
     private boolean checkDown =true;
-    private DbSqlite dbSqlite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,24 +69,9 @@ public class ShowActivity extends AppCompatActivity {
         appBarLayoutEdit();
         sliderInitialize();
         onClicks();
-        dbSQLite();
 
     }
 
-    private void dbSQLite() {
-        Cursor cursor = dbSqlite.cu(Integer.parseInt(id));
-
-        if (cursor.getCount() == 1){
-            imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.gold));
-            imgFav.setImageResource(R.drawable.ic_star_black_24dp);
-            fav=false;
-        }else {
-
-            imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.gray));
-            imgFav.setImageResource(R.drawable.ic_star_border_black_24dp);
-            fav=true;
-        }
-    }
 
     private void onClicks() {
         txtNext.setOnClickListener(new View.OnClickListener() {
@@ -192,40 +169,45 @@ public class ShowActivity extends AppCompatActivity {
         imgFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (fav){
-                    if (!offPrice.equals("")){
-                        boolean isInsert=dbSqlite.insertFav(new ModelFav(Integer.valueOf(id),imagee,titlee,visitt,pricee,lablee,offPrice,"sdasd","dasd","dfgd"));
-                        imgFav.setImageResource(R.drawable.ic_star_black_24dp);
-                        imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.gold));
-                        fav=false;
-                        if (isInsert){
-                            Toast.makeText(ShowActivity.this, "به لیست علاقه مندی ها اضافه شد", Toast.LENGTH_SHORT).show();
-                        }
-                    }else {
+                    apiServices.AddToFav(id, phone, new ApiServices.OnFavAdd() {
+                        @Override
+                        public void onFav(int responseStatus) {
+                            if (responseStatus==218){
+                                imgFav.setImageResource(R.drawable.ic_star_black_24dp);
+                                imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.gold));
+                                fav=false;
+                                Toast.makeText(ShowActivity.this, "به لیست علاقه مندی ها اضافه شد", Toast.LENGTH_SHORT).show();
+                            }else {
+                                fav=true;
+                                imgFav.setImageResource(R.drawable.ic_star_border_black_24dp);
+                                imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.gray));
+                                Toast.makeText(ShowActivity.this, "از لیست علاقه مندی ها حذف شد", Toast.LENGTH_SHORT).show();
 
-                        boolean isInsert=dbSqlite.insertFav(new ModelFav(Integer.valueOf(id),imagee,titlee,visitt,pricee,lablee,pricee,"sdasd","dasd","dfgd"));
-                        imgFav.setImageResource(R.drawable.ic_star_black_24dp);
-                        imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.gold));
-                        fav=false;
-                        if (isInsert) {
-                            Toast.makeText(ShowActivity.this, "به لیست علاقه مندی ها اضافه شد", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-
-                }else {
-                    boolean isDelete=dbSqlite.deleteFav(Integer.parseInt(id));
-                    if (isDelete){
-                        Toast.makeText(ShowActivity.this, "از لیست علاقه مندی ها حذف شد", Toast.LENGTH_SHORT).show();
-                    }
-                    fav=true;
-                    imgFav.setImageResource(R.drawable.ic_star_border_black_24dp);
-                    imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.gray));
-                }
+                    });
             }
         });
     }
 
     private void initializePage() {
+
+        apiServices.CheckFav(id, phone, new ApiServices.OnFavCheck() {
+            @Override
+            public void onCheck(int responseStatus) {
+                if (responseStatus==218){
+                    imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.gold));
+                    imgFav.setImageResource(R.drawable.ic_star_black_24dp);
+                    fav=false;
+                }else {
+
+                    imgFav.setColorFilter(ShowActivity.this.getResources().getColor(R.color.gray));
+                    imgFav.setImageResource(R.drawable.ic_star_border_black_24dp);
+                    fav=true;
+                }
+            }
+        });
+
         apiServices.GetCount(phone, new ApiServices.OnCountReceived() {
             @Override
             public void onCount(String count) {
@@ -238,7 +220,7 @@ public class ShowActivity extends AppCompatActivity {
         apiServices.GetProductInfo(id, new ApiServices.OnProductInfoReceived() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onInfoReceived(String desc, String title, String visit, String price, String finalrating, String publisher, String author, String image,String lable,String cat) {
+            public void onInfoReceived(String desc, String title, String visit, String price, String finalrating, String publisher, String author, String image,String lable,String cat,String offPrice) {
                 DecimalFormat decimalFormat = new DecimalFormat("###,###");
                 titlee= title;
                 imagee = image;
@@ -271,19 +253,20 @@ public class ShowActivity extends AppCompatActivity {
 //            public void onLike(List<ModelOff_Only_MostVisit> modelOff_only_mostVisits) {
 //                Toast.makeText(ShowActivity.this, "like", Toast.LENGTH_SHORT).show();
 //                AdapterProduct adapterProduct = new AdapterProduct(ShowActivity.this,modelOff_only_mostVisits);
-//                recyclerViewOthers.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
-//                recyclerViewOthers.setAdapter(adapterProduct);
+//                recyclerViewLikes.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+//                recyclerViewLikes.setAdapter(adapterProduct);
 //            }
 //        });
 
         // TODO eslah jeddi niaz dard aslan dorost kar nemikonad fuuuuuuuuuuuck
-        apiServices.GetLikeProduct(catt,new ApiServices.OnLikeReceived() {
+        catt=getIntent().getStringExtra(Put.cat);
+        apiServices.GetLikeProduct(id,catt,new ApiServices.OnLikeReceived() {
             @Override
             public void onLike(List<ModelLikes> modelLikes) {
 //                Toast.makeText(ShowActivity.this, "like", Toast.LENGTH_SHORT).show();
                 AdapterLikes adapterLikes = new AdapterLikes(ShowActivity.this,modelLikes);
-                recyclerViewOthers.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
-                recyclerViewOthers.setAdapter(adapterLikes);
+                recyclerViewLikes.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+                recyclerViewLikes.setAdapter(adapterLikes);
             }
         });
 
@@ -367,7 +350,6 @@ public class ShowActivity extends AppCompatActivity {
     }
 
     private void findViews() {
-        dbSqlite = new DbSqlite(ShowActivity.this);
         cardComments=findViewById(R.id.card_comments_show_activity);
         offPrice=getIntent().getStringExtra(Put.offPrice);
         txtCounCart=findViewById(R.id.txt_count_cart);
@@ -390,7 +372,7 @@ public class ShowActivity extends AppCompatActivity {
 
         imgBack = findViewById(R.id.imgback_showactivity);
         imgShopCart = findViewById(R.id.img_shop_cart_showactivity);
-        recyclerViewOthers=findViewById(R.id.recycler_similar);
+        recyclerViewLikes =findViewById(R.id.recycler_similar);
 //        recyclerViewSimilar=findViewById(R.id.recycler_others);
         ratingBar = findViewById(R.id.ratingbar);
         txtRate = findViewById(R.id.txt_rate);
@@ -405,7 +387,7 @@ public class ShowActivity extends AppCompatActivity {
                 for (int i = 0; i < pics.size(); i++) {
                     TextSliderView textSliderView = new TextSliderView(ShowActivity.this);
                     textSliderView
-                            .image(pics.get(i).replace(Links.LOCALHOST,Links.LINK_ADAPTER))
+                            .image(pics.get(i))
 //                    .setOnSliderClickListener(this)
                             .empty(R.drawable.placeholder)
                             .error(R.drawable.placeholder)

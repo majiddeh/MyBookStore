@@ -16,6 +16,7 @@ import com.example.mybookstore.Models.ModelBanner;
 import com.example.mybookstore.Models.ModelBasket;
 import com.example.mybookstore.Models.ModelCategory;
 import com.example.mybookstore.Models.ModelComment;
+import com.example.mybookstore.Models.ModelFav;
 import com.example.mybookstore.Models.ModelItemProduct;
 import com.example.mybookstore.Models.ModelLikes;
 import com.example.mybookstore.Models.ModelOff_Only_MostVisit;
@@ -313,6 +314,7 @@ public class ApiServices {
                         modelOffOnly.setLable(jsonObject.getString(Put.label));
                         modelOffOnly.setPrice(jsonObject.getString(Put.price));
                         modelOffOnly.setTitle(jsonObject.getString(Put.title));
+                        modelOffOnly.setCat(jsonObject.getString(Put.cat));
                         modelOffOnly.setVisit(jsonObject.getString(Put.visit));
                         modelOffOnly.setOffPrice(jsonObject.getString(Put.offPrice));
 
@@ -358,6 +360,7 @@ public class ApiServices {
                         modelOnly.setLable(jsonObject.getString(Put.label));
                         modelOnly.setTitle(jsonObject.getString(Put.title));
                         modelOnly.setVisit(jsonObject.getString(Put.visit));
+                        modelOnly.setCat(jsonObject.getString(Put.cat));
 
                         modelOnlies.add(modelOnly);
 
@@ -399,6 +402,7 @@ public class ApiServices {
                         modelMostVisit.setPrice(jsonObject.getString(Put.price));
                         modelMostVisit.setLable(jsonObject.getString(Put.label));
                         modelMostVisit.setTitle(jsonObject.getString(Put.title));
+                        modelMostVisit.setCat(jsonObject.getString(Put.cat));
                         modelMostVisit.setVisit(jsonObject.getString(Put.visit));
 
                         modeMostVisits.add(modelMostVisit);
@@ -443,6 +447,7 @@ public class ApiServices {
                         modelMostSold.setLable(jsonObject.getString(Put.label));
                         modelMostSold.setTitle(jsonObject.getString(Put.title));
                         modelMostSold.setVisit(jsonObject.getString(Put.visit));
+                        modelMostSold.setCat(jsonObject.getString(Put.cat));
 
                         modelMostSolds.add(modelMostSold);
 
@@ -530,11 +535,11 @@ public class ApiServices {
                     String cat = jsonObject.getString(Put.cat);
 //                        int id =(jsonObject.getInt(Put.id));
 //                        String label = (jsonObject.getString(Put.label));
-//                        String offPrice =(jsonObject.getString(Put.offPrice));
+                        String offPrice =(jsonObject.getString(Put.offPrice));
 //                        String date =(jsonObject.getString(Put.date));
 //                        String only =(jsonObject.getString(Put.only));
 //                        String num_sold =(jsonObject.getString(Put.num_sold));
-                    onProductInfoReceived.onInfoReceived(desc,title,visit,price,finalrating,publisher,author,image,lable,cat);
+                    onProductInfoReceived.onInfoReceived(desc,title,visit,price,finalrating,publisher,author,image,lable,cat,offPrice);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -577,6 +582,7 @@ public class ApiServices {
 
                 }else {
                     Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                    Log.i("apiii",response.toString());
                 }
 
 
@@ -774,6 +780,7 @@ public class ApiServices {
                         modelItemProduct1.setTitle(jsonObject.getString(Put.title));
                         modelItemProduct1.setPrice(jsonObject.getString(Put.price));
                         modelItemProduct1.setVisit(jsonObject.getString(Put.visit));
+                        modelItemProduct1.setCat(jsonObject.getString(Put.cat));
                         modelItemProduct1.setAuthor(jsonObject.getString(Put.author));
                         modelItemProduct1.setPublisher(jsonObject.getString(Put.publisher));
 
@@ -940,6 +947,7 @@ public class ApiServices {
                         modelItemProduct1.setLable(jsonObject.getString(Put.label));
                         modelItemProduct1.setOffPrice(jsonObject.getString(Put.offPrice));
                         modelItemProduct1.setTitle(jsonObject.getString(Put.title));
+                        modelItemProduct1.setCat(jsonObject.getString(Put.cat));
                         modelItemProduct1.setPrice(jsonObject.getString(Put.price));
                         modelItemProduct1.setVisit(jsonObject.getString(Put.visit));
                         modelItemProduct1.setAuthor(jsonObject.getString(Put.author));
@@ -1063,6 +1071,7 @@ public class ApiServices {
                         modelItemProduct1.setOffPrice(jsonObject.getString(Put.offPrice));
                         modelItemProduct1.setTitle(jsonObject.getString(Put.title));
                         modelItemProduct1.setPrice(jsonObject.getString(Put.price));
+                        modelItemProduct1.setCat(jsonObject.getString(Put.cat));
                         modelItemProduct1.setVisit(jsonObject.getString(Put.visit));
                         modelItemProduct1.setAuthor(jsonObject.getString(Put.author));
                         modelItemProduct1.setPublisher(jsonObject.getString(Put.publisher));
@@ -1096,12 +1105,12 @@ public class ApiServices {
 
     }
 
-    public void GetLikeProduct(final String cat, final OnLikeReceived onLikeReceived){
+    public void GetLikeProduct(final String id,final String cat, final OnLikeReceived onLikeReceived){
 
-        StringRequest stringRequest = new StringRequest(0, Links.GET_LIKES, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(1, Links.GET_LIKES, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
+                Log.i("apiii",response.toString());
                 List<ModelLikes> modelLikes = new ArrayList<>();
                 try {
                     JSONArray jsonArray = new JSONArray(response);
@@ -1115,6 +1124,7 @@ public class ApiServices {
                         modelLikes1.setTitle(jsonObject.getString(Put.title));
                         modelLikes1.setPrice(jsonObject.getString(Put.price));
                         modelLikes1.setVisit(jsonObject.getString(Put.visit));
+                        modelLikes1.setCat(jsonObject.getString(Put.cat));
 
 
                         modelLikes.add(modelLikes1);
@@ -1145,6 +1155,9 @@ public class ApiServices {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                Log.i("apiiilike",error.toString());
+
+
 
             }
         })
@@ -1154,6 +1167,7 @@ public class ApiServices {
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
                 map.put(Put.cat,cat);
+                map.put(Put.id,id);
                 return map;
             }
         }
@@ -1197,7 +1211,131 @@ public class ApiServices {
 
     }
 
+    public void AddToFav(final String idproduct,final String phone, final OnFavAdd onFavAdd){
 
+
+        StringRequest stringRequest = new StringRequest(1, Links.ADD_TO_FAV, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if (response.equals("218") || response.equals("213")){
+                    int responseStatus = Integer.valueOf(response);
+                    onFavAdd.onFav(responseStatus);
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map = new HashMap<>();
+                map.put(Put.phone,phone);
+                map.put(Put.id,idproduct);
+                return map;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(stringRequest);
+
+    }
+
+    public void FavReceived(final String phone, final OnFavtReceived onFavtReceived){
+
+
+        StringRequest stringRequest = new StringRequest(1, Links.GET_FAV, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.i("apiii",response.toString());
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    List<ModelFav> modelFavs = new ArrayList<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        ModelFav modelFav = new ModelFav();
+                        modelFav.setId(Integer.valueOf(jsonObject.getString("id")));
+                        modelFav.setImage(jsonObject.getString("image"));
+                        modelFav.setTitle(jsonObject.getString("title"));
+                        modelFav.setLable(jsonObject.getString(Put.label));
+                        modelFav.setPrice(jsonObject.getString("price"));
+                        modelFav.setOffPrice(jsonObject.getString(Put.offPrice));
+                        modelFav.setVisit(jsonObject.getString(Put.visit));
+                        modelFav.setAuthor(jsonObject.getString(Put.author));
+                        modelFav.setPublisher(jsonObject.getString(Put.publisher));
+                        modelFav.setDesc(jsonObject.getString("description"));
+                        modelFav.setCat(jsonObject.getString(Put.cat));
+
+                        modelFavs.add(modelFav);
+                    }
+
+                    onFavtReceived.onReceived(modelFavs);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
+                Log.i("apiii",error.toString());
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map = new HashMap<>();
+                map.put(Put.phone,phone);
+                return map;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(stringRequest);
+
+    }
+
+    public void CheckFav(final String idproduct,final String phone, final OnFavCheck onFavCheck){
+
+
+        StringRequest stringRequest = new StringRequest(1, Links.CHECK_FAV, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if (response.equals("218") || response.equals("0")){
+                    int responseStatus = Integer.valueOf(response);
+                    onFavCheck.onCheck(responseStatus);
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map = new HashMap<>();
+                map.put(Put.phone,phone);
+                map.put(Put.id,idproduct);
+                return map;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(stringRequest);
+
+    }
 
 
     public interface OnSignUpComplete {
@@ -1232,7 +1370,7 @@ public class ApiServices {
     }
     public interface OnProductInfoReceived{
         void onInfoReceived(String desc,String title,String visit,String price,
-                            String finalrating,String publisher,String author,String image,String lable,String cat) ;
+                            String finalrating,String publisher,String author,String image,String lable,String cat,String offPrice) ;
     }
     public interface OnShopCartAdd{
         void onShopCart(int responseStatus);
@@ -1275,6 +1413,15 @@ public class ApiServices {
     }
     public interface OnCatStringReceived{
         void onCatReceived(List<String> strings);
+    }
+    public interface OnFavAdd{
+        void onFav(int responseStatus);
+    }
+    public interface OnFavtReceived{
+        void onReceived(List<ModelFav> modelFavs);
+    }
+    public interface OnFavCheck{
+        void onCheck(int responseStatus);
     }
 
 

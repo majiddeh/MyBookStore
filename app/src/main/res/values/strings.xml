@@ -61,6 +61,10 @@
     <string name="fav_list">لیست علاقه مندی ها</string>
     <string name="recovery_password">بازیابی رمز عبور</string>
     <string name="please_enter_email">لطفا پست الکترونیک خود را وارد کنید</string>
-    <string name="forget_password">فراموشی رمز عبور</string>
+    <string name="forget_password">کلمه عبور را فراموش کرده ام!</string>
     <string name="full_list">لیست کامل</string>
+    <string name="phone_or_mobile">شماره موبایل یا ایمیل</string>
+    <string name="change_pass_button">ایجاد کلمه عبور جدید</string>
+    <string name="new_pass">رمز عبور جدید</string>
+    <string name="double_pass">تکرار رمز عبور</string>
 </resources>

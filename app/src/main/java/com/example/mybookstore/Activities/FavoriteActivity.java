@@ -12,7 +12,8 @@ import android.widget.Toast;
 import com.example.mybookstore.Adapters.AdapterFav;
 import com.example.mybookstore.Models.ModelFav;
 import com.example.mybookstore.R;
-import com.example.mybookstore.Utils.DbSqlite;
+import com.example.mybookstore.Utils.ApiServices;
+import com.example.mybookstore.Utils.Put;
 
 import java.util.List;
 
@@ -21,15 +22,12 @@ public class FavoriteActivity extends AppCompatActivity {
     private ImageView imgBackButton;
     private RecyclerView recyclerView;
     private AdapterFav adapterFav;
-    private List<ModelFav> modelFavs;
-    private DbSqlite dbSqlite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
 
-        dbSqlite = new DbSqlite(FavoriteActivity.this);
 
         findViews();
         onClicks();
@@ -65,11 +63,17 @@ public class FavoriteActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        modelFavs = dbSqlite.showData();
-        adapterFav = new AdapterFav(FavoriteActivity.this, modelFavs);
-        recyclerView.setLayoutManager(new LinearLayoutManager(FavoriteActivity.this));
-        recyclerView.setAdapter(adapterFav);
-        recyclerView.hasFixedSize();
+        ApiServices apiServices = new ApiServices(FavoriteActivity.this);
+        apiServices.FavReceived(getIntent().getStringExtra(Put.phone), new ApiServices.OnFavtReceived() {
+            @Override
+            public void onReceived(List<ModelFav> modelFavs) {
+                adapterFav = new AdapterFav(FavoriteActivity.this, modelFavs);
+                recyclerView.setLayoutManager(new LinearLayoutManager(FavoriteActivity.this));
+                recyclerView.setAdapter(adapterFav);
+                recyclerView.hasFixedSize();
+            }
+        });
+
 
     }
     @Override

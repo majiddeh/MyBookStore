@@ -13,36 +13,18 @@ public class ModelItemProduct {
     private String desc;
     private String author;
     private String publisher;
+    private String cat;
     private float finalrating;
 
     public ModelItemProduct() {
     }
 
-    public ModelItemProduct(int id, String image, String title, String visit, String price, String lable, String offPrice, String desc, String author, String publisher) {
-        this.id = id;
-        this.image = image;
-        this.title = title;
-        this.visit = visit;
-        this.price = price;
-        this.lable = lable;
-        this.offPrice = offPrice;
-        this.desc = desc;
-        this.author = author;
-        this.publisher = publisher;
+    public String getCat() {
+        return cat;
     }
 
-    public ModelItemProduct(int id, String image, String title, String visit, String price, String lable, String offPrice, String desc, String author, String publisher, float finalrating) {
-        this.id = id;
-        this.image = image;
-        this.title = title;
-        this.visit = visit;
-        this.price = price;
-        this.lable = lable;
-        this.offPrice = offPrice;
-        this.desc = desc;
-        this.author = author;
-        this.publisher = publisher;
-        this.finalrating = finalrating;
+    public void setCat(String cat) {
+        this.cat = cat;
     }
 
     public int getId() {

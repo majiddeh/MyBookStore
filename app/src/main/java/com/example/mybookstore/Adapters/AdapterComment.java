@@ -47,7 +47,7 @@ public class AdapterComment extends RecyclerView.Adapter<AdapterComment.viewHold
         viewHolder.txtNegative.setText(comment.getNegative());
         viewHolder.txtComment.setText(comment.getComment());
 
-        Picasso.with(context).load(comment.getImage().replace(Links.LOCALHOST,Links.LINK_ADAPTER))
+        Picasso.with(context).load(comment.getImage())
                 .error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder)
                 .into(viewHolder.circleImageView);

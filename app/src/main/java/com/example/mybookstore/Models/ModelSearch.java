@@ -9,12 +9,13 @@ public class ModelSearch {
     private String price;
     private String lable;
     private String offPrice;
+    private String cat;
     private String desc;
 
     public ModelSearch() {
     }
 
-    public ModelSearch(int id, String image, String title, String visit, String price, String lable, String offPrice, String desc) {
+    public ModelSearch(int id, String image, String title, String visit, String price, String lable, String offPrice, String cat, String desc) {
         this.id = id;
         this.image = image;
         this.title = title;
@@ -22,7 +23,16 @@ public class ModelSearch {
         this.price = price;
         this.lable = lable;
         this.offPrice = offPrice;
+        this.cat = cat;
         this.desc = desc;
+    }
+
+    public String getCat() {
+        return cat;
+    }
+
+    public void setCat(String cat) {
+        this.cat = cat;
     }
 
     public int getId() {

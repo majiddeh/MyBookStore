@@ -57,7 +57,7 @@ public class AdapterBasket extends RecyclerView.Adapter<AdapterBasket.ViewHolder
         DecimalFormat decimalFormat = new DecimalFormat("###,###");
 
         viewHolder.txtTotalPrice.setText(decimalFormat.format(Integer.valueOf(list.get(i).getAllPrice()))+" "+"تومان");
-        Picasso.with(context).load(list.get(i).getImage().replace(Links.LOCALHOST, Links.LINK_ADAPTER))
+        Picasso.with(context).load(list.get(i).getImage())
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
                 .into(viewHolder.imageBasket);

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto"
+    android:layoutDirection="rtl"
+    android:background="@color/gray_light_for_bg_activity"
+    tools:context=".Activities.ChangePassActivity">
+
+
+    <include layout="@layout/toolbar_second"/>
+
+    <RelativeLayout
+        android:id="@+id/liner1"
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/ed_pass"
+            android:layout_width="match_parent"
+            android:fontFamily="@font/vazir_medium"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/new_pass"
+            android:gravity="right"
+            android:background="@drawable/shape_line_color_edittext"
+            android:paddingTop="5dp"
+            android:paddingBottom="8dp"
+            android:textSize="15dp"
+            android:paddingRight="40dp"/>
+
+        <ImageView
+            android:id="@+id/Im_phone"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginRight="30dp"
+            android:padding="5dp"
+            android:tint="@color/gray"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_email_black_24dp" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/liner2"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/liner1">
+
+        <EditText
+            android:id="@+id/ed_repass"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:fontFamily="@font/vazir_medium"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_line_color_edittext"
+            android:hint="@string/double_pass"
+            android:gravity="right"
+            android:textSize="15dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="8dp"
+            android:inputType="textPassword"
+            android:paddingRight="40dp"/>
+
+        <ImageView
+            android:id="@+id/Im_password"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginRight="30dp"
+            android:padding="5dp"
+            android:tint="@color/gray"
+            android:layout_marginBottom="3dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_https_black_24dp" />
+
+
+    </RelativeLayout>
+
+
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:id="@+id/card_Register"
+        android:layout_alignParentBottom="true"
+        android:elevation="@dimen/standard_elevation"
+        android:layout_height="50dp"
+        tools:targetApi="lollipop">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/light_blue"
+            android:gravity="center_vertical"
+            android:text="@string/change_pass_button"
+            android:textAlignment="center"
+            android:textSize="@dimen/txt_size_title_activity_show"
+            android:textColor="@color/white"
+            android:fontFamily="@font/vazir_medium" />
+    </android.support.v7.widget.CardView>
+
+
+    <!--    <com.pnikosis.materialishprogress.ProgressWheel-->
+    <!--        android:id="@+id/progress_wheel"-->
+    <!--        android:layout_width="50dp"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_centerHorizontal="true"-->
+    <!--        android:layout_centerVertical="true"-->
+    <!--        wheel:matProg_barColor="@color/red"-->
+    <!--        android:layout_marginBottom="5dp"-->
+    <!--        android:visibility="gone"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        wheel:matProg_progressIndeterminate="true" />-->
+
+
+</RelativeLayout>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layoutDirection="rtl"
+    android:layout_height="match_parent"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto"
+    tools:context=".Activities.VerfyCodeActivity">
+    <include layout="@layout/toolbar_second"
+        android:id="@+id/toolbar_second"/>
+
+
+    <LinearLayout
+        android:id="@+id/liner1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_code_verfy"
+        android:orientation="vertical"
+        android:layout_below="@+id/toolbar_second"
+        android:layout_margin="30dp">
+
+        <TextView
+            android:id="@+id/tv_phone_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/vazir_medium"
+            android:padding="10dp"
+            android:textSize="18dp"
+            tools:text="کد تایید برای شماره ۰۹۳۰۶۲۴۶۴۲۳ ارسال گردید"/>
+
+
+        <TextView
+            android:id="@+id/tv_edit_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/vazir_medium"
+            android:padding="10dp"
+            android:textSize="18dp"
+            android:textColor="#0505e9"
+            android:text="ویرایش شماره تلفن"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/Tv_title_active"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/vazir_medium"
+        android:textSize="18dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:textColor="#000"
+        android:layout_below="@+id/liner1"
+        android:text="ویرایش شماره تلفن"/>
+
+
+    <LinearLayout
+        android:id="@+id/liner2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="ltr"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:layout_below="@+id/Tv_title_active"
+        android:layout_margin="30dp">
+
+        <EditText
+            android:id="@+id/Et_1"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:maxLength="1"
+            android:fontFamily="@font/vazir_medium"
+            android:maxLines="1"
+            android:gravity="center"
+            android:inputType="number"/>
+
+        <EditText
+            android:id="@+id/Et_2"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:maxLength="1"
+            android:maxLines="1"
+            android:fontFamily="@font/vazir_medium"
+            android:gravity="center"
+            android:inputType="number"/>
+
+
+        <EditText
+            android:id="@+id/Et_3"
+            android:layout_width="40dp"
+            android:fontFamily="@font/vazir_medium"
+            android:layout_height="wrap_content"
+            android:maxLength="1"
+            android:maxLines="1"
+            android:gravity="center"
+            android:inputType="number"/>
+
+
+        <EditText
+            android:id="@+id/Et_4"
+            android:layout_width="40dp"
+            android:fontFamily="@font/vazir_medium"
+            android:layout_height="wrap_content"
+            android:maxLength="1"
+            android:maxLines="1"
+            android:gravity="center"
+            android:inputType="number"/>
+
+
+        <EditText
+            android:id="@+id/Et_5"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:maxLength="1"
+            android:fontFamily="@font/vazir_medium"
+            android:maxLines="1"
+            android:gravity="center"
+            android:inputType="number"/>
+
+
+    </LinearLayout>
+
+
+
+    <com.pnikosis.materialishprogress.ProgressWheel
+        android:id="@+id/progress_wheel"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        wheel:matProg_barColor="@color/red"
+        android:layout_marginBottom="5dp"
+        android:visibility="gone"
+        android:layout_below="@+id/liner2"
+        wheel:matProg_progressIndeterminate="true" />
+
+
+    <TextView
+        android:id="@+id/tv_timer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/vazir_medium"
+        android:textSize="18dp"
+        android:textAlignment="center"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        tools:text="ارسال مجدد کد در : 50 ثانیه"
+        android:textColor="#000"
+        android:layout_below="@+id/liner2" />
+
+</RelativeLayout>

@@ -12,7 +12,21 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activities.FullProductActivity"></activity>
+        <activity android:name=".Activities.ChangePassActivity"></activity>
+        <activity android:name=".Activities.VerfyCodeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activities.LoginActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".Activities.RegisterActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".Activities.FullProductActivity" />
         <activity android:name=".Activities.CatActivity_ViewPager" />
         <activity
             android:name=".Activities.ForgetPassActivity"
@@ -21,13 +35,7 @@
         <activity android:name=".Activities.FavoriteActivity" />
         <activity android:name=".Activities.AboutActivity" />
         <activity android:name=".Activities.SendCommentActivity" />
-        <activity android:name=".Activities.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".Activities.SplashActivity"></activity>
         <activity android:name=".Activities.ShowCommentActivity" />
         <activity android:name=".Activities.SearchActivity" />
         <activity android:name=".Activities.ItemActivity" />
@@ -38,10 +46,10 @@
         <activity android:name=".Activities.EditInformation" />
         <activity android:name=".Activities.ProfileActivity" />
         <activity
-            android:name=".Activities.RegisterActivity"
+            android:name=".Activities.RegisterActivityND"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".Activities.LoginActivity"
+            android:name=".Activities.LoginActivityND"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activities.MainActivity"

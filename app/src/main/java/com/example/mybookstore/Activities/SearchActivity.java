@@ -28,7 +28,7 @@ public class SearchActivity extends AppCompatActivity {
     RecyclerView recyclerViewSearch;
     AdapterSearch adapterSearch;
     List<ModelSearch> modelSearches = new ArrayList<>();
-    String id, image, title, price, description, offPrice, lable, visit;
+    String id, image, title, price, description, offPrice, lable, visit,cat;
     boolean array = true;
 
     @Override
@@ -72,12 +72,13 @@ public class SearchActivity extends AppCompatActivity {
                                         image = object.getString(Put.image);
                                         title = object.getString(Put.title);
                                         price = object.getString(Put.price);
+                                        cat = object.getString(Put.cat);
                                         lable = object.getString(Put.label);
                                         offPrice = String.valueOf(object.getInt(Put.offPrice));
                                         visit = object.getString(Put.visit);
                                         description = object.getString(Put.desc);
 
-                                        modelSearches.add(new ModelSearch(Integer.parseInt(id), image, title, visit, price, lable, offPrice, description));
+                                        modelSearches.add(new ModelSearch(Integer.parseInt(id), image, title, visit, price, lable, offPrice,cat, description));
                                         adapterSearch.notifyDataSetChanged();
                                     }
 
@@ -108,12 +109,13 @@ public class SearchActivity extends AppCompatActivity {
                                                 image = object.getString(Put.image);
                                                 title = object.getString(Put.title);
                                                 lable = object.getString(Put.label);
+                                                cat = object.getString(Put.cat);
                                                 price = object.getString(Put.price);
                                                 offPrice = String.valueOf(object.getInt(Put.offPrice));
                                                 visit = object.getString(Put.visit);
                                                 description = object.getString(Put.desc);
 
-                                                modelSearches.add(new ModelSearch(Integer.parseInt(id), image, title, visit, price, lable, offPrice, description));
+                                                modelSearches.add(new ModelSearch(Integer.parseInt(id), image, title, visit, price, lable, offPrice,cat, description));
                                                 adapterSearch.notifyDataSetChanged();
                                             }
 

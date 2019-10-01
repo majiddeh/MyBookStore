@@ -40,7 +40,7 @@ public class AdapterBanner extends RecyclerView.Adapter<AdapterBanner.viewHolder
     @Override
     public void onBindViewHolder(@NonNull final viewHolder viewHolder, final int i) {
 
-        Picasso.with(context).load(modelBanners.get(i).getImage().replace(Links.LOCALHOST,Links.LINK_ADAPTER))
+        Picasso.with(context).load(modelBanners.get(i).getImage())
                 .error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder)
                 .into(viewHolder.imgBanner);

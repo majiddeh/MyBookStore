@@ -66,7 +66,7 @@ public class AdapterItemProduct extends RecyclerView.Adapter<AdapterItemProduct.
 
         viewHolder.txtDesc.setText(modelItemProduct.getDesc());
 
-        Picasso.with(context).load(modelItemProduct.getImage().replace(Links.LOCALHOST,Links.LINK_ADAPTER))
+        Picasso.with(context).load(modelItemProduct.getImage())
                 .error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder)
                 .into(viewHolder.imgProduct);
@@ -82,6 +82,7 @@ public class AdapterItemProduct extends RecyclerView.Adapter<AdapterItemProduct.
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
                 intent.putExtra(Put.id,modelItemProduct.getId()+"");
+                intent.putExtra(Put.cat,modelItemProduct.getCat());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 context.startActivity(intent);

@@ -44,7 +44,7 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.viewHo
         final ModelCategory modelCategory = modelCategories.get(i);
 
         viewHolder.txtCat.setText(modelCategory.getTitle_category());
-        Picasso.with(context).load(modelCategory.getImage().replace("localhost", Links.LINK_ADAPTER))
+        Picasso.with(context).load(modelCategory.getImage())
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
                 .into(viewHolder.imgCat);

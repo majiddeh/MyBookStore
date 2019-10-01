@@ -8,18 +8,19 @@ public class ModelOff_Only_MostVisit {
     String price;
     String lable;
     String offPrice;
+    String cat;
 
-    public ModelOff_Only_MostVisit(int id, String image, String title, String visit, String price, String lable, String offPrice) {
-        this.id = id;
-        this.image = image;
-        this.title = title;
-        this.visit = visit;
-        this.price = price;
-        this.lable = lable;
-        this.offPrice = offPrice;
-    }
+
 
     public ModelOff_Only_MostVisit() {
+    }
+
+    public String getCat() {
+        return cat;
+    }
+
+    public void setCat(String cat) {
+        this.cat = cat;
     }
 
     public int getId() {

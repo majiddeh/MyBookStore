@@ -53,7 +53,7 @@ public class AdapterLikes extends RecyclerView.Adapter<AdapterLikes.viewHolder> 
             viewHolder.txtTitle.setText(modelLikes.get(i).getTitle());
             viewHolder.triangleLabelView.setSecondaryText(modelLikes.get(i).getLable());
             Picasso.with(context)
-                    .load(modelLikes.get(i).getImage().replace(Links.LOCALHOST,Links.LINK_ADAPTER))
+                    .load(modelLikes.get(i).getImage())
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.placeholder)
                     .into(viewHolder.imgOnly);
@@ -74,6 +74,7 @@ public class AdapterLikes extends RecyclerView.Adapter<AdapterLikes.viewHolder> 
             public void onClick(View v) {
                 Intent intent = new Intent(viewHolder.itemView.getContext(), ShowActivity.class);
                 intent.putExtra(Put.id, modelLikes.get(i).getId()+"");
+                intent.putExtra(Put.cat, modelLikes.get(i).getCat());
 //                intent.putExtra(Put.offPrice, modelLikes.get(i).getOffPrice());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);

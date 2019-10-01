@@ -14,17 +14,16 @@ import android.widget.TextView;
 
 import com.example.mybookstore.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class ChangePassActivity extends AppCompatActivity {
 
-    EditText edUsername,edPassword;
+    EditText edrepass,edPassword;
     TextView txtTitle;
-    CardView cardRegister;
+    CardView cardRepass;
     ImageView imgBack;
-    CheckBox checkBox;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log);
+        setContentView(R.layout.activity_change_pass);
         findViews();
         onClicks();
 
@@ -38,26 +37,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    edPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                }else {
-                    edPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }
-            }
-        });
     }
 
     private void findViews() {
         txtTitle = findViewById(R.id.txt_title_toolbar_second);
-        txtTitle.setText(" ورود");
-        cardRegister = findViewById(R.id.card_Register);
+        txtTitle.setText("ایجاد کلمه عبور جدید");
+        cardRepass = findViewById(R.id.card_Register);
+        edPassword = findViewById(R.id.ed_pass);
+        edrepass = findViewById(R.id.ed_repass);
         imgBack = findViewById(R.id.img_back_second_toolbar);
-        edPassword = findViewById(R.id.ed_password);
-        edUsername = findViewById(R.id.ed_phone);
-        checkBox = findViewById(R.id.checkbox);
     }
-
 }
