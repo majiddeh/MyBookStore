@@ -11,6 +11,8 @@ public class Links {
     public static final String LINK_FONT_VAZIR = "vazi_medium.ttf";
 
     static final String REGISTER_URL = Link_HOST + "/samed_bookstore/register.php";
+    static final String REGISTER_URL_HA = Link_HOST + "/samed_bookstore/1reg(HA).php";
+    static final String CHECK_CODE_HA = Link_HOST + "/samed_bookstore/1checkcode(HA).php";
     static final String REGISTER_URL_WITHOUT_IMAGE = Link_HOST + "/samed_bookstore/registerWithoutImage.php";
     static final String LOGIN_URL = Link_HOST + "/samed_bookstore/login.php";
     static final String FORGOT_PASS = Link_HOST + "/samed_bookstore/forgetpassword.php";

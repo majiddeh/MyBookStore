@@ -1,6 +1,5 @@
 package com.example.mybookstore.Activities;
 
-import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,7 +34,7 @@ public class BasketActivity extends AppCompatActivity {
         setContentView(R.layout.activity_basket);
 
         UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(BasketActivity.this);
-        phone= userSharedPrefrences.getUserPhone();
+        phone= userSharedPrefrences.getUserName();
 
         finViews();
         initializePage();

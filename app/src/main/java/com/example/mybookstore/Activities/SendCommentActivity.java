@@ -6,19 +6,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
-import com.example.mybookstore.Utils.Links;
 import com.example.mybookstore.Utils.Put;
 import com.example.mybookstore.Utils.UserSharedPrefrences;
 import com.willy.ratingbar.ScaleRatingBar;
-
-import java.lang.reflect.Type;
 
 public class SendCommentActivity extends AppCompatActivity {
 
@@ -92,7 +87,7 @@ public class SendCommentActivity extends AppCompatActivity {
         imgBack = findViewById(R.id.img_back_second_toolbar);
 
         UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(SendCommentActivity.this);
-        phone = userSharedPrefrences.getUserPhone();
+        phone = userSharedPrefrences.getUserName();
         image = userSharedPrefrences.getUserImaje();
 
         id = getIntent().getStringExtra(Put.id);

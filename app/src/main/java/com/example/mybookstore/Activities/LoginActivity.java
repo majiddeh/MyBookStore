@@ -1,5 +1,6 @@
 package com.example.mybookstore.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -17,7 +18,7 @@ import com.example.mybookstore.R;
 public class LoginActivity extends AppCompatActivity {
 
     EditText edUsername,edPassword;
-    TextView txtTitle;
+    TextView txtTitle,tvRegister,tvForgetPass;
     CardView cardRegister;
     ImageView imgBack;
     CheckBox checkBox;
@@ -48,6 +49,20 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        tvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+            }
+        });
+
+        tvForgetPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     private void findViews() {
@@ -58,6 +73,8 @@ public class LoginActivity extends AppCompatActivity {
         edPassword = findViewById(R.id.ed_password);
         edUsername = findViewById(R.id.ed_phone);
         checkBox = findViewById(R.id.checkbox);
+        tvForgetPass = findViewById(R.id.tv_forget_password);
+        tvRegister = findViewById(R.id.tv_register);
     }
 
 }

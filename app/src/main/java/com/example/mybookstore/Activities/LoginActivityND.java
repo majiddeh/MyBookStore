@@ -87,9 +87,9 @@ public class LoginActivityND extends AppCompatActivity {
                                 case Put.STATUS_SUCCESS:
                                     Toast.makeText(LoginActivityND.this, "به فروشگاه کتاب صامد خوش آمدید", Toast.LENGTH_SHORT).show();
                                     UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(LoginActivityND.this);
-                                    userSharedPrefrences.saveUserLoginInfo(edphone.getText().toString().trim(),image);
+                                    userSharedPrefrences.saveUserLoginInfo(edphone.getText().toString().trim(),image,"ff");
                                     Intent intent = new Intent();
-                                    intent.putExtra(Put.phone,edphone.getText().toString().trim());
+                                    intent.putExtra(Put.username,edphone.getText().toString().trim());
                                     intent.putExtra(Put.image,image);
                                     setResult(RESULT_OK,intent);
                                     finish();
@@ -128,7 +128,7 @@ public class LoginActivityND extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Put.REQUEST_CODE && resultCode == RESULT_OK){
-            String phone = data.getStringExtra(Put.phone);
+            String phone = data.getStringExtra(Put.username);
             String password = data.getStringExtra(Put.password);
             edphone.setText(phone);
             edPass.setText(password);

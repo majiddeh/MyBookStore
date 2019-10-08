@@ -106,7 +106,7 @@ public class RegisterActivityND extends RuntimePermissionsActivity {
                                                 case Put.STATUS_SUCCESS:
                                                     Toast.makeText(RegisterActivityND.this, "ثبت نام با موفقیت انجام شد", Toast.LENGTH_SHORT).show();
                                                     Intent intent = new Intent();
-                                                    intent.putExtra(Put.phone,phone);
+                                                    intent.putExtra(Put.username,phone);
                                                     intent.putExtra(Put.password,password);
                                                     setResult(RESULT_OK,intent);
                                                     finish();

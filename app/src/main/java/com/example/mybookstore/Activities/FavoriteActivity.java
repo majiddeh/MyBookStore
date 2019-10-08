@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mybookstore.Adapters.AdapterFav;
 import com.example.mybookstore.Models.ModelFav;
@@ -64,7 +63,7 @@ public class FavoriteActivity extends AppCompatActivity {
         super.onStart();
 
         ApiServices apiServices = new ApiServices(FavoriteActivity.this);
-        apiServices.FavReceived(getIntent().getStringExtra(Put.phone), new ApiServices.OnFavtReceived() {
+        apiServices.FavReceived(getIntent().getStringExtra(Put.username), new ApiServices.OnFavtReceived() {
             @Override
             public void onReceived(List<ModelFav> modelFavs) {
                 adapterFav = new AdapterFav(FavoriteActivity.this, modelFavs);

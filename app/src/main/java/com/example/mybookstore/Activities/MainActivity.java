@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
     TextView txtNaviLogin,txtCount,navAbout, navCat,navBasket,navAccount,
             navFav,txtListOffs,txtListOnly,txtListMostVisit,txtListMostSold;
     LinearLayout specialOffersLable;
-    String phone;
+    String username;
     ApiServices apiServices = new ApiServices(MainActivity.this);
     UserSharedPrefrences userSharedPrefrences;
 
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity
     private void findViews() {
         userSharedPrefrences = new UserSharedPrefrences(MainActivity.this);
 
-        phone = userSharedPrefrences.getUserPhone();
+        username = userSharedPrefrences.getUserName();
 
         recyclerOff = findViewById(R.id.offlist_recycler);
         sliderLayout = findViewById(R.id.slider);
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         txtNaviLogin = findViewById(R.id.txt_nav_login);
-        txtNaviLogin.setText(phone);
+        txtNaviLogin.setText(username);
 
 
 
@@ -139,8 +139,8 @@ public class MainActivity extends AppCompatActivity
 
     private void setUpNavigation() {
 
-        if (!phone.isEmpty()) {
-            txtNaviLogin.setText(phone);
+        if (!username.isEmpty()) {
+            txtNaviLogin.setText(username);
         }
         navAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity
                 } else {
 
                     Intent intent = new Intent(MainActivity.this, FavoriteActivity.class);
-                    intent.putExtra(Put.phone,phone);
+                    intent.putExtra(Put.username, username);
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 
@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity
         imgShopCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (phone.equals("ورود/عضویت")){
+                if (username.equals("ورود/عضویت")){
                     Toast.makeText(MainActivity.this, "لطفا وارد حساب خود شوید", Toast.LENGTH_SHORT).show();
                 }else {
                     startActivity(new Intent(MainActivity.this,BasketActivity.class));
@@ -405,7 +405,7 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        if (phone != null && phone.equals("ورود/عضویت")){
+        if (username != null && username.equals("ورود/عضویت")){
             imgShopCart.setColorFilter(Color.rgb(170,170,170));
             txtCount.setVisibility(View.GONE);
         }
@@ -425,9 +425,9 @@ public class MainActivity extends AppCompatActivity
 
         if (requestCode == Put.REQUEST_CODE && resultCode == RESULT_OK) {
             if (data != null) {
-                String phone = data.getStringExtra(Put.phone);
+                String username = data.getStringExtra(Put.username);
                 String image = data.getStringExtra(Put.image);
-                txtNaviLogin.setText("خوش آمدید  " + phone);
+                txtNaviLogin.setText("خوش آمدید  " + username);
                 Picasso.with(getApplicationContext()).load(image)
                         .placeholder(R.drawable.avatar)
                         .error(R.drawable.avatar)
@@ -436,7 +436,7 @@ public class MainActivity extends AppCompatActivity
             }
         } else if (requestCode == Put.REQUEST_EXIT && resultCode == RESULT_OK) {
             if (data != null) {
-                String phone = data.getStringExtra(Put.phone);
+                String username = data.getStringExtra(Put.username);
                 String image = data.getStringExtra(Put.image);
                 if (image.equals("")){
                     Picasso.with(getApplicationContext()).load(R.drawable.banner2).
@@ -449,7 +449,7 @@ public class MainActivity extends AppCompatActivity
                             .placeholder(R.drawable.placeholder)
                             .into(circleImageView);
                 }
-                txtNaviLogin.setText(phone);
+                txtNaviLogin.setText(username);
                 recreate();
             }
 
@@ -501,7 +501,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        apiServices.GetCount(phone, new ApiServices.OnCountReceived() {
+        apiServices.GetCount(username, new ApiServices.OnCountReceived() {
             @Override
             public void onCount(String count) {
                 txtCount.setText(count);

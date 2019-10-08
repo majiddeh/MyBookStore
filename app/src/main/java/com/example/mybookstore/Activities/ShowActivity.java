@@ -62,7 +62,7 @@ public class ShowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show);
 
         UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(ShowActivity.this);
-        phone = userSharedPrefrences.getUserPhone();
+        phone = userSharedPrefrences.getUserName();
 
         findViews();
         initializePage();

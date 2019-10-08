@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">باشگاه کتاب خوانی صامد</string>
     <string name="navigation_drawer_open">باز کردن پنل</string>
     <string name="navigation_drawer_close">بستن پنل</string>

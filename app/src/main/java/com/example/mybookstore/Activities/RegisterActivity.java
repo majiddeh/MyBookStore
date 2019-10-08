@@ -11,6 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
@@ -54,9 +55,48 @@ public class RegisterActivity extends AppCompatActivity {
         cardRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                apiServices.
+                if (!edPassword.getText().toString().trim().equals("")&&!edUsername.getText().toString().trim().equals("")){
+                    if (!(edPassword.getText().toString().trim().length() <4)){
+                        String username=convertNumberToEnglish(edUsername.getText().toString().trim());
+//                        Toast.makeText(RegisterActivity.this, username, Toast.LENGTH_SHORT).show();
+                        apiServices.registeWhitSMS(username,edPassword.getText().toString().trim());
+                    }else
+                        Toast.makeText(RegisterActivity.this, "پسورد حداقل باید چهار کاراکتر باشد", Toast.LENGTH_SHORT).show();
+
+                }else
+                    Toast.makeText(RegisterActivity.this, "لطفا نام کاربری و پسورد را وارد کنید", Toast.LENGTH_SHORT).show();
+
             }
         });
+
+
+    }
+
+    private String convertNumberToEnglish(String num) {
+        String d = num;
+        d = d.replace("۰", "0");
+        d = d.replace("۱", "1");
+        d = d.replace("۲", "2");
+        d = d.replace("٣", "3");
+        d = d.replace("٤", "4");
+        d = d.replace("۵", "5");
+        d = d.replace("٦", "6");
+        d = d.replace("٧", "7");
+        d = d.replace("۸", "8");
+        d = d.replace("۹", "9");
+
+        d = d.replace("۰", "0");
+        d = d.replace("۱", "1");
+        d = d.replace("۲", "2");
+        d = d.replace("۳", "3");
+        d = d.replace("۴", "4");
+        d = d.replace("۵", "5");
+        d = d.replace("۶", "6");
+        d = d.replace("۷", "7");
+        d = d.replace("۸", "8");
+        d = d.replace("۹", "9");
+
+        return d;
     }
 
     private void findViews() {

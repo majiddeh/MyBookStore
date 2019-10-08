@@ -1,6 +1,8 @@
 package com.example.mybookstore.Utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,6 +14,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.mybookstore.Activities.MainActivity;
+import com.example.mybookstore.Activities.VerfyCodeActivity;
 import com.example.mybookstore.Models.ModelBanner;
 import com.example.mybookstore.Models.ModelBasket;
 import com.example.mybookstore.Models.ModelCategory;
@@ -71,9 +75,105 @@ public class ApiServices {
                 HashMap<String,String> map = new HashMap<>();
                 map.put(Put.email,email);
                 map.put(Put.address,address);
-                map.put(Put.phone,phone);
+                map.put(Put.username,phone);
                 map.put(Put.password,password);
                 map.put(Put.image,image);
+                return map;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(request);
+
+
+    }
+
+    public void registeWhitSMS(final String username, final String password) {
+
+
+        StringRequest request = new StringRequest(Request.Method.POST, Links.REGISTER_URL_HA , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("registerapi",response.toString());
+                if (response.equals("218")||response.equals("214")||response.equals("0")||response.equals("211")){
+                    if (response.equals("218")){
+                        Intent intent = new Intent(context, VerfyCodeActivity.class);
+                        intent.putExtra(Put.username,username);
+                        context.startActivity(intent);
+
+                    }else if (response.equals("214")){
+                        Toast.makeText(context, "چنین کاربری قبلا ثبت نام کرده است", Toast.LENGTH_SHORT).show();
+                    }else if (response.equals("0")){
+                        Toast.makeText(context, "خطا!! لطفا مجددا سعی کنید", Toast.LENGTH_SHORT).show();
+                    }else if (response.equals("211")){
+                        Toast.makeText(context, "نام کاربری را به درستی وارد کنید", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else {
+                    Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("registererror",error.toString());
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map = new HashMap<>();
+                map.put(Put.username,username);
+                map.put(Put.password,password);
+                return map;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(request);
+
+
+    }
+
+    public void VerfyCode(final String username, final String code) {
+
+
+        StringRequest request = new StringRequest(Request.Method.POST, Links.CHECK_CODE_HA , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("registerapi",response.toString());
+
+                if (response.length()==32){
+                    UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(context);
+                    userSharedPrefrences.saveUserLoginInfoHA(username,response);
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.putExtra(Put.username,username);
+                    context.startActivity(intent);
+                    ((Activity)context).finish();
+//                } else if (response.equals("213")){
+//                        Toast.makeText(context, "کد نا معتبر است", Toast.LENGTH_SHORT).show();
+//                    }else if (response.equals("0")){
+//                        Toast.makeText(context, "لطفا ورودی هارا کنترل کنید", Toast.LENGTH_SHORT).show();
+//                    }else if (response.equals("315")){
+//                        Toast.makeText(context, "چنین کاربری وجود ندارد", Toast.LENGTH_SHORT).show();
+                    }else Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("registererror",error.toString());
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map = new HashMap<>();
+                map.put(Put.username,username);
+                map.put(Put.code,code);
                 return map;
             }
         };
@@ -112,7 +212,7 @@ public class ApiServices {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
-                map.put(Put.phone,phone);
+                map.put(Put.username,phone);
                 return map;
             }
         };
@@ -150,7 +250,7 @@ public class ApiServices {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map =new HashMap<>();
-                map.put(Put.phone,phone);
+                map.put(Put.username,phone);
                 map.put(Put.password,password);
                 return map;
             }
@@ -187,7 +287,7 @@ public class ApiServices {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map =new HashMap<>();
-                map.put(Put.phone,phone);
+                map.put(Put.username,phone);
                 map.put(Put.email,email);
                 map.put(Put.address,address);
                 map.put(Put.name,name);
@@ -207,7 +307,7 @@ public class ApiServices {
 
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put(Put.phone,phone);
+            jsonObject.put(Put.username,phone);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -597,7 +697,7 @@ public class ApiServices {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
-                map.put(Put.phone,phone);
+                map.put(Put.username,phone);
                 map.put(Put.id,id);
                 map.put(Put.title,title);
                 map.put(Put.image,image);
@@ -655,7 +755,7 @@ public class ApiServices {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
-                map.put(Put.phone,phone);
+                map.put(Put.username,phone);
                 return map;
             }
         };
@@ -712,7 +812,7 @@ public class ApiServices {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map =new HashMap<>();
-                map.put(Put.phone,phone);
+                map.put(Put.username,phone);
                 return map;
             }
         };
@@ -916,7 +1016,7 @@ public class ApiServices {
                 HashMap<String,String> map = new HashMap<>();
                 map.put(Put.id,idProduct);
                 map.put(Put.image,image);
-                map.put(Put.phone,phone);
+                map.put(Put.username,phone);
                 map.put(Put.negative,negative);
                 map.put(Put.positive,positive);
                 map.put(Put.comment,comment);
@@ -1234,7 +1334,7 @@ public class ApiServices {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
-                map.put(Put.phone,phone);
+                map.put(Put.username,phone);
                 map.put(Put.id,idproduct);
                 return map;
             }
@@ -1293,7 +1393,7 @@ public class ApiServices {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
-                map.put(Put.phone,phone);
+                map.put(Put.username,phone);
                 return map;
             }
         };
@@ -1326,7 +1426,7 @@ public class ApiServices {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
-                map.put(Put.phone,phone);
+                map.put(Put.username,phone);
                 map.put(Put.id,idproduct);
                 return map;
             }
@@ -1423,6 +1523,7 @@ public class ApiServices {
     public interface OnFavCheck{
         void onCheck(int responseStatus);
     }
+
 
 
 

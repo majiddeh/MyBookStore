@@ -28,7 +28,7 @@ public class EditInformation extends AppCompatActivity {
         setContentView(R.layout.activity_edit_information);
         findViews();
         UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(EditInformation.this);
-        phone =userSharedPrefrences.getUserPhone();
+        phone =userSharedPrefrences.getUserName();
         receiveInformation();
         onClicks();
     }

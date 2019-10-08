@@ -9,12 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mybookstore.R;
-import com.example.mybookstore.Utils.ImageGallery;
 import com.example.mybookstore.Utils.Put;
-import com.example.mybookstore.Utils.RuntimePermissionsActivity;
 import com.example.mybookstore.Utils.UserSharedPrefrences;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -48,7 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
                 UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(ProfileActivity.this);
                 userSharedPrefrences.exitFromAccount();
                 Intent intent =new Intent();
-                intent.putExtra(Put.phone,"ورود/عضویت");
+                intent.putExtra(Put.username,"ورود/عضویت");
                 intent.putExtra(Put.image,"");
                 setResult(RESULT_OK,intent);
                 finish();

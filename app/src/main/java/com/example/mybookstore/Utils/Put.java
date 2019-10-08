@@ -9,12 +9,15 @@ public class Put {
     public static final int STATUS_USER_EXIST =214;
     public static final int REQUEST_EXIT =214;
 
+
     static final String email = "email";
-    public static final String phone = "phone";
+    public static final String username = "username";
     static final String address = "address";
     public static final String name = "name";
     static final String family = "family";
     public static final String password = "password";
+    public static final String token = "password";
+    public static final String code = "code";
 
     public static final String image = "image";
     public static final String price = "price";
