@@ -5,6 +5,7 @@
     app:cardCornerRadius="7dp"
     android:id="@+id/card_banner"
     android:elevation="@dimen/standard_elevation"
+    android:foreground="?attr/selectableItemBackground"
     android:layout_margin="2dp"
     android:layout_height="140dp">
     <ImageView

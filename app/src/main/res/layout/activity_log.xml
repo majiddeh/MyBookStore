@@ -7,7 +7,7 @@
     xmlns:wheel="http://schemas.android.com/apk/res-auto"
     android:layoutDirection="rtl"
     tools:context=".Activities.LoginActivity"
-    android:background="#fff">
+    android:background="@color/gray_light_for_bg_activity">
 
     <include layout="@layout/toolbar_second"/>
 
@@ -22,6 +22,9 @@
             android:layout_width="match_parent"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
+            android:lines="1"
+            android:inputType="text"
+            android:maxLines="1"
             android:layout_height="wrap_content"
             android:fontFamily="@font/vazir_medium"
             android:hint="@string/phone_or_mobile"
@@ -29,7 +32,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="8dp"
             android:textSize="15dp"
-            android:background="@drawable/shape_line_color_edittext"
+            android:background="@drawable/tv_color_change_border"
             android:paddingRight="40dp"/>
 
         <ImageView
@@ -59,12 +62,12 @@
             android:layout_marginRight="30dp"
             android:layout_height="wrap_content"
             android:hint="@string/password"
-            android:gravity="right"
+            android:gravity="end"
             android:textSize="15dp"
             android:paddingTop="5dp"
             android:fontFamily="@font/vazir_medium"
             android:paddingBottom="8dp"
-            android:background="@drawable/shape_line_color_edittext"
+            android:background="@drawable/tv_color_change_border"
             android:inputType="textPassword"
             android:paddingRight="40dp"/>
 
@@ -114,13 +117,15 @@
         android:id="@+id/tv_forget_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
         android:layout_below="@+id/liner3"
-        android:layout_marginLeft="80dp"
-        android:layout_marginRight="80dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
         android:textAlignment="center"
         android:fontFamily="@font/vazir_medium"
         android:textSize="16dp"
-        android:background="@drawable/tv_color_change_border"
+        android:background="@drawable/tv_color_change_border_gray"
         android:text="@string/forget_password"
         android:layout_marginTop="15dp"/>
 
@@ -128,39 +133,59 @@
 
     <TextView
         android:id="@+id/tv_register"
-        android:layout_width="170dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_forget_password"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginLeft="130dp"
+        android:layout_marginRight="130dp"
         android:textAlignment="center"
-        android:textColor="#27AE60"
         android:fontFamily="@font/vazir_medium"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
         android:textSize="16dp"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/shape_line_color_edittext"
+        android:background="@drawable/tv_color_change_border"
         android:text="@string/register"
         android:layout_marginTop="20dp"/>
 
+             <android.support.v7.widget.CardView
+                 android:layout_width="match_parent"
+                 android:id="@+id/card_login"
+                 android:foreground="?attr/selectableItemBackground"
+                 android:layout_alignParentBottom="true"
+                 android:elevation="@dimen/standard_elevation"
+                 android:layout_height="50dp"
+                 tools:targetApi="lollipop">
+                 <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/green"
+                    android:gravity="center_vertical"
+                    android:text="@string/login"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/txt_size_title_activity_show"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/vazir_medium" />
+        </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:id="@+id/card_login"
-        android:layout_alignParentBottom="true"
-        android:elevation="@dimen/standard_elevation"
-        android:layout_height="50dp"
-        tools:targetApi="lollipop">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/green"
-            android:gravity="center_vertical"
-            android:text="@string/login"
-            android:textAlignment="center"
-            android:textSize="@dimen/txt_size_title_activity_show"
-            android:textColor="@color/white"
-            android:fontFamily="@font/vazir_medium" />
-    </android.support.v7.widget.CardView>
+        <com.pnikosis.materialishprogress.ProgressWheel
+            android:id="@+id/progress_wheel"
+            android:layout_width="50dp"
+            android:layout_above="@id/card_login"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            wheel:matProg_barColor="@color/red"
+            android:layout_marginBottom="5dp"
+            android:visibility="gone"
+            wheel:matProg_progressIndeterminate="true" />
+
+
+
+
+
+
+
 
 
 

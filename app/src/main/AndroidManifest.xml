@@ -3,63 +3,95 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.mybookstore">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher_samed"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_samed"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activities.ChangePassActivity"></activity>
-        <activity android:name=".Activities.VerfyCodeActivity">
-
-        </activity>
+        <activity android:name=".Activities.PayConfirmActivity"></activity>
+        <activity
+            android:name=".Activities.ChangePassActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".Activities.VerfyCodeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".Activities.LoginActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Activities.RegisterActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity android:name=".Activities.FullProductActivity" />
-        <activity android:name=".Activities.CatActivity_ViewPager" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".Activities.ForgetPassActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity android:name=".Activities.BannerActivity" />
-        <activity android:name=".Activities.FavoriteActivity" />
-        <activity android:name=".Activities.AboutActivity" />
-        <activity android:name=".Activities.SendCommentActivity" />
-        <activity android:name=".Activities.SplashActivity"></activity>
-        <activity android:name=".Activities.ShowCommentActivity" />
-        <activity android:name=".Activities.SearchActivity" />
-        <activity android:name=".Activities.ItemActivity" />
-        <activity android:name=".Activities.ItemCatActivity" />
-        <activity android:name=".Activities.BasketActivity" />
-        <activity android:name=".Activities.ShowActivity" />
-        <activity android:name=".Activities.CategoryActivity" />
-        <activity android:name=".Activities.EditInformation" />
-        <activity android:name=".Activities.ProfileActivity" />
+            android:name=".Activities.FullProductActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.RegisterActivityND"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:name=".Activities.CatActivity_ViewPager"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.LoginActivityND"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:name=".Activities.BannerActivity"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:name=".Activities.FavoriteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.SendCommentActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".Activities.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Activities.ShowCommentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.ItemActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.ItemCatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.BasketActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.ShowActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.CategoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.EditInformation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

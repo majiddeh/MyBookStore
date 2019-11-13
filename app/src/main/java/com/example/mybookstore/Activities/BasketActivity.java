@@ -1,7 +1,10 @@
 package com.example.mybookstore.Activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,6 +16,8 @@ import com.example.mybookstore.Adapters.AdapterBasket;
 import com.example.mybookstore.Models.ModelBasket;
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
+import com.example.mybookstore.Utils.Links;
+import com.example.mybookstore.Utils.Put;
 import com.example.mybookstore.Utils.UserSharedPrefrences;
 
 import java.text.DecimalFormat;
@@ -22,11 +27,12 @@ public class BasketActivity extends AppCompatActivity {
     TextView txtTitle,txttotal;
     ImageView imgBackButton;
     LinearLayout lnrBasket;
+    CardView cardBasket;
     RecyclerView recyclerViewBasket;
     ApiServices apiServices = new ApiServices(BasketActivity.this);
     AdapterBasket adapterBasket;
     int totalAllPrice = 0;
-    String phone;
+    String phone,token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,8 @@ public class BasketActivity extends AppCompatActivity {
 
         UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(BasketActivity.this);
         phone= userSharedPrefrences.getUserName();
+        token = userSharedPrefrences.getUserToken();
+
 
         finViews();
         initializePage();
@@ -76,10 +84,31 @@ public class BasketActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        cardBasket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BasketActivity.this,PayConfirmActivity.class);
+                intent.putExtra(Put.token,token);
+                startActivity(intent);
+            }
+//                Intent intent = new Intent(Intent.ACTION_VIEW);
+//                intent.setData(Uri.parse(Links.ZARRINPAL+"?Amount="+"1000"+"&Email="+"majiddehghan74@gmail.com"+"&Description="+"سفارش کتاب"));
+//                try {
+//                    startActivity(intent);
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+////                Intent intent = new Intent(BasketActivity.this,WebGateActivity.class);
+////                intent.putExtra(Put.total,totalAllPrice);
+////                startActivity(intent);
+//            }
+        });
     }
 
     private void finViews() {
         recyclerViewBasket=findViewById(R.id.recyclerbasket);
+        cardBasket=findViewById(R.id.card_basket);
         txtTitle = findViewById(R.id.txt_title_toolbar_second);
         txtTitle.setText("سبد خرید شما");
         imgBackButton = findViewById(R.id.img_back_second_toolbar);

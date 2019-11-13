@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:background="@color/colorPrimary"
+<LinearLayout android:background="@color/colorPrimary"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,7 +7,8 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".Activities.SplashActivity">
+    tools:context=".Activities.SplashActivity"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:layout_width="360dp"
@@ -16,15 +16,13 @@
         android:layout_height="360dp"
         android:scaleType="centerCrop"
         android:src="@drawable/samed" />
-
-    <!--<com.wang.avi.AVLoadingIndicatorView-->
-        <!--android:id="@+id/avi"-->
-        <!--style="@style/AVLoadingIndicatorView"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="20dp"-->
-        <!--android:visibility="visible"-->
-        <!--app:indicatorColor="@color/light"-->
-        <!--app:indicatorName="LineScalePulseOutIndicator" />-->
+    <com.pnikosis.materialishprogress.ProgressWheel
+        android:id="@+id/progress_wheel"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        wheel:matProg_barColor="@color/white"
+        android:layout_marginBottom="5dp"
+        android:visibility="visible"
+        wheel:matProg_progressIndeterminate="true" />
 
 </LinearLayout>

@@ -104,6 +104,7 @@
                         android:layout_height="match_parent">
 
                         <TextView
+                            android:foreground="?attr/selectableItemBackground"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/vazir_medium"
@@ -122,6 +123,7 @@
                         android:layout_height="match_parent">
 
                         <TextView
+                            android:foreground="?attr/selectableItemBackground"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/vazir_medium"
@@ -259,9 +261,10 @@
                             android:layout_height="50dp"
                             tools:targetApi="lollipop">
                             <LinearLayout
+
                                 android:layout_width="match_parent"
                                 android:background="@color/green"
-
+                                android:foreground="?attr/selectableItemBackground"
                                 android:gravity="center_vertical|center"
                                 android:orientation="horizontal"
                                 android:layout_height="match_parent">
@@ -324,11 +327,11 @@
 
                         <TextView
                             android:id="@+id/txt_continue"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/standard_margin"
+                            android:layout_gravity="center_horizontal"
                             android:fontFamily="@font/vazir_medium"
-
                             android:gravity="center"
                             android:text="@string/continue_reading"
                             android:textColor="@color/gray"

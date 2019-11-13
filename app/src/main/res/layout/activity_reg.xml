@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:wheel="http://schemas.android.com/apk/res-auto"
     android:layoutDirection="rtl"
-    android:background="#fff"
+    android:background="@color/gray_light_for_bg_activity"
     tools:context=".Activities.RegisterActivity">
 
 
@@ -25,9 +25,12 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_height="wrap_content"
+            android:lines="1"
+            android:inputType="text"
+            android:maxLines="1"
             android:hint="@string/phone_or_mobile"
             android:gravity="right"
-            android:background="@drawable/shape_line_color_edittext"
+            android:background="@drawable/tv_color_change_border"
             android:paddingTop="5dp"
             android:paddingBottom="8dp"
             android:textSize="15dp"
@@ -60,9 +63,9 @@
             android:layout_marginRight="30dp"
             android:fontFamily="@font/vazir_medium"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_line_color_edittext"
+            android:background="@drawable/tv_color_change_border"
             android:hint="@string/password"
-            android:gravity="right"
+            android:gravity="end"
             android:textSize="15dp"
             android:paddingTop="5dp"
             android:paddingBottom="8dp"
@@ -112,10 +115,25 @@
 
     </RelativeLayout>
 
+    <com.pnikosis.materialishprogress.ProgressWheel
+        android:id="@+id/progress_wheel"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_above="@+id/card_Register"
+        wheel:matProg_barColor="@color/colorPrimary"
+        android:layout_marginBottom="5dp"
+        android:visibility="gone"
+        wheel:matProg_progressIndeterminate="true" />
+
+
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:id="@+id/card_Register"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
         android:layout_alignParentBottom="true"
         android:elevation="@dimen/standard_elevation"
         android:layout_height="50dp"
@@ -133,17 +151,7 @@
     </android.support.v7.widget.CardView>
 
 
-<!--    <com.pnikosis.materialishprogress.ProgressWheel-->
-<!--        android:id="@+id/progress_wheel"-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:layout_centerVertical="true"-->
-<!--        wheel:matProg_barColor="@color/red"-->
-<!--        android:layout_marginBottom="5dp"-->
-<!--        android:visibility="gone"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        wheel:matProg_progressIndeterminate="true" />-->
+
 
 
 </RelativeLayout>

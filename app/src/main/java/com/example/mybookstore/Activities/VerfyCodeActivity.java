@@ -6,17 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
 import com.example.mybookstore.Utils.Put;
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.util.Locale;
 import java.util.Timer;
@@ -24,13 +22,13 @@ import java.util.TimerTask;
 
 public class VerfyCodeActivity extends AppCompatActivity {
     ImageView imgBack;
-    TextView txtTitle, tvPhoneInfo,tvTimer,edPhoneEdit;
+    TextView txtTitle, tvPhoneInfo,tvTimer, tvPhoneEdit;
 //
     EditText edCode;
     Timer timer;
     long timercount;
     int check;
-    String code="";
+    ProgressWheel progressWheel;
     ApiServices apiServices;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +92,7 @@ public class VerfyCodeActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length()==5){
-                    apiServices.VerfyCode(getIntent().getStringExtra(Put.username),edCode.getText().toString().trim());
+                    apiServices.VerfyCode(getIntent().getStringExtra(Put.username),edCode.getText().toString().trim(),getIntent().getStringExtra("reg"),progressWheel);
                 }
             }
         });
@@ -180,6 +178,13 @@ public class VerfyCodeActivity extends AppCompatActivity {
             }
         });
 
+        tvPhoneEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(VerfyCodeActivity.this,RegisterActivity.class));
+            }
+        });
+
         tvPhoneInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,15 +194,17 @@ public class VerfyCodeActivity extends AppCompatActivity {
         });
     }
     private void findViews() {
-        edPhoneEdit=findViewById(R.id.tv_edit_phone);
+        tvPhoneEdit =findViewById(R.id.tv_edit_phone);
         apiServices=new ApiServices(VerfyCodeActivity.this);
         txtTitle = findViewById(R.id.txt_title_toolbar_second);
         tvPhoneInfo = findViewById(R.id.tv_phone_info);
         tvTimer = findViewById(R.id.tv_timer);
         txtTitle.setText("تایید شماره همراه");
+        progressWheel=findViewById(R.id.progress_wheel);
         imgBack = findViewById(R.id.img_back_second_toolbar);
         tvPhoneInfo.setText("کد تایید به "+getIntent().getStringExtra(Put.username) + " ارسال شد");
         edCode=findViewById(R.id.ed_code);
+        edCode.requestFocus();
     }
 
 }

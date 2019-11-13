@@ -67,4 +67,14 @@
     <string name="change_pass_button">ایجاد کلمه عبور جدید</string>
     <string name="new_pass">رمز عبور جدید</string>
     <string name="double_pass">تکرار رمز عبور</string>
+    <string name="myorders">سفارش های من</string>
+    <string name="account_information">اطلاعات فردی</string>
+    <string name="change_pass">تغییر کلمه عبور</string>
+    <string name="status">وضعیت</string>
+    <string name="myaddress">آدرس های من</string>
+    <string name="addaddress">افزودن آدرس</string>
+    <string name="current_pass">رمز عبور فعلی</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -6,7 +6,7 @@
     android:layoutDirection="rtl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_light_for_bg_itemshow"
+    android:background="@color/gray_light_for_bg_activity"
     android:orientation="vertical"
     tools:context=".Activities.CategoryActivity">
     <include layout="@layout/toolbar_second"/>

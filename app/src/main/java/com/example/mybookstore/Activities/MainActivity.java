@@ -31,6 +31,7 @@ import com.example.mybookstore.Adapters.AdapterProduct;
 import com.example.mybookstore.Models.ModelBanner;
 import com.example.mybookstore.Models.ModelCategory;
 import com.example.mybookstore.Models.ModelOff_Only_MostVisit;
+import com.example.mybookstore.Models.ModelSlider;
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
 import com.example.mybookstore.Utils.Links;
@@ -300,6 +301,7 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     adapterOff = new AdapterOff(modelOffOnlies, getApplicationContext());
                     recyclerOff.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+                    recyclerOff.hasFixedSize();
                     recyclerOff.setAdapter(adapterOff);
 
                 }
@@ -311,6 +313,7 @@ public class MainActivity extends AppCompatActivity
             public void onCatReceived(List<ModelCategory> modelCategories) {
                 AdapterCategoryLittleView adapterCategoryLittleView = new AdapterCategoryLittleView(MainActivity.this, modelCategories);
                 recycCatLittle.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+                recycCatLittle.hasFixedSize();
                 recycCatLittle.setAdapter(adapterCategoryLittleView);
             }
         });
@@ -320,6 +323,7 @@ public class MainActivity extends AppCompatActivity
             public void onCatReceived(List<ModelCategory> modelCategories) {
                 AdapterCategory adapterCategory = new AdapterCategory(MainActivity.this, modelCategories);
                 recyclerCategory.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+                recyclerCategory.hasFixedSize();
                 recyclerCategory.setAdapter(adapterCategory);
             }
         });
@@ -329,6 +333,7 @@ public class MainActivity extends AppCompatActivity
             public void onOnlyReceived(List<ModelOff_Only_MostVisit> modelOnlies) {
                 AdapterProduct adapterProduct = new AdapterProduct(getApplicationContext(),modelOnlies);
                 recyclerOnly.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+                recyclerOnly.hasFixedSize();
                 recyclerOnly.setAdapter(adapterProduct);
             }
         });
@@ -338,6 +343,7 @@ public class MainActivity extends AppCompatActivity
             public void onMostVisit(List<ModelOff_Only_MostVisit> modelMostVisit) {
                 AdapterProduct adapterProduct = new AdapterProduct(getApplicationContext(),modelMostVisit);
                 recyclerMostVisit.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+                recyclerMostVisit.hasFixedSize();
                 recyclerMostVisit.setAdapter(adapterProduct);
             }
         });
@@ -347,6 +353,7 @@ public class MainActivity extends AppCompatActivity
             public void onSold(List<ModelOff_Only_MostVisit> modelSold) {
                 AdapterProduct adapterProduct = new AdapterProduct(getApplicationContext(),modelSold);
                 recyclerMostSold.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+                recyclerMostSold.hasFixedSize();
                 recyclerMostSold.setAdapter(adapterProduct);
             }
         });
@@ -356,6 +363,7 @@ public class MainActivity extends AppCompatActivity
             public void onBanner(List<ModelBanner> modelBanners) {
                 AdapterBanner adapterBanner = new AdapterBanner(MainActivity.this,modelBanners);
                 recycBanner.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
+                recycBanner.hasFixedSize();
                 recycBanner.setAdapter(adapterBanner);
             }
         });
@@ -365,6 +373,7 @@ public class MainActivity extends AppCompatActivity
             public void onBanner(List<ModelBanner> modelBanners) {
                 AdapterBanner adapterBanner = new AdapterBanner(MainActivity.this,modelBanners);
                 recyBannerBig.setLayoutManager(new GridLayoutManager(MainActivity.this,1));
+                recyBannerBig.hasFixedSize();
                 recyBannerBig.setAdapter(adapterBanner);
             }
         });
@@ -374,29 +383,55 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void sliderInitialize() {
-        HashMap<String, String> url_image = new HashMap<>();
-        url_image.put("image1",Links.Link_HOST + "/samed_bookstore/uploads/banners/banner4.jpg");
-        url_image.put("image2",Links.Link_HOST + "/samed_bookstore/uploads/banners/banner6.jpg");
-        url_image.put("image3",Links.Link_HOST + "/samed_bookstore/uploads/banners/banner7.jpg");
-        url_image.put("image4",Links.Link_HOST + "/samed_bookstore/uploads/banners/banner8.jpg");
+        apiServices.GetSliders(new ApiServices.OnSliderReceived() {
+            @Override
+            public void onSlider(List<ModelSlider> modelSliders) {
+                HashMap<String, String> url_image = new HashMap<>();
+                for (int i = 0; i < modelSliders.size(); i++) {
+                    url_image.put(modelSliders.get(i).getName(),modelSliders.get(i).getImage());
+                }
+                for (int i = 0; i < url_image.keySet().size(); i++) {
+                    String keyname = url_image.keySet().toArray()[i].toString();
+                    TextSliderView textSliderView = new TextSliderView(MainActivity.this);
+                    textSliderView
+                            .description(keyname)
+                            .image(url_image.get(keyname))
+                            .setOnSliderClickListener(MainActivity.this)
+                            .empty(R.drawable.placeholder)
+                            .error(R.drawable.placeholder)
+                            .setScaleType(BaseSliderView.ScaleType.Fit);
 
-        for (int i = 0; i < url_image.keySet().size(); i++) {
-            String keyname = url_image.keySet().toArray()[i].toString();
-            TextSliderView textSliderView = new TextSliderView(MainActivity.this);
-            textSliderView
-//                    .description(keyname)
-                    .image(url_image.get(keyname))
-                    .setOnSliderClickListener(this)
-                    .empty(R.drawable.placeholder)
-                    .error(R.drawable.placeholder)
-                    .setScaleType(BaseSliderView.ScaleType.Fit);
-
-            textSliderView.bundle(new Bundle());
-            textSliderView.getBundle()
-                    .putString("extra", keyname);
-            sliderLayout.setDuration(3000);
-            sliderLayout.addSlider(textSliderView);
-        }
+                    textSliderView.bundle(new Bundle());
+                    textSliderView.getBundle()
+                            .putString("extra", keyname);
+                    sliderLayout.setDuration(3000);
+                    sliderLayout.addSlider(textSliderView);
+                }
+            }
+        });
+//        HashMap<String, String> url_image = new HashMap<>();
+//        url_image.put("image1",Links.Link_HOST + "/samed_bookstore/uploads/banners/banner4.jpg");
+//        url_image.put("image2",Links.Link_HOST + "/samed_bookstore/uploads/banners/banner1.jpg");
+//        url_image.put("image3",Links.Link_HOST + "/samed_bookstore/uploads/banners/banner7.jpg");
+//        url_image.put("image4",Links.Link_HOST + "/samed_bookstore/uploads/banners/banner8.jpg");
+//
+//        for (int i = 0; i < url_image.keySet().size(); i++) {
+//            String keyname = url_image.keySet().toArray()[i].toString();
+//            TextSliderView textSliderView = new TextSliderView(MainActivity.this);
+//            textSliderView
+////                    .description(keyname)
+//                    .image(url_image.get(keyname))
+//                    .setOnSliderClickListener(this)
+//                    .empty(R.drawable.placeholder)
+//                    .error(R.drawable.placeholder)
+//                    .setScaleType(BaseSliderView.ScaleType.Fit);
+//
+//            textSliderView.bundle(new Bundle());
+//            textSliderView.getBundle()
+//                    .putString("extra", keyname);
+//            sliderLayout.setDuration(3000);
+//            sliderLayout.addSlider(textSliderView);
+//        }
     }
 
     private void setUpToolbar() {
@@ -473,22 +508,22 @@ public class MainActivity extends AppCompatActivity
     public void onSliderClick(BaseSliderView slider) {
         String s = slider.getBundle().get("extra") + "";
 
-        switch (s) {
-            case ("image1"):
-                Toast.makeText(this, "عکس شماره 1", Toast.LENGTH_SHORT).show();
-                break;
-            case ("image2"):
-                Toast.makeText(this, "عکس شماره 2", Toast.LENGTH_SHORT).show();
-                break;
-            case ("image3"):
-                Toast.makeText(this, "عکس شماره 3", Toast.LENGTH_SHORT).show();
-                break;
-            case ("image4"):
-                Toast.makeText(this, "عکس شماره 4", Toast.LENGTH_SHORT).show();
-                break;
-
-
-        }
+//        switch (s) {
+//            case ("image1"):
+//                Toast.makeText(this, "عکس شماره 1", Toast.LENGTH_SHORT).show();
+//                break;
+//            case ("image2"):
+//                Toast.makeText(this, "عکس شماره 2", Toast.LENGTH_SHORT).show();
+//                break;
+//            case ("image3"):
+//                Toast.makeText(this, "عکس شماره 3", Toast.LENGTH_SHORT).show();
+//                break;
+//            case ("image4"):
+//                Toast.makeText(this, "عکس شماره 4", Toast.LENGTH_SHORT).show();
+//                break;
+//
+//
+//        }
 
 
     }

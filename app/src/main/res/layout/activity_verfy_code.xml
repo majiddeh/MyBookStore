@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layoutDirection="rtl"
     android:layout_height="match_parent"
+    android:background="#fff"
     xmlns:wheel="http://schemas.android.com/apk/res-auto"
     tools:context=".Activities.VerfyCodeActivity">
     <include layout="@layout/toolbar_second"
@@ -53,7 +54,7 @@
         android:layout_marginRight="30dp"
         android:textColor="#000"
         android:layout_below="@+id/liner1"
-        android:text="ویرایش شماره تلفن"/>
+        android:text="کد تایید :"/>
 
 
     <LinearLayout
@@ -68,9 +69,12 @@
         android:layout_margin="30dp">
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:lines="1"
             android:maxLength="5"
+            android:padding="5dp"
+            android:textAlignment="center"
+            android:background="@drawable/selector_default_edittext"
             android:id="@+id/ed_code"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"/>
@@ -138,8 +142,9 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
+        android:layout_above="@+id/tv_timer"
         android:layout_centerVertical="true"
-        wheel:matProg_barColor="@color/red"
+        wheel:matProg_barColor="@color/colorPrimary"
         android:layout_marginBottom="5dp"
         android:visibility="gone"
         android:layout_below="@+id/liner2"

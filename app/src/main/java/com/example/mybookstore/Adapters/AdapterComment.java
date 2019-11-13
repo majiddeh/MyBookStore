@@ -46,11 +46,11 @@ public class AdapterComment extends RecyclerView.Adapter<AdapterComment.viewHold
         viewHolder.txtPositive.setText(comment.getPositive());
         viewHolder.txtNegative.setText(comment.getNegative());
         viewHolder.txtComment.setText(comment.getComment());
-
-        Picasso.with(context).load(comment.getImage())
-                .error(R.drawable.placeholder)
-                .placeholder(R.drawable.placeholder)
-                .into(viewHolder.circleImageView);
+//
+//        Picasso.with(context).load(comment.getImage())
+//                .error(R.drawable.placeholder)
+//                .placeholder(R.drawable.placeholder)
+//                .into(viewHolder.circleImageView);
         viewHolder.ratingBar.setRating(comment.getRating());
 
     }
@@ -63,7 +63,7 @@ public class AdapterComment extends RecyclerView.Adapter<AdapterComment.viewHold
     class viewHolder extends RecyclerView.ViewHolder{
 
         TextView txtComment,txtUser,txtPositive,txtNegative;
-        CircleImageView circleImageView;
+//        CircleImageView circleImageView;
         ScaleRatingBar ratingBar;
 
         viewHolder(@NonNull View itemView) {
@@ -72,7 +72,7 @@ public class AdapterComment extends RecyclerView.Adapter<AdapterComment.viewHold
             txtNegative=itemView.findViewById(R.id.txt_negativeComment);
             txtPositive=itemView.findViewById(R.id.txt_posotiveComment);
             txtUser=itemView.findViewById(R.id.txt_usercomment);
-            circleImageView = itemView.findViewById(R.id.img_userComment);
+//            circleImageView = itemView.findViewById(R.id.img_userComment);
             ratingBar = itemView.findViewById(R.id.rating_comment);
         }
     }

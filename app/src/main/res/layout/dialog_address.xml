@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center"
+    android:layoutDirection="rtl"
+    app:cardCornerRadius="5dp"
+    android:elevation="5dp"
+    android:background="@color/gray_light_for_bg_activity"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layoutDirection="rtl"
+    tools:context=".Activities.EditInformation">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/Tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:fontFamily="@font/vazir_medium"
+                android:text="لطفا اطلاعات کاربری را کامل کنید"
+                android:layout_marginTop="20dp"/>
+
+            <EditText
+                android:id="@+id/Et_name"
+                android:layout_below="@+id/Tv_title"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_height="wrap_content"
+                android:hint="نام"
+                android:gravity="start"
+                android:lines="1"
+                android:maxLines="1"
+                android:inputType="text"
+                android:maxLength="50"
+                android:paddingTop="5dp"
+                android:paddingBottom="8dp"
+                android:fontFamily="@font/vazir_medium"
+                android:textSize="15dp" />
+
+            <EditText
+                android:id="@+id/Et_family"
+                android:layout_below="@+id/Et_name"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:lines="1"
+                android:maxLines="1"
+                android:maxLength="50"
+                android:inputType="text"
+                android:layout_marginRight="30dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/vazir_medium"
+                android:hint="نام خانوادگی"
+                android:gravity="start"
+                android:paddingTop="5dp"
+                android:paddingBottom="8dp"
+                android:textSize="15dp" />
+
+            <EditText
+                android:id="@+id/Et_postalcod"
+                android:layout_below="@+id/Et_family"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:inputType="numberDecimal"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:lines="1"
+                android:layout_height="wrap_content"
+                android:hint="کد پستی"
+                android:gravity="start"
+                android:paddingTop="5dp"
+                android:fontFamily="@font/vazir_medium"
+                android:paddingBottom="8dp"
+                android:textSize="15dp" />
+
+            <EditText
+                android:id="@+id/Et_phone_home"
+                android:layout_below="@+id/Et_postalcod"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_height="wrap_content"
+                android:hint="شماره تلفن ثابت"
+                android:lines="1"
+                android:maxLines="1"
+                android:maxLength="11"
+                android:inputType="numberDecimal"
+                android:gravity="start"
+                android:paddingTop="5dp"
+                android:paddingBottom="8dp"
+                android:fontFamily="@font/vazir_medium"
+                android:textSize="15dp" />
+
+            <EditText
+                android:id="@+id/Et_phone"
+                android:layout_below="@+id/Et_phone_home"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_height="wrap_content"
+                android:hint="شماره موبایل"
+                android:inputType="numberDecimal"
+                android:maxLength="11"
+                android:lines="1"
+                android:maxLines="10"
+                android:gravity="start"
+                android:paddingTop="5dp"
+                android:fontFamily="@font/vazir_medium"
+                android:paddingBottom="8dp"
+                android:textSize="15dp" />
+
+
+            <TextView
+                android:id="@+id/tv_title_ostan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Et_phone"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:fontFamily="@font/vazir_medium"
+                android:text="محل سکونت"/>
+
+            <LinearLayout
+                android:id="@+id/liner3"
+                android:layout_below="@+id/tv_title_ostan"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp">
+
+                <Spinner
+                    android:id="@+id/spiner_city_cap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/tv_title_ostan">
+
+                </Spinner>
+
+
+                <Spinner
+                    android:id="@+id/spinner_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_below="@+id/tv_title_t">
+
+                </Spinner>
+
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/Et_address"
+                android:layout_below="@+id/liner3"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_height="wrap_content"
+                android:hint="آدرس"
+                android:maxLines="3"
+                android:lines="2"
+                android:inputType="textMultiLine"
+                android:maxLength="255"
+                android:gravity="start"
+                android:layout_marginBottom="10dp"
+                android:paddingTop="5dp"
+                android:fontFamily="@font/vazir_medium"
+                android:paddingBottom="8dp"
+                android:textSize="15dp" />
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:weightSum="1"
+                android:layout_below="@+id/Et_address"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".5"
+                    android:layout_height="45dp"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:background="@color/red"
+                    android:id="@+id/tv_dialog_negative"
+                    android:gravity="center_vertical"
+                    android:text="لغو"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/txt_size_title_activity_show"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/vazir_medium"
+                    android:focusable="true"
+                    tools:ignore="UnusedAttribute" />
+
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".5"
+                    android:layout_height="45dp"
+                    android:id="@+id/tv_dialog_positive"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:background="@color/green"
+                    android:gravity="center_vertical"
+                    android:text="ثبت آدرس"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/txt_size_title_activity_show"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/vazir_medium"
+                    android:focusable="true"
+                    tools:targetApi="m"
+                    tools:ignore="UnusedAttribute" />
+
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+    </RelativeLayout>
+    </ScrollView>
+</android.support.v7.widget.CardView>

@@ -11,13 +11,15 @@ import android.widget.TextView;
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.Put;
 import com.example.mybookstore.Utils.UserSharedPrefrences;
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private Button btnEdit,btnFavorit,btnExite;
+    private TextView tvEdit,tvFav,tvExit,tvChangePass;
     private ImageView imgBack;
-
+    UserSharedPrefrences userSharedPrefrences;
     private TextView txtTitle;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        btnExite.setOnClickListener(new View.OnClickListener() {
+        tvExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(ProfileActivity.this);
@@ -51,10 +53,30 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        btnEdit.setOnClickListener(new View.OnClickListener() {
+        tvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ProfileActivity.this,EditInformation.class));
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            }
+        });
+
+        tvFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileActivity.this, FavoriteActivity.class);
+                intent.putExtra(Put.username, username);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            }
+        });
+
+        tvChangePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileActivity.this, ChangePassActivity.class);
+                intent.putExtra("changepass", "change");
+                startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
@@ -62,9 +84,14 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void findViews() {
 
-        btnEdit=findViewById(R.id.btn_edit_profile);
-        btnExite=findViewById(R.id.btn_exit_profile);
-        btnFavorit=findViewById(R.id.btn_favorite_profile);
+        userSharedPrefrences = new UserSharedPrefrences(ProfileActivity.this);
+
+        username = userSharedPrefrences.getUserName();
+
+        tvEdit=findViewById(R.id.tv_personalInformation);
+        tvExit=findViewById(R.id.tv_exit);
+        tvChangePass = findViewById(R.id.tv_change_pass);
+        tvFav=findViewById(R.id.tv_fav);
         imgBack=findViewById(R.id.img_back_second_toolbar);
         txtTitle=findViewById(R.id.txt_title_toolbar_second);
         txtTitle.setText("حساب کاربری");

@@ -2,6 +2,7 @@ package com.example.mybookstore.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,10 +20,10 @@ public class SendCommentActivity extends AppCompatActivity {
 
     ScaleRatingBar ratingBar;
     EditText edInsert,edPositive,edNegative;
-    Button btnSubmit;
+    CardView btnSubmit;
     TextView txtTollbar;
     ImageView imgBack;
-    String phone,image;
+    String phone;
     String id ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,20 +46,24 @@ public class SendCommentActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (phone.equals("ورود/عضویت") && image.equals("")){
+                if (phone.equals("ورود/عضویت")){
                     Toast.makeText(SendCommentActivity.this, "لطفا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
                 }else {
                     if (!edInsert.getText().toString().equals("") && !edNegative.getText().toString().trim().equals("")
                                 && !edPositive.getText().toString().trim().equals("")){
                         if (ratingBar.getRating() != 0){
                             ApiServices apiServices = new ApiServices(SendCommentActivity.this);
-                            apiServices.SendComment(id, phone, image, edInsert.getText().toString().trim(),
+                            apiServices.SendComment(id, phone, edInsert.getText().toString().trim(),
                                     edPositive.getText().toString().trim(), edNegative.getText().toString().trim(),
                                     ratingBar.getRating(), new ApiServices.OnCommentSend() {
                                         @Override
                                         public void onSend(int responsStatus) {
                                             if (responsStatus == 218){
                                                 Toast.makeText(SendCommentActivity.this, "نظر با موفقیت ثبت شد", Toast.LENGTH_SHORT).show();
+                                                edInsert.setText("");
+                                                edNegative.setText("");
+                                                edPositive.setText("");
+                                                edInsert.requestFocus();
                                             }
                                         }
                                     });
@@ -77,6 +82,7 @@ public class SendCommentActivity extends AppCompatActivity {
 
         ratingBar = findViewById(R.id.rating_insert_comment);
         edInsert = findViewById(R.id.ed_comment_input);
+        edInsert.requestFocus();
         edNegative = findViewById(R.id.ed_negative);
         edPositive = findViewById(R.id.ed_positive);
         btnSubmit = findViewById(R.id.btn_submit);
@@ -88,7 +94,7 @@ public class SendCommentActivity extends AppCompatActivity {
 
         UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(SendCommentActivity.this);
         phone = userSharedPrefrences.getUserName();
-        image = userSharedPrefrences.getUserImaje();
+//        image = userSharedPrefrences.getUserImaje();
 
         id = getIntent().getStringExtra(Put.id);
 

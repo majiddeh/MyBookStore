@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="5dp"
     app:cardBackgroundColor="@color/bg_for_itemshow"
-    android:clickable="true"
+    app:cardCornerRadius="5dp"
+    android:foreground="?attr/selectableItemBackground"
     android:layoutDirection="rtl"
     android:id="@+id/card_item_product"
     xmlns:tools="http://schemas.android.com/tools"
@@ -25,12 +26,12 @@
             android:scaleType="centerInside"
             android:layout_marginBottom="@dimen/margin_itemshow_product"
             android:layout_weight=".6"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginRight="@dimen/standard_margin"
-            android:layout_marginLeft="@dimen/standard_margin"
-            android:background="@color/gray_for_littile_view"/>
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:layout_marginRight="@dimen/standard_margin"-->
+<!--            android:layout_marginLeft="@dimen/standard_margin"-->
+<!--            android:background="@color/gray_for_littile_view"/>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

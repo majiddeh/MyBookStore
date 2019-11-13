@@ -1,9 +1,16 @@
 package com.example.mybookstore.Utils;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -14,8 +21,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.mybookstore.Activities.ChangePassActivity;
+import com.example.mybookstore.Activities.EditInformation;
+import com.example.mybookstore.Activities.LoginActivity;
 import com.example.mybookstore.Activities.MainActivity;
+import com.example.mybookstore.Activities.ProfileActivity;
 import com.example.mybookstore.Activities.VerfyCodeActivity;
+import com.example.mybookstore.Models.ModelAddress;
 import com.example.mybookstore.Models.ModelBanner;
 import com.example.mybookstore.Models.ModelBasket;
 import com.example.mybookstore.Models.ModelCategory;
@@ -24,7 +36,11 @@ import com.example.mybookstore.Models.ModelFav;
 import com.example.mybookstore.Models.ModelItemProduct;
 import com.example.mybookstore.Models.ModelLikes;
 import com.example.mybookstore.Models.ModelOff_Only_MostVisit;
+import com.example.mybookstore.Models.ModelSlider;
+import com.example.mybookstore.R;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,65 +57,24 @@ public class ApiServices {
 
     public ApiServices(Context context) {
         this.context = context;
-    }
-
-
-
-    public void registerUser(final String image,final String phone, final String email, final String password, final String address, final OnSignUpComplete onSignUpComplete) {
-
-
-        StringRequest request = new StringRequest(Request.Method.POST, Links.REGISTER_URL , new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.i("registerapi",response.toString());
-                if (response.equals("218")||response.equals("214")||response.equals("0")){
-                    int responseStatus = Integer.valueOf(response) ;
-                    onSignUpComplete.onSignUp(responseStatus);
-                }else {
-                    Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i("registererror",error.toString());
-
-                onSignUpComplete.onSignUp(Put.STATUS_FAILED);
-                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-            }
-        }){
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
-                map.put(Put.email,email);
-                map.put(Put.address,address);
-                map.put(Put.username,phone);
-                map.put(Put.password,password);
-                map.put(Put.image,image);
-                return map;
-            }
-        };
-        request.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        MySingleton.getInstance(context).addToRequestQueue(request);
-
 
     }
 
-    public void registeWhitSMS(final String username, final String password) {
+    public void registeWhitSMS(final String username, final String password, final ProgressWheel progressWheel) {
 
-
+        progressWheel.setVisibility(View.VISIBLE);
         StringRequest request = new StringRequest(Request.Method.POST, Links.REGISTER_URL_HA , new Response.Listener<String>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(final String response) {
+                progressWheel.setVisibility(View.GONE);
                 Log.i("registerapi",response.toString());
                 if (response.equals("218")||response.equals("214")||response.equals("0")||response.equals("211")){
                     if (response.equals("218")){
-                        Intent intent = new Intent(context, VerfyCodeActivity.class);
-                        intent.putExtra(Put.username,username);
-                        context.startActivity(intent);
-
+                                        Intent intent = new Intent(context, VerfyCodeActivity.class);
+                                        intent.putExtra(Put.username,username);
+                                        intent.putExtra("reg","reg");
+                                        context.startActivity(intent);
+                                        ((Activity)context).finish();
                     }else if (response.equals("214")){
                         Toast.makeText(context, "چنین کاربری قبلا ثبت نام کرده است", Toast.LENGTH_SHORT).show();
                     }else if (response.equals("0")){
@@ -116,6 +91,7 @@ public class ApiServices {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressWheel.setVisibility(View.GONE);
                 Log.i("registererror",error.toString());
                 Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
             }
@@ -135,28 +111,98 @@ public class ApiServices {
 
     }
 
-    public void VerfyCode(final String username, final String code) {
+    public void VerfyCode(final String username, final String code,final String reg, final ProgressWheel progressWheel) {
 
+        String url = "";
+        if (reg.equals("reg") || reg.equals("notverficated")){
+             url = Links.CHECK_CODE_HA;
+        }else if (reg.equals("change")){
+             url = Links.CHECK_CODE_HA_FORGET;
+        }
 
-        StringRequest request = new StringRequest(Request.Method.POST, Links.CHECK_CODE_HA , new Response.Listener<String>() {
+        progressWheel.setVisibility(View.VISIBLE);
+        StringRequest request = new StringRequest(Request.Method.POST, url , new Response.Listener<String>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(final String response) {
+                progressWheel.setVisibility(View.GONE);
                 Log.i("registerapi",response.toString());
 
                 if (response.length()==32){
-                    UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(context);
-                    userSharedPrefrences.saveUserLoginInfoHA(username,response);
-                    Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra(Put.username,username);
-                    context.startActivity(intent);
-                    ((Activity)context).finish();
+                        final Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.dilaog_default);
+                        dialog.show();
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.setCancelable(false);
+                        TextView tvTitle,tvText,tvNegativ,tvPositive;
+                        tvNegativ=dialog.findViewById(R.id.tv_dialog_negative);
+                        tvPositive=dialog.findViewById(R.id.tv_dialog_positive);
+                        tvText=dialog.findViewById(R.id.tv_dialog_text);
+                        tvTitle=dialog.findViewById(R.id.tv_dialog_title);
+                        tvNegativ.setText("خیر بعدا انجام میدم");
+                        tvPositive.setText("بله");
+
+                        tvNegativ.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        dialog.dismiss();
+                                        UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(context);
+                                        userSharedPrefrences.saveUserLoginInfoHA(username,response);
+                                        Intent intent = new Intent(context, MainActivity.class);
+                                        intent.putExtra(Put.username,username);
+                                        context.startActivity(intent);
+                                        ((Activity)context).finish();
+                                    }
+                                },500);
+
+                            }
+                        });
+
+                        tvPositive.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(context);
+                                        userSharedPrefrences.saveUserLoginInfoHA(username,response);
+                                        Intent intent = new Intent(context, EditInformation.class);
+                                        intent.putExtra(Put.newuser,Put.newuser);
+                                        context.startActivity(intent);
+                                        ((Activity)context).finish();
+                                    }
+                                },500);
+
+                            }
+                        });
+
+                        tvTitle.setText("ثبت نام با موفقیت انجام شد");
+                        tvText.setText("آیا مایل به تکمیل ثبت نام و ثبت آدرس و اطلاعات فردی هستید؟");
+
 //                } else if (response.equals("213")){
 //                        Toast.makeText(context, "کد نا معتبر است", Toast.LENGTH_SHORT).show();
 //                    }else if (response.equals("0")){
 //                        Toast.makeText(context, "لطفا ورودی هارا کنترل کنید", Toast.LENGTH_SHORT).show();
 //                    }else if (response.equals("315")){
 //                        Toast.makeText(context, "چنین کاربری وجود ندارد", Toast.LENGTH_SHORT).show();
-                    }else Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+
+
+                    }else if(response.equals("213")){
+                    Toast.makeText(context, "کد نامعتبر", Toast.LENGTH_SHORT).show();
+
+                }else if (response.equals("218")){
+                    Intent intent = new Intent(context, ChangePassActivity.class);
+                    intent.putExtra(Put.username,username);
+                    intent.putExtra("changepass","forget");
+                    context.startActivity(intent);
+                    ((Activity)context).finish();
+                }else {
+                    Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                }
 
 
 
@@ -164,6 +210,7 @@ public class ApiServices {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressWheel.setVisibility(View.GONE);
                 Log.i("registererror",error.toString());
                 Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
             }
@@ -183,65 +230,39 @@ public class ApiServices {
 
     }
 
-    public void registerUserWithOutImage(final String phone, final OnSignUpComplete onSignUpComplete) {
-
-
-        StringRequest request = new StringRequest(Request.Method.POST, Links.REGISTER_URL_WITHOUT_IMAGE , new Response.Listener<String>() {
+    public void loginUserHA(final String username, final String password, final ProgressWheel progressWheel){
+        progressWheel.setVisibility(View.VISIBLE);
+        StringRequest request = new StringRequest(Request.Method.POST, Links.LOGIN_URL_HA, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i("registerapi",response.toString());
-                if (response.equals("218")||response.equals("214")||response.equals("0")){
-                    int responseStatus = Integer.valueOf(response) ;
-                    onSignUpComplete.onSignUp(responseStatus);
+                progressWheel.setVisibility(View.GONE);
+                if (response.equals("0")){
+                    Toast.makeText(context, "رمز عبور یا نام کربری اشتباه است", Toast.LENGTH_SHORT).show();
+                }else if (response.equals("01")){
+                    Toast.makeText(context, "نام کاربری و رمز عبور را وارد کنید", Toast.LENGTH_SHORT).show();
+                }else if (response.equals("209")){
+                    Toast.makeText(context, "فعالسازی انجام نشده", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, VerfyCodeActivity.class);
+                    intent.putExtra("reg","notverficated");
+                    intent.putExtra(Put.username,username);
+                    context.startActivity(intent);
+                    ((Activity)context).finish();
+                }else if (response.length()==32){
+                    UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(context);
+                    userSharedPrefrences.saveUserLoginInfoHA(username,response);
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.putExtra(Put.username,username);
+                    context.startActivity(intent);
+                    ((Activity)context).finish();
                 }else {
                     Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
                 }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                Log.i("registerapierror",error.toString());
-
-                onSignUpComplete.onSignUp(Put.STATUS_FAILED);
-                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-            }
-        }){
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
-                map.put(Put.username,phone);
-                return map;
-            }
-        };
-        request.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        MySingleton.getInstance(context).addToRequestQueue(request);
-
-
-    }
-
-    public void loginUser(final String phone, final String password, final OnLoginComplete onLoginComplete){
-
-        StringRequest request = new StringRequest(Request.Method.POST, Links.LOGIN_URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if (response.startsWith("2")){
-//                    String image = response.substring(1,response.length());
-                    String[] split =  response.split(";");
-                    String image= split[1].trim();
-                    int loginStatus = Integer.valueOf(split[0]);
-                    onLoginComplete.onResponse(loginStatus,image);
-                }else if (response.startsWith("0")){
-                    Toast.makeText(context, "نام کاربری یا رمز عبور اشتباه است", Toast.LENGTH_SHORT).show();
-                }else Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
-
                 Log.i("loginapi",response.toString());
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressWheel.setVisibility(View.GONE);
                 Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
                 Log.i("loginapierror",error.toString());
             }
@@ -250,7 +271,7 @@ public class ApiServices {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map =new HashMap<>();
-                map.put(Put.username,phone);
+                map.put(Put.username,username);
                 map.put(Put.password,password);
                 return map;
             }
@@ -260,15 +281,325 @@ public class ApiServices {
 
     }
 
-    public void editInformation(final String phone, final String email, final String address, final String name, final String family, final OnInformationEdit onInformationEdit){
+    public void ChangePass(final String username,final String token, final String oldPass, final String newPass, final String rePass, final ProgressWheel progressWheel){
+        progressWheel.setVisibility(View.VISIBLE);
+        StringRequest request = new StringRequest(Request.Method.POST, Links.CHANGE_PASS, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressWheel.setVisibility(View.GONE);
+                if (response.equals("354")){
+                    Toast.makeText(context, "رمز قبلی همخوانی ندارد", Toast.LENGTH_SHORT).show();
+                }else if (response.equals("370")){
+                    Toast.makeText(context, "رمز عبور همخوانی ندارد", Toast.LENGTH_SHORT).show();
+                }else if (response.equals("210")) {
+                    Toast.makeText(context, "رمز باید بیش از 4 کاراکتر باشد", Toast.LENGTH_SHORT).show();
+                }else if (response.equals("218")){
+                    Toast.makeText(context, "رمز عبور با موفقیت تغییر کرد", Toast.LENGTH_SHORT).show();
+                    ((Activity)context).finish();
+                }else {
+                    Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                }
+                Log.i("loginapi",response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressWheel.setVisibility(View.GONE);
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                Log.i("loginapierror",error.toString());
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map =new HashMap<>();
+                map.put(Put.username,username);
+                map.put("oldpass",oldPass);
+                map.put("newpass",newPass);
+                map.put("repass",rePass);
+                map.put(Put.token,token);
+                return map;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(18000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(request);
+
+    }
+
+    public void SetPass(final  String username ,final String pass,final String repass, final ProgressWheel progressWheel){
+        progressWheel.setVisibility(View.VISIBLE);
+        StringRequest request = new StringRequest(Request.Method.POST, Links.SET_PASS, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressWheel.setVisibility(View.GONE);
+                if (response.equals("370")){
+                    Toast.makeText(context, "رمز عبور همخوانی ندارد", Toast.LENGTH_SHORT).show();
+                }else if (response.equals("210")) {
+                    Toast.makeText(context, "رمز باید بیش از 4 کاراکتر باشد", Toast.LENGTH_SHORT).show();
+                }else if (response.equals("218")){
+                    Toast.makeText(context, "رمز عبور با موفقیت تغییر کرد", Toast.LENGTH_LONG).show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(context,LoginActivity.class);
+                            intent.putExtra(Put.username,username);
+                            context.startActivity(intent);
+                            ((Activity)context).finish();
+                        }
+                    },1000);
+
+                }else {
+                    Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                }
+                Log.i("loginapi",response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressWheel.setVisibility(View.GONE);
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                Log.i("loginapierror",error.toString());
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map =new HashMap<>();
+                map.put(Put.username,username);
+                map.put(Put.password,pass);
+                map.put(Put.repass,repass);
+                return map;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(18000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(request);
+
+    }
+
+    public void ForgetPass(final String username, final ProgressWheel progressWheel){
+        progressWheel.setVisibility(View.VISIBLE);
+        StringRequest request = new StringRequest(Request.Method.POST, Links.FORGOT_PASS, new Response.Listener<String>() {
+            @Override
+
+            public void onResponse(String response) {
+                progressWheel.setVisibility(View.GONE);
+                if (response.equals("218")){
+                    Intent intent = new Intent(context,VerfyCodeActivity.class);
+                    intent.putExtra(Put.username,username);
+                    intent.putExtra("reg","change");
+                    context.startActivity(intent);
+                    ((Activity)context).finish();
+                }else if (response.equals("315")){
+                    Toast.makeText(context, "چنین کاربری وجود ندارد...", Toast.LENGTH_SHORT).show();
+                }else if (response.equals("211")){
+                    Toast.makeText(context, "لطفا نام کاربری را به درستی وارد کنید", Toast.LENGTH_SHORT).show();
+                }else Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
+
+
+
+                Log.i("apiii",response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressWheel.setVisibility(View.GONE);
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                Log.i("apiii",error.toString());
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map =new HashMap<>();
+                map.put(Put.username,username);
+                return map;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(18000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(request);
+
+    }
+
+    public void receivePersonalInformation(final String username, final OnInformationReceived onInformationReceived){
+
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(Put.username,username);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(1, Links.GET_PERSONAL_INFORMATION, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i("infoapi",response.toString());
+                try {
+                    JSONObject jsonObject = response.getJSONObject("0");
+                    String name = jsonObject.getString(Put.name);
+                    String family = jsonObject.getString(Put.family);
+                    onInformationReceived.onReceived(name,family);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                Log.i("infoapierror",error.toString());
+
+            }
+        });
+
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
+    }
+
+    public void AddAddress(final String token, final String name, final String family, final String postalcode, final String phone,
+                           final String mobile, final String idcity,final String idCityCap, final String address, final OnAddressAdd onAddressAdd){
+
+
+        StringRequest request = new StringRequest(1, Links.ADD_ADDRESS, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                onAddressAdd.onAddress(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "خطایی رخ داد مجددا امتحان کنید", Toast.LENGTH_SHORT).show();
+                Log.i("editapierror",error.toString());
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map =new HashMap<>();
+                map.put(Put.token,token);
+                map.put(Put.name,name);
+                map.put(Put.family,family);
+                map.put(Put.postalcode,postalcode);
+                map.put(Put.phone,phone);
+                map.put(Put.mobile,mobile);
+                map.put("idcity",idcity);
+                map.put("idcitycap",idCityCap);
+                map.put(Put.address,address);
+
+                return map;
+            }
+        };
+
+        request.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(request);
+
+    }
+
+    public void GetAddress(final String token, final OnAddressReceived onAddressReceived){
+
+
+        StringRequest request = new StringRequest(1, Links.GET_ADDRESS,new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    List<ModelAddress> modelAddresses = new ArrayList<>();
+                    for (int i = 0; i < response.length(); i++) {
+                        ModelAddress modelAddress = new ModelAddress();
+                        try {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            modelAddress.setIdAddress(jsonObject.getInt("idaddress"));
+                            modelAddress.setName(jsonObject.getString(Put.name));
+                            modelAddress.setFamily(jsonObject.getString(Put.family));
+                            modelAddress.setPhone(jsonObject.getString(Put.phone));
+                            modelAddress.setMobile(jsonObject.getString(Put.mobile));
+                            modelAddress.setCity(jsonObject.getString("city"));
+                            modelAddress.setCityCap(jsonObject.getString("citycap"));
+                            modelAddress.setPostalcode(jsonObject.getString("postalcode"));
+                            modelAddress.setIduser(jsonObject.getString("iduser"));
+                            modelAddress.setAddress(jsonObject.getString("address"));
+                            modelAddress.setIdcity(jsonObject.getString("idcity"));
+                            modelAddress.setIdcityCap(jsonObject.getString("idcitycap"));
+
+                            modelAddresses.add(modelAddress);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    onAddressReceived.onReceived(modelAddresses);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "خطایی رخ داد مجددا امتحان کنید", Toast.LENGTH_SHORT).show();
+                Log.i("editapierror",error.toString());
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map =new HashMap<>();
+                map.put(Put.token,token);
+                return map;
+            }
+        };
+
+        request.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(request);
+
+    }
+
+    public void DelAddress (final String idAddress, final OnAddressDeleted onAddressDeleted){
+
+
+        StringRequest request = new StringRequest(1, Links.DEL_ADDRESS,new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equals("218")){
+                    onAddressDeleted.onDeleted(true);
+                }else {
+                    onAddressDeleted.onDeleted(false);
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "خطایی رخ داد مجددا امتحان کنید", Toast.LENGTH_SHORT).show();
+                Log.i("editapierror",error.toString());
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map =new HashMap<>();
+                map.put("idaddress",idAddress);
+                return map;
+            }
+        };
+
+        request.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(request);
+
+    }
+
+    public void editInformation(final String username,final String name, final String family){
 
 
         StringRequest request = new StringRequest(1, Links.EDIT_INFORMATION, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (response.equals("218")||response.equals("0")){
-                    int editStatus = Integer.valueOf(response);
-                    onInformationEdit.onEdit(editStatus);
 
                 }
                 else Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
@@ -287,12 +618,9 @@ public class ApiServices {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map =new HashMap<>();
-                map.put(Put.username,phone);
-                map.put(Put.email,email);
-                map.put(Put.address,address);
+                map.put(Put.username,username);
                 map.put(Put.name,name);
                 map.put(Put.family,family);
-
                 return map;
             }
         };
@@ -300,44 +628,6 @@ public class ApiServices {
         request.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         MySingleton.getInstance(context).addToRequestQueue(request);
 
-    }
-
-    public void receivePersonalInformation(final String phone, final OnInformationReceived onInformationReceived){
-
-
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put(Put.username,phone);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(1, Links.GET_PERSONAL_INFORMATION, jsonObject, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.i("infoapi",response.toString());
-                try {
-                    JSONObject jsonObject = response.getJSONObject("0");
-                    String name = jsonObject.getString(Put.name);
-                    String email = jsonObject.getString(Put.email);
-                    String family = jsonObject.getString(Put.family);
-                    String address = jsonObject.getString(Put.address);
-                    onInformationReceived.onReceived(name,email,family,address);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-                Log.i("infoapierror",error.toString());
-
-            }
-        });
-
-        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        MySingleton.getInstance(context).addToRequestQueue(jsonArrayRequest);
     }
 
     public void categoryReceive(final OnCategoryReceived categoryReceived){
@@ -955,7 +1245,6 @@ public class ApiServices {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         comment.setComment(jsonObject.getString(Put.comment));
                         comment.setUser(jsonObject.getString(Put.user));
-                        comment.setImage(jsonObject.getString(Put.image));
                         comment.setNegative(jsonObject.getString(Put.negative));
                         comment.setPositive(jsonObject.getString(Put.positive));
                         comment.setRating(jsonObject.getLong(Put.rating));
@@ -990,7 +1279,7 @@ public class ApiServices {
         MySingleton.getInstance(context).addToRequestQueue(stringRequest);
     }
 
-    public void SendComment(final String idProduct, final String phone, final String image, final String comment, final String positive, final String negative, final float rating,
+    public void SendComment(final String idProduct, final String phone, final String comment, final String positive, final String negative, final float rating,
                             final OnCommentSend onCommentSend){
 
         StringRequest stringRequest = new StringRequest(1,Links.SEND_COMMENT, new Response.Listener<String>() {
@@ -1015,7 +1304,6 @@ public class ApiServices {
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
                 map.put(Put.id,idProduct);
-                map.put(Put.image,image);
                 map.put(Put.username,phone);
                 map.put(Put.negative,negative);
                 map.put(Put.positive,positive);
@@ -1278,40 +1566,7 @@ public class ApiServices {
 
     }
 
-    public void ForgetPass(final String email, final OnForgetPass onForgetPass){
-
-        StringRequest request = new StringRequest(Request.Method.POST, Links.FORGOT_PASS, new Response.Listener<String>() {
-            @Override
-
-            public void onResponse(String response) {
-                if (response.equals("218")||response.equals("0")){
-                    int responseStatus = Integer.valueOf(response);
-                    onForgetPass.OnForget(responseStatus);
-                }else Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
-
-                Log.i("apiii",response.toString());
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-                Log.i("apiii",error.toString());
-            }
-        }){
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map =new HashMap<>();
-                map.put(Put.email,email);
-                return map;
-            }
-        };
-        request.setRetryPolicy(new DefaultRetryPolicy(18000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        MySingleton.getInstance(context).addToRequestQueue(request);
-
-    }
-
-    public void AddToFav(final String idproduct,final String phone, final OnFavAdd onFavAdd){
+    public void AddToFav(final String idproduct,final String username, final OnFavAdd onFavAdd){
 
 
         StringRequest stringRequest = new StringRequest(1, Links.ADD_TO_FAV, new Response.Listener<String>() {
@@ -1334,7 +1589,7 @@ public class ApiServices {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
-                map.put(Put.username,phone);
+                map.put(Put.username,username);
                 map.put(Put.id,idproduct);
                 return map;
             }
@@ -1437,6 +1692,41 @@ public class ApiServices {
 
     }
 
+    public void GetSliders(final OnSliderReceived onSliderReceived){
+
+        StringRequest stringRequest = new StringRequest(0, Links.GET_SLIDERS, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    List<ModelSlider> modelSliders = new ArrayList<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        ModelSlider modelSlider = new ModelSlider();
+
+                        modelSlider.setId(jsonObject.getInt(Put.id));
+                        modelSlider.setImage(jsonObject.getString(Put.image));
+                        modelSlider.setName(jsonObject.getString(Put.name));
+
+                        modelSliders.add(modelSlider);
+                    }
+                    onSliderReceived.onSlider(modelSliders);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(stringRequest);
+    }
+
 
     public interface OnSignUpComplete {
         void onSignUp (int responseStatus);
@@ -1448,7 +1738,7 @@ public class ApiServices {
         void onEdit(int editStatus);
     }
     public interface OnInformationReceived{
-        void onReceived(String name,String family,String email,String address);
+        void onReceived(String name,String family);
     }
     public interface OnCategoryReceived{
         void onCatReceived(List<ModelCategory> modelCategories);
@@ -1523,8 +1813,108 @@ public class ApiServices {
     public interface OnFavCheck{
         void onCheck(int responseStatus);
     }
+    public interface OnSliderReceived{
+        void onSlider(List<ModelSlider> modelSliders);
+    }
+    public interface OnAddressAdd{
+        void onAddress(String response);
+    }
+    public interface OnAddressReceived{
+        void onReceived(List<ModelAddress> modelAddresses);
+    }
+    public interface OnAddressDeleted{
+        void onDeleted(boolean succeed);
+    }
 
 
+
+
+
+
+
+
+
+
+
+
+    public void registerUser(final String image,final String phone, final String email, final String password, final String address, final OnSignUpComplete onSignUpComplete) {
+
+
+        StringRequest request = new StringRequest(Request.Method.POST, Links.REGISTER_URL , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("registerapi",response.toString());
+                if (response.equals("218")||response.equals("214")||response.equals("0")){
+                    int responseStatus = Integer.valueOf(response) ;
+                    onSignUpComplete.onSignUp(responseStatus);
+                }else {
+                    Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("registererror",error.toString());
+
+                onSignUpComplete.onSignUp(Put.STATUS_FAILED);
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map = new HashMap<>();
+                map.put(Put.email,email);
+                map.put(Put.address,address);
+                map.put(Put.username,phone);
+                map.put(Put.password,password);
+                map.put(Put.image,image);
+                return map;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(18000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(request);
+
+
+    }
+    public void loginUser(final String phone, final String password, final OnLoginComplete onLoginComplete){
+
+        StringRequest request = new StringRequest(Request.Method.POST, Links.LOGIN_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.startsWith("2")){
+//                    String image = response.substring(1,response.length());
+                    String[] split =  response.split(";");
+                    String image= split[1].trim();
+                    int loginStatus = Integer.valueOf(split[0]);
+                    onLoginComplete.onResponse(loginStatus,image);
+                }else if (response.startsWith("0")){
+                    Toast.makeText(context, "نام کاربری یا رمز عبور اشتباه است", Toast.LENGTH_SHORT).show();
+                }else Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
+
+                Log.i("loginapi",response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                Log.i("loginapierror",error.toString());
+            }
+        }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String,String> map =new HashMap<>();
+                map.put(Put.username,phone);
+                map.put(Put.password,password);
+                return map;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(18000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        MySingleton.getInstance(context).addToRequestQueue(request);
+
+    }
 
 
 

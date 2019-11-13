@@ -47,7 +47,7 @@ public class AdapterCategoryLittleView extends RecyclerView.Adapter<AdapterCateg
             @Override
             public void onClick(View v) {
                 //TODO id ke ferestade mishe be safhe baad bayad daghighan mahsoolat hamoon id ro neshoon bede vali nemide ...
-                Intent intent = new Intent(viewHolder.itemView.getContext(), CatActivity_ViewPager.class);
+                Intent intent = new Intent(viewHolder.itemView.getContext(), ItemCatActivity.class);
                 intent.putExtra(Put.id,modelCategories.get(i).getId()+"");
                 String title = modelCategory.getTitle_category();
                 intent.putExtra(Put.name,title);

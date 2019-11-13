@@ -18,16 +18,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/img_userComment"
-                android:layout_width="50dp"
-                android:layout_margin="5dp"
-                android:src="@drawable/book12"
-                app:civ_border_width="1dp"
-                app:civ_border_color="@color/gray"
-                android:layout_height="50dp" />
+<!--            <de.hdodenhof.circleimageview.CircleImageView-->
+<!--                android:id="@+id/img_userComment"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_margin="5dp"-->
+<!--                android:src="@drawable/book12"-->
+<!--                app:civ_border_width="1dp"-->
+<!--                app:civ_border_color="@color/gray"-->
+<!--                android:layout_height="50dp" />-->
             <TextView
                 android:textSize="15sp"
+                android:paddingStart="10dp"
                 android:id="@+id/txt_usercomment"
                 android:text="ali@yahoo.com"
                 android:fontFamily="@font/vazir_medium"
@@ -41,8 +42,8 @@
             android:layout_margin="5dp"
             android:fontFamily="@font/vazir_medium"
             tools:text="@string/lorem"
-            android:textSize="13dp"
-            android:textColor="@color/black"
+            android:textSize="13sp"
+
             android:gravity="center_vertical|right"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -60,7 +61,7 @@
                 android:id="@+id/txt_posotiveComment"
                 android:text="این گوشی عالیه"
                 android:textColor="@color/green"
-                android:textSize="15sp"
+                android:textSize="@dimen/text_size_small"
                 android:layout_width="wrap_content"
                 android:fontFamily="@font/vazir_medium"
                 android:layout_height="wrap_content" />
@@ -79,7 +80,7 @@
                 android:id="@+id/txt_negativeComment"
                 android:text="این گوشی عالیه"
                 android:textColor="@color/red"
-                android:textSize="15sp"
+                android:textSize="@dimen/text_size_small"
                 android:layout_width="wrap_content"
                 android:fontFamily="@font/vazir_medium"
                 android:layout_height="wrap_content" />

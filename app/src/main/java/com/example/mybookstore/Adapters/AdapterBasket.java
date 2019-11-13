@@ -1,7 +1,10 @@
 package com.example.mybookstore.Adapters;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -64,28 +67,81 @@ public class AdapterBasket extends RecyclerView.Adapter<AdapterBasket.ViewHolder
         viewHolder.txtNumber.setText(list.get(i).getNumber()+" "+"عدد");
         viewHolder.txtTitile.setText(list.get(i).getTitle());
         viewHolder.txtPrice.setText(decimalFormat.format(Integer.valueOf(list.get(i).getPrice()))+" "+"تومان");
-        viewHolder.txtDelete.setOnClickListener(new View.OnClickListener() {
+        viewHolder.imgdelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (onloadPrice !=null ){
+//                if (onloadPrice !=null ){
+//                            onloadPrice.onloadPrice();
+//                            ApiServices apiServices = new ApiServices(context);
+//                            apiServices.DeleteFromCart(list.get(i).getId());
+//                            Handler handler = new Handler();
+//                            handler.postDelayed(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    list.remove(i);
+//                                    notifyItemRemoved(i);
+//                                    notifyItemRangeRemoved(i,list.size());
+//                                }
+//                            },2);
+//                        }
 
-                    onloadPrice.onloadPrice();
-                    ApiServices apiServices = new ApiServices(context);
-                    apiServices.DeleteFromCart(list.get(i).getId());
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            list.remove(i);
-                            notifyItemRemoved(i);
-                            notifyItemRangeRemoved(i,list.size());
-                        }
-                    },2);
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.dilaog_default);
+                dialog.show();
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.setCancelable(false);
+                TextView tvTitle,tvText,tvNegativ,tvPositive;
+                tvNegativ=dialog.findViewById(R.id.tv_dialog_negative);
+                tvPositive=dialog.findViewById(R.id.tv_dialog_positive);
+                tvText=dialog.findViewById(R.id.tv_dialog_text);
+                tvTitle=dialog.findViewById(R.id.tv_dialog_title);
+                tvNegativ.setText("خیر");
+                tvPositive.setText("بله");
 
+                tvNegativ.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                            }
+                        },500);
 
-                }
+                    }
+                });
 
+                tvPositive.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Handler handlerr = new Handler();
+                        handlerr.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (onloadPrice !=null ){
+                                    onloadPrice.onloadPrice();
+                                    ApiServices apiServices = new ApiServices(context);
+                                    apiServices.DeleteFromCart(list.get(i).getId());
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            list.remove(i);
+                                            notifyItemRemoved(i);
+                                            notifyItemRangeRemoved(i,list.size());
+                                        }
+                                    },2);
+                                }
+                            }
+                        },500);
+
+                    }
+                });
+
+                tvTitle.setText("حذف از سبد خرید");
+                tvText.setText("آیا مطمئن هستید؟");
 
             }
         });
@@ -104,12 +160,12 @@ public class AdapterBasket extends RecyclerView.Adapter<AdapterBasket.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageBasket;
-        TextView txtTitile,txtNumber,txtPrice,txtTotalPrice,txtDelete;
+        ImageView imageBasket,imgdelete;
+        TextView txtTitile,txtNumber,txtPrice,txtTotalPrice;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtDelete=itemView.findViewById(R.id.txtdeletefrombasket);
+            imgdelete=itemView.findViewById(R.id.img_delete_from_cart);
             txtNumber=itemView.findViewById(R.id.txtnumberbasket);
             txtPrice=itemView.findViewById(R.id.txtpricebasket);
             txtTitile=itemView.findViewById(R.id.txttitlebasket);

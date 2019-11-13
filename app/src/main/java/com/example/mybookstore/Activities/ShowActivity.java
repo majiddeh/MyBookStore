@@ -46,7 +46,7 @@ public class ShowActivity extends AppCompatActivity {
             txtTitleToolbar,txtPrice,txtNext,txtPriceOff,txtCounCart,txtRate;
     private ApiServices apiServices = new ApiServices(ShowActivity.this);
     private CardView addToShoCart,cardComments;
-    private String id,titlee,imagee,pricee,phone,offPrice,visitt,lablee,catt;
+    private String id,titlee,imagee,pricee, username,offPrice,visitt,lablee,catt;
     private NestedScrollView scrollView;
     private RecyclerView recyclerViewLikes;
     private ScaleRatingBar ratingBar;
@@ -62,7 +62,7 @@ public class ShowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show);
 
         UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(ShowActivity.this);
-        phone = userSharedPrefrences.getUserName();
+        username = userSharedPrefrences.getUserName();
 
         findViews();
         initializePage();
@@ -100,12 +100,12 @@ public class ShowActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (phone.equals("ورود/عضویت")){
+                if (username.equals("ورود/عضویت")){
                     Toast.makeText(ShowActivity.this, "لطفا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
                 }else {
 
                     if (!offPrice.equals("0")){
-                        apiServices.AddToShopCart(id, titlee, imagee, offPrice, phone, new ApiServices.OnShopCartAdd() {
+                        apiServices.AddToShopCart(id, titlee, imagee, offPrice, username, new ApiServices.OnShopCartAdd() {
                             @Override
                             public void onShopCart(int responseStatus) {
                                 switch (responseStatus){
@@ -122,7 +122,7 @@ public class ShowActivity extends AppCompatActivity {
                         });
 
                     }else {
-                        apiServices.AddToShopCart(id, titlee, imagee, pricee, phone, new ApiServices.OnShopCartAdd() {
+                        apiServices.AddToShopCart(id, titlee, imagee, pricee, username, new ApiServices.OnShopCartAdd() {
                             @Override
                             public void onShopCart(int responseStatus) {
                                 switch (responseStatus){
@@ -145,7 +145,7 @@ public class ShowActivity extends AppCompatActivity {
         imgShopCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (phone.equals("ورود/عضویت")){
+                if (username.equals("ورود/عضویت")){
                     Toast.makeText(ShowActivity.this, "لطفا وارد حساب خود شوید", Toast.LENGTH_SHORT).show();
                 }else {
                     startActivity(new Intent(ShowActivity.this,BasketActivity.class));
@@ -169,7 +169,10 @@ public class ShowActivity extends AppCompatActivity {
         imgFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    apiServices.AddToFav(id, phone, new ApiServices.OnFavAdd() {
+                if (username.equals("ورود/عضویت")){
+                    Toast.makeText(ShowActivity.this, "لطفا وارد حساب کاربری خود شوید", Toast.LENGTH_SHORT).show();
+                }else {
+                    apiServices.AddToFav(id, username, new ApiServices.OnFavAdd() {
                         @Override
                         public void onFav(int responseStatus) {
                             if (responseStatus==218){
@@ -186,13 +189,15 @@ public class ShowActivity extends AppCompatActivity {
                             }
                         }
                     });
+                }
+
             }
         });
     }
 
     private void initializePage() {
 
-        apiServices.CheckFav(id, phone, new ApiServices.OnFavCheck() {
+        apiServices.CheckFav(id, username, new ApiServices.OnFavCheck() {
             @Override
             public void onCheck(int responseStatus) {
                 if (responseStatus==218){
@@ -208,7 +213,7 @@ public class ShowActivity extends AppCompatActivity {
             }
         });
 
-        apiServices.GetCount(phone, new ApiServices.OnCountReceived() {
+        apiServices.GetCount(username, new ApiServices.OnCountReceived() {
             @Override
             public void onCount(String count) {
                 txtCounCart.setText(count);

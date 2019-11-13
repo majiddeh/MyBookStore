@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,125 +10,129 @@
     android:layout_height="match_parent"
     tools:context=".Activities.SendCommentActivity">
 
-    <include layout="@layout/toolbar_second"/>
+    <include layout="@layout/toolbar_second"
+        android:id="@+id/toooolbar_second"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+    <LinearLayout
+        android:layout_below="@+id/toooolbar_second"
         android:layout_width="match_parent"
-        android:layout_height="100dp" >
-        <EditText
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:fontFamily="@font/vazir_medium"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_height="wrap_content"
+                android:lines="5"
+                android:maxLength="250"
+                android:textSize="@dimen/text_size_small"
+                android:paddingStart="10dp"
+                android:id="@+id/ed_comment_input"
+                android:hint="@string/insert_comment"
+                android:background="@drawable/selector_default_edittext"/>
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:fontFamily="@font/vazir_medium"
+            android:layout_height="wrap_content">
+                <EditText
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_width="200dp"
+                    android:paddingStart="10dp"
+                    android:textColorHint="#923CCC25"
+                    android:maxLength="60"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/green"
+                    android:lines="3"
+                    android:layout_centerVertical="true"
+                    android:hint="@string/positive_points"
+                    android:fontFamily="@font/vazir_medium"
+                    android:textSize="@dimen/text_size_small"
+                    android:id="@+id/ed_positive"
+                    android:background="@drawable/selector_default_edittext"/>
 
-            android:layout_height="match_parent"
-            android:id="@+id/ed_comment_input"
-            android:hint="@string/insert_comment"
-            android:background="@color/gray_light"/>
-    </android.support.design.widget.TextInputLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <android.support.design.widget.TextInputLayout
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_width="0dp"
-            android:layout_weight=".7"
-            android:padding="5dp"
-            android:layout_height="100dp" >
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/positive_points"
-                android:fontFamily="@font/vazir_medium"
-
-                android:id="@+id/ed_positive"
-                android:background="@color/gray_light"/>
-        </android.support.design.widget.TextInputLayout>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/vazir_medium"
-
-            android:layout_weight=".3"
-            android:gravity="center_vertical|start"
-            android:textColor="@color/green"
-            android:text="@string/positive_points"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <android.support.design.widget.TextInputLayout
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_width="0dp"
-            android:layout_weight=".7"
-            android:padding="5dp"
-            android:layout_height="100dp" >
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/vazir_medium"
-
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginEnd="20dp"
+                android:layout_width="200dp"
+                android:paddingStart="10dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:maxLength="60"
+                android:lines="3"
+                android:textColor="@color/red"
+                android:textColorHint="#9CCA0000"
                 android:hint="@string/negative_point"
+                android:fontFamily="@font/vazir_medium"
+                android:textSize="@dimen/text_size_small"
                 android:id="@+id/ed_negative"
-                android:background="@color/gray_light"/>
-        </android.support.design.widget.TextInputLayout>
+                android:background="@drawable/selector_default_edittext"/>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/vazir_medium"
 
-            android:layout_weight=".3"
-            android:gravity="center_vertical|start"
-            android:textColor="@color/red"
-            android:text="@string/negative_point"/>
+        </RelativeLayout>
+
+
+        <com.willy.ratingbar.ScaleRatingBar
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/rating_insert_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srb_numStars="5"
+            android:layout_gravity="center_horizontal"
+            app:srb_minimumStars="0"
+            app:srb_rating="0"
+            app:srb_starWidth="30dp"
+            app:srb_starHeight="30dp"
+            app:srb_starPadding="10dp"
+            app:srb_stepSize="0.5"
+            app:srb_isIndicator="false"
+            app:srb_clickable="true"
+            app:srb_scrollable="true"
+            app:srb_clearRatingEnabled="true"
+            app:srb_drawableEmpty="@drawable/empty"
+            app:srb_drawableFilled="@drawable/filled">
+        </com.willy.ratingbar.ScaleRatingBar>
 
     </LinearLayout>
 
 
-    <com.willy.ratingbar.ScaleRatingBar
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/rating_insert_comment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srb_numStars="5"
-        android:layout_gravity="center_horizontal"
-        app:srb_minimumStars="0"
-        app:srb_rating="0"
-        app:srb_starWidth="30dp"
-        app:srb_starHeight="30dp"
-        app:srb_starPadding="10dp"
-        app:srb_stepSize="0.5"
-        app:srb_isIndicator="false"
-        app:srb_clickable="true"
-        app:srb_scrollable="true"
-        app:srb_clearRatingEnabled="true"
-        app:srb_drawableEmpty="@drawable/empty"
-        app:srb_drawableFilled="@drawable/filled">
-    </com.willy.ratingbar.ScaleRatingBar>
-
-    <Button
-        android:layout_width="200dp"
-        android:fontFamily="@font/vazir_medium"
-
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:text="@string/insert_comment"
-        android:textColor="@color/white"
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
         android:id="@+id/btn_submit"
-        android:layout_height="wrap_content"
-        android:background="@color/green"/>
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:layout_alignParentBottom="true"
+        android:elevation="@dimen/standard_elevation"
+        android:layout_height="50dp"
+        tools:targetApi="lollipop">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/green"
+            android:gravity="center_vertical"
+            android:text="@string/insert_comment"
+            android:textAlignment="center"
+            android:textSize="@dimen/txt_size_title_activity_show"
+            android:textColor="@color/white"
+            android:fontFamily="@font/vazir_medium" />
 
-</LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+
+
+</RelativeLayout>

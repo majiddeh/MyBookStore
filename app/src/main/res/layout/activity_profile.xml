@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layoutDirection="rtl"
     android:background="@color/gray_light_for_bg_activity"
     android:layout_height="match_parent"
     tools:context=".Activities.ProfileActivity">
@@ -12,47 +13,167 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_vertical"
-        android:layout_height="match_parent">
-        <Button
-            android:layout_width="200dp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/txt_size_title_item_shows"
-            android:background="@drawable/shape_btn_edit_profile"
-            android:fontFamily="@font/vazir_medium"
+        android:layout_height="match_parent"
+        android:background="@color/gray_light"
+        android:orientation="vertical">
 
-            android:id="@+id/btn_edit_profile"
-            android:layout_height="wrap_content"
-            android:text="@string/edit_information"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/large_margin"/>
-        <Button
-            android:layout_width="200dp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/txt_size_title_item_shows"
-            android:background="@drawable/shape_btn_favorite_profile"
-            android:id="@+id/btn_favorite_profile"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/vazir_medium"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary">
 
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/vazir_medium"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_size_navigation_items"
+                tools:text="09120696474" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_myorders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:drawableStart="@drawable/ic_list_black_24dp"
+            android:drawableTint="@color/gray"
+            android:fontFamily="@font/vazir_medium"
+            android:text="@string/myorders"
+            android:textSize="@dimen/txt_size_navigation_items" />
+
+        <TextView
+            android:id="@+id/tv_fav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:drawableStart="@drawable/ic_favorite_black_24dp"
+            android:drawableTint="@color/gray"
+            android:fontFamily="@font/vazir_medium"
             android:text="@string/favorite"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/large_margin"/>
-        <Button
-            android:layout_width="200dp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/txt_size_title_item_shows"
-            android:background="@drawable/shape_btn_exit_profile"
-            android:fontFamily="@font/vazir_medium"
+            android:textSize="@dimen/txt_size_navigation_items" />
 
-            android:id="@+id/btn_exit_profile"
+        <TextView
+            android:id="@+id/tv_personalInformation"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:drawableStart="@drawable/ic_account_circle_black_24dp"
+            android:drawableTint="@color/gray"
+            android:fontFamily="@font/vazir_medium"
+            android:text="@string/account_information"
+            android:textSize="@dimen/txt_size_navigation_items" />
+
+        <TextView
+            android:id="@+id/tv_basket"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:drawableStart="@drawable/ic_shopping_cart_black_24dp"
+            android:drawableTint="@color/gray"
+            android:fontFamily="@font/vazir_medium"
+            android:text="@string/cart"
+            android:textSize="@dimen/txt_size_navigation_items" />
+
+
+        <TextView
+            android:id="@+id/tv_change_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:drawableStart="@drawable/ic_https_black_24dp"
+            android:drawableTint="@color/gray"
+            android:fontFamily="@font/vazir_medium"
+            android:text="@string/change_pass"
+            android:textSize="@dimen/txt_size_navigation_items" />
+
+
+        <TextView
+            android:id="@+id/tv_exit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:drawableStart="@drawable/ic_exit_to_app_black_24dp"
+            android:drawableTint="@color/gray"
+            android:fontFamily="@font/vazir_medium"
             android:text="@string/exit_profile"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/large_margin"/>
+            android:textSize="@dimen/txt_size_navigation_items" />
+
 
     </LinearLayout>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:orientation="vertical"-->
+<!--        android:gravity="center_vertical"-->
+<!--        android:layout_height="match_parent">-->
+<!--        <Button-->
+<!--            android:layout_width="200dp"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="@dimen/txt_size_title_item_shows"-->
+<!--            android:background="@drawable/shape_btn_edit_profile"-->
+<!--            android:fontFamily="@font/vazir_medium"-->
+
+<!--            android:id="@+id/btn_edit_profile"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/edit_information"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:layout_marginTop="@dimen/large_margin"/>-->
+<!--        <Button-->
+<!--            android:layout_width="200dp"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="@dimen/txt_size_title_item_shows"-->
+<!--            android:background="@drawable/shape_btn_favorite_profile"-->
+<!--            android:id="@+id/btn_favorite_profile"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fontFamily="@font/vazir_medium"-->
+
+<!--            android:text="@string/favorite"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:layout_marginTop="@dimen/large_margin"/>-->
+<!--        <Button-->
+<!--            android:layout_width="200dp"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="@dimen/txt_size_title_item_shows"-->
+<!--            android:background="@drawable/shape_btn_exit_profile"-->
+<!--            android:fontFamily="@font/vazir_medium"-->
+
+<!--            android:id="@+id/btn_exit_profile"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/exit_profile"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:layout_marginTop="@dimen/large_margin"/>-->
+
+<!--    </LinearLayout>-->
 
 
 </LinearLayout>

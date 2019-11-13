@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="170dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginEnd="16dp"
     android:layout_marginStart="16dp"
     app:cardElevation="8dp"
+    android:foreground="?attr/selectableItemBackground"
     android:layout_marginTop="5dp"
     android:background="@color/bg_for_itemshow"
     android:layout_marginBottom="5dp"
     xmlns:tools="http://schemas.android.com/tools"
-
-    android:elevation="@dimen/standard_elevation"
+    app:cardCornerRadius="5dp"
     tools:targetApi="lollipop">
 
     <LinearLayout
@@ -31,13 +32,13 @@
                 tools:src="@drawable/banner4"
                 android:scaleType="centerInside"
                 android:layout_height="match_parent"
-                android:layout_weight=".5"/>
+                android:layout_weight=".4"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:orientation="vertical"
-                android:layout_weight=".5"
+                android:layout_weight=".6"
                 android:layout_marginStart="@dimen/large_margin"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="match_parent"
                     android:ellipsize="end"
@@ -48,37 +49,89 @@
                     android:layout_marginStart="@dimen/standard_margin"
                     android:gravity="center_vertical|start"
                     tools:text="گوشی آیفون"
-                    android:layout_height="0dp"
-                    android:layout_weight=".3"/>
-                <View
+                    android:layout_height="wrap_content" />
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:background="@color/gray_for_littile_view"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:textSize="@dimen/txt_size_title_item_shows"
+                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/standard_margin"
-                    android:gravity="center_vertical|start"
-                    android:fontFamily="@font/vazir_medium"
-                    android:text="@string/number"
-                    android:layout_marginTop="5dp"
-                    android:layout_height="0dp"
-                    android:layout_weight=".2"/>
-                <TextView
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textSize="@dimen/txt_size_title_item_shows"
+                        android:fontFamily="@font/vazir_medium"
+                        android:text="@string/number"
+                        android:layout_marginTop="5dp"
+                        android:layout_height="wrap_content" />
+
+                    <ImageButton
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="7dp"
+                        android:background="@color/transparent"
+                        android:src="@drawable/ic_add_black_24dp"
+                        android:tint="@color/gray_for_littile_view" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textSize="@dimen/txt_size_title_item_shows"
+                        android:id="@+id/txtnumberbasket"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_vertical|start"
+                        tools:text="5 "
+                        android:fontFamily="@font/vazir_medium"
+                        android:layout_height="wrap_content" />
+
+                    <ImageButton
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="5dp"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:layout_marginTop="7dp"
+                        android:background="@color/transparent"
+                        android:src="@drawable/ic_remove_black_24dp"
+                        android:tint="@color/gray_for_littile_view" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/txt_size_title_item_shows"
-                    android:id="@+id/txtnumberbasket"
-                    android:layout_marginStart="8dp"
-                    android:gravity="center_vertical|start"
-                    tools:text="5 "
-                    android:fontFamily="@font/vazir_medium"
-                    android:layout_height="0dp"
-                    android:layout_weight=".3"/>
+                    android:layout_weight="1"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="@dimen/standard_margin"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textSize="@dimen/txt_size_title_item_shows"
+                        android:fontFamily="@font/vazir_medium"
+                        android:text="@string/status"
+                        android:layout_marginTop="5dp"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textSize="@dimen/txt_size_title_item_shows"
+                        android:id="@+id/txt_status"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_vertical|start"
+                        tools:text="موجود"
+                        android:fontFamily="@font/vazir_medium"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+<!--                <View-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="1dp"-->
+<!--                    android:layout_marginRight="15dp"-->
+<!--                    android:layout_marginLeft="15dp"-->
+<!--                    android:background="@color/gray_for_littile_view"/>-->
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginLeft="15dp"
                     android:background="@color/gray_for_littile_view"/>
@@ -90,7 +143,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            android:layout_weight=".2">
+            android:layout_weight=".1">
             <TextView
                 android:layout_width="0dp"
                 android:gravity="center_vertical|start"
@@ -112,17 +165,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight=".5"/>
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:background="@color/gray_for_littile_view"/>
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:layout_marginRight="15dp"-->
+<!--            android:layout_marginLeft="15dp"-->
+<!--            android:background="@color/gray_for_littile_view"/>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            android:layout_weight=".2">
+            android:layout_weight=".1">
             <TextView
                 android:layout_width="0dp"
                 android:gravity="center_vertical|start"
@@ -144,24 +197,22 @@
                 android:layout_height="match_parent"
                 android:layout_weight=".5"/>
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:background="@color/gray_for_littile_view"/>
-        <TextView
-            android:layout_width="match_parent"
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:layout_marginRight="15dp"-->
+<!--            android:layout_marginLeft="15dp"-->
+<!--            android:background="@color/gray_for_littile_view"/>-->
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:src="@drawable/ic_delete_black_24dp"
             android:layout_weight="0.15"
-            android:id="@+id/txtdeletefrombasket"
-            android:text="@string/delete"
-            android:fontFamily="@font/vazir_medium"
-            android:gravity="center_vertical|end"
-            android:layout_marginEnd="8dp"
-            android:textSize="@dimen/text_size_small"
-            android:paddingBottom="5dp"
-            android:textColor="#9E0E0E"/>
+            android:tint="@color/gray_for_littile_view"
+            android:foreground="?attr/selectableItemBackground"
+            android:id="@+id/img_delete_from_cart"
+            android:layout_gravity="end"
+            android:layout_marginEnd="8dp" />
 
 
     </LinearLayout>

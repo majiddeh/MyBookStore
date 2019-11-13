@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="@color/gray_light_for_bg_itemshow"
+    android:background="@color/gray_light_for_bg_activity"
     android:layoutDirection="rtl"
     android:layout_height="match_parent"
     tools:context=".Activities.SearchActivity">

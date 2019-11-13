@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.mybookstore.R;
 import com.example.mybookstore.Utils.ApiServices;
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText edUsername,edPassword;
@@ -23,6 +24,7 @@ public class RegisterActivity extends AppCompatActivity {
     CheckBox checkBox;
     ImageView imgBack;
     ApiServices apiServices;
+    ProgressWheel progressWheel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,13 +60,21 @@ public class RegisterActivity extends AppCompatActivity {
                 if (!edPassword.getText().toString().trim().equals("")&&!edUsername.getText().toString().trim().equals("")){
                     if (!(edPassword.getText().toString().trim().length() <4)){
                         String username=convertNumberToEnglish(edUsername.getText().toString().trim());
+                        String password=convertNumberToEnglish(edPassword.getText().toString().trim());
 //                        Toast.makeText(RegisterActivity.this, username, Toast.LENGTH_SHORT).show();
-                        apiServices.registeWhitSMS(username,edPassword.getText().toString().trim());
-                    }else
-                        Toast.makeText(RegisterActivity.this, "پسورد حداقل باید چهار کاراکتر باشد", Toast.LENGTH_SHORT).show();
+                        apiServices.registeWhitSMS(username,password,progressWheel);
+                    }else{
+                        edPassword.setError("پسورد حداقل باید چهار کاراکتر باشد");
+                        edPassword.requestFocus();
+                    }
 
-                }else
-                    Toast.makeText(RegisterActivity.this, "لطفا نام کاربری و پسورد را وارد کنید", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    edUsername.setError("لطفا نام کاربری و پسورد را وارد کنید");
+                    edPassword.setError("لطفا نام کاربری و پسورد را وارد کنید");
+                    edUsername.requestFocus();
+                }
+
 
             }
         });
@@ -104,8 +114,10 @@ public class RegisterActivity extends AppCompatActivity {
         txtTitle = findViewById(R.id.txt_title_toolbar_second);
         txtTitle.setText("ثبت نام");
         cardRegister = findViewById(R.id.card_Register);
+        progressWheel=findViewById(R.id.progress_wheel);
         edPassword = findViewById(R.id.ed_password);
         edUsername = findViewById(R.id.ed_phone);
+        edUsername.requestFocus();
         imgBack = findViewById(R.id.img_back_second_toolbar);
         checkBox = findViewById(R.id.checkbox_reg);
     }

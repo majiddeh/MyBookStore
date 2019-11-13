@@ -45,5 +45,8 @@ public class UserSharedPrefrences {
     public String getUserImaje(){
         return sharedPreferences.getString(Put.image,"");
     }
+    public String getUserToken(){
+        return sharedPreferences.getString(Put.token,"");
+    }
 
 }
