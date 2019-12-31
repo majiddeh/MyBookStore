@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,10 +27,16 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.viewHold
 
     Context context;
     List<ModelAddress> modelAddresses;
+    CardView cardViewPlace;
+    RecyclerView recyclerView;
+    OnEndLine onEndLine;
 
-    public AdapterAddress(Context context, List<ModelAddress> modelAddresses) {
+    public AdapterAddress(Context context, List<ModelAddress> modelAddresses,CardView cardView,RecyclerView recyclerView,OnEndLine onEndLine) {
         this.context = context;
         this.modelAddresses = modelAddresses;
+        this.cardViewPlace=cardView;
+        this.recyclerView=recyclerView;
+        this.onEndLine=onEndLine;
     }
 
     @NonNull
@@ -77,6 +84,11 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.viewHold
                                                     modelAddresses.remove(i);
                                                     notifyItemRemoved(i);
                                                     notifyItemRangeRemoved(i,modelAddresses.size());
+                                                    if (modelAddresses.isEmpty()){
+                                                        recyclerView.setVisibility(View.GONE);
+                                                        cardViewPlace.setVisibility(View.VISIBLE);
+                                                        onEndLine.onEnd(true);
+                                                    }
                                                 }
                                             },20);
                                             dialog.dismiss();
@@ -124,6 +136,11 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.viewHold
 
 
     }
+
+    public interface OnEndLine{
+        void onEnd(boolean isEnd);
+    }
+
 
     @Override
     public int getItemCount() {

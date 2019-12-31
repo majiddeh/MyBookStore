@@ -4,6 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layoutDirection="rtl"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:background="@color/gray_light_for_bg_activity"
     android:orientation="vertical"
@@ -19,22 +21,7 @@
         android:padding="8dp"
         android:background="#42C243"
         android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="0dp"
-            android:gravity="center_vertical|center"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/txt_total"
-            android:fontFamily="@font/vazir_medium"
-            android:textSize="@dimen/txt_size_title_activity_show"
-            android:textColor="@color/white"
-            tools:text="10000"
-            android:layout_height="match_parent"
-            android:layout_weight=".5"/>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/white"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -48,6 +35,24 @@
             />
 
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+        <TextView
+            android:layout_width="0dp"
+            android:gravity="center_vertical|center"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/txt_total"
+            android:fontFamily="@font/vazir_medium"
+            android:textSize="@dimen/txt_size_title_activity_show"
+            android:textColor="@color/white"
+            tools:text="10000"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"/>
+
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -55,6 +60,7 @@
         android:layout_below="@+id/lnrbasket"
         android:layoutDirection="rtl"
         android:layout_width="match_parent"
+        android:layout_above="@id/card_basket"
         android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
@@ -66,6 +72,19 @@
         </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
+
+    <com.pnikosis.materialishprogress.ProgressWheel
+        android:id="@+id/progress_wheel"
+        android:layout_width="50dp"
+        android:layout_above="@id/card_basket"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        wheel:matProg_barColor="@color/red"
+        android:layout_marginBottom="5dp"
+        android:visibility="gone"
+        wheel:matProg_progressIndeterminate="true" />
+
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"

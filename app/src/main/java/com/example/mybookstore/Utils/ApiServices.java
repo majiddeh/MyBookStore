@@ -959,7 +959,7 @@ public class ApiServices {
 
     }
 
-    public void AddToShopCart(final String id, final String title, final String image, final String price, final String phone, final OnShopCartAdd onShopCartAdd){
+    public void AddToShopCart(final String id, final String title, final String image, final String price, final String token, final OnShopCartAdd onShopCartAdd){
 
 
         StringRequest stringRequest = new StringRequest(1, Links.ADD_TO_SHOP_CART, new Response.Listener<String>() {
@@ -987,7 +987,7 @@ public class ApiServices {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
-                map.put(Put.username,phone);
+                map.put(Put.token,token);
                 map.put(Put.id,id);
                 map.put(Put.title,title);
                 map.put(Put.image,image);
@@ -1001,9 +1001,9 @@ public class ApiServices {
 
     }
 
-    public void CartReceived(final String phone, final OnCartReceived onCartReceived){
+    public void CartReceived(final ProgressWheel progressWheel, final String token, final OnCartReceived onCartReceived){
 
-
+        progressWheel.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest(1, Links.GET_CART, new Response.Listener<String>() {
 
             @Override
@@ -1032,20 +1032,21 @@ public class ApiServices {
                     e.printStackTrace();
                 }
 
-
+            progressWheel.setVisibility(View.GONE);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, "خطایی رخ داد", Toast.LENGTH_SHORT).show();
                 Log.i("apiii",error.toString());
+                progressWheel.setVisibility(View.GONE);
             }
         }){
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map = new HashMap<>();
-                map.put(Put.username,phone);
+                map.put(Put.token,token);
                 return map;
             }
         };
@@ -1083,7 +1084,7 @@ public class ApiServices {
         MySingleton.getInstance(context).addToRequestQueue(stringRequest);
     }
 
-    public void GetCount(final String phone, final OnCountReceived onCountReceived){
+    public void GetCount(final String token, final OnCountReceived onCountReceived){
 
 
         StringRequest stringRequest = new StringRequest(1, Links.GET_COUNT, new Response.Listener<String>() {
@@ -1102,7 +1103,7 @@ public class ApiServices {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> map =new HashMap<>();
-                map.put(Put.username,phone);
+                map.put(Put.token,token);
                 return map;
             }
         };

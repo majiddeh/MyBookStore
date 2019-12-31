@@ -6,120 +6,285 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/gray_light_for_bg_activity"
     android:layoutDirection="rtl"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.FragmentOrder">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_holder"
+        android:layout_width="match_parent"
+        android:elevation="5dp"
+        app:cardBackgroundColor="@color/gray_light_for_bg_activity"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:id="@+id/linear1"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <ImageView
+                    android:id="@+id/img_first"
+                    android:layout_width="35dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_height="35dp"
+                    android:src="@drawable/tick" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/txt_first"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/img_first"
+                    android:textColor="#666565"
+                    android:text="    ______    "/>
+
+                <RelativeLayout
+                    android:layout_width="35dp"
+                    android:id="@+id/img_second"
+                    android:layout_toEndOf="@+id/txt_first"
+                    android:layout_height="35dp">
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/tick"
+                        android:scaleType="center"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/txt_second"
+                    android:layout_toEndOf="@+id/img_second"
+                    android:layout_height="wrap_content"
+                    android:textColor="#666565"
+                    android:text="    ______    "/>
+
+                <RelativeLayout
+                    android:layout_width="35dp"
+                    android:id="@+id/img_third"
+                    android:layout_toEndOf="@id/txt_second"
+                    android:layout_height="35dp">
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/shape_circle_white"
+                        android:scaleType="center"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/vazir_medium"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="۳"/>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/linear2"
+                android:layout_marginBottom="16dp"
+                android:layout_below="@+id/linear1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".33"
+                    android:layout_height="wrap_content"
+                    android:textColor="#666565"
+                    android:layout_marginStart="48dp"
+                    android:textSize="11dp"
+                    android:fontFamily="@font/vazir_medium"
+                    android:text="ورود به باشگاه صامد"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".33"
+                    android:layout_height="wrap_content"
+                    android:textColor="#666565"
+                    android:textSize="11dp"
+                    android:fontFamily="@font/vazir_medium"
+                    android:layout_marginStart="24dp"
+                    android:text="شیوه ارسال"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".33"
+                    android:layout_height="wrap_content"
+                    android:textColor="#666565"
+                    android:textSize="11dp"
+                    android:fontFamily="@font/vazir_medium"
+                    android:text="پرداخت"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
     <ScrollView
         android:layout_width="match_parent"
+        android:layout_below="@id/card_holder"
+        android:layout_above="@id/card_fragment_order"
         android:layout_height="match_parent">
 
-
-    <RelativeLayout
-        android:id="@+id/linear1"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:gravity="center">
-        <ImageView
-            android:id="@+id/img_first1"
-            android:layout_width="35dp"
-            android:layout_alignParentStart="true"
-            android:layout_height="35dp"
-            android:src="@drawable/tick" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/txt_first"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/img_first1"
-            android:textColor="#666565"
-            android:text="    ______    "/>
-
         <RelativeLayout
-            android:layout_width="35dp"
-            android:id="@+id/img_second"
-            android:layout_toEndOf="@+id/txt_first"
-            android:layout_height="35dp">
-            <ImageView
-                android:id="@+id/img_first"
-                android:layout_width="35dp"
-                android:layout_alignParentStart="true"
-                android:layout_height="35dp"
-                android:src="@drawable/tick" />
-
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/txt_second"
-            android:layout_toEndOf="@+id/img_second"
-            android:layout_height="wrap_content"
-            android:textColor="#666565"
-            android:text="    ______    "/>
-
-        <RelativeLayout
-            android:layout_width="35dp"
-            android:id="@+id/img_third"
-            android:layout_toEndOf="@id/txt_second"
-            android:layout_height="35dp">
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@drawable/shape_circle_white"
-                android:scaleType="center"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/vazir_medium"
-                android:textSize="15dp"
-                android:textColor="@color/black"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="۳"/>
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-        <LinearLayout
-            android:id="@+id/linear2"
-            android:layout_below="@+id/linear1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="1"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_height="match_parent">
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:id="@+id/card_payment_total"
+                android:elevation="5dp"
+                app:cardBackgroundColor="@color/white"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/txt_total_txt"
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight=".33"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/green"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/vazir_medium"
+                        android:layout_marginTop="8dp"
+                        android:padding="8dp"
+                        android:layout_marginStart="8dp"
+                        android:text="مجموع کل سبد خرید"
+                        />
+                    <TextView
+                        android:id="@+id/txt_post_cost_txt"
+                        android:layout_width="match_parent"
+                        android:fontFamily="@font/vazir_medium"
+                        android:layout_below="@id/txt_total_txt"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:layout_marginStart="8dp"
+                        android:text="هزینه ارسال مرسوله"
+                        />
+                    <TextView
+                        android:id="@+id/txt_total"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/vazir_medium"
+                        android:gravity="end"
+                        android:layout_width="match_parent"
+                        android:layout_marginEnd="16dp"
+                        android:textColor="@color/green"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:layout_marginStart="8dp"
+                        android:text="25000"
+                        />
+                    <TextView
+                        android:id="@+id/txt_post_cost"
+                        android:gravity="end"
+                        android:layout_width="match_parent"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/vazir_medium"
+                        android:layout_below="@id/txt_total_txt"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="8dp"
+                        android:text="رایگان"
+                        />
+                </RelativeLayout>
+
+
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:id="@+id/card_zarrin"
+                android:layout_below="@+id/card_payment_total"
+                android:layout_marginTop="16dp"
+                android:elevation="5dp"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/vazir_medium"
+                        android:layout_marginTop="8dp"
+                        android:padding="8dp"
+                        android:layout_marginStart="8dp"
+                        android:text="شیوه ارسال"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:background="@color/gray_for_littile_view"
+                        android:layout_height="wrap_content">
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:padding="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:checked="true"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:fontFamily="@font/vazir_medium"
+                            android:layout_gravity="center"
+                            android:layout_height="wrap_content"
+                            android:text="درگاه پرداحت زرین پال"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_gravity="center"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/zarinpal"
+                            android:layout_height="30dp"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                app:cardCornerRadius="2dp"
+                android:elevation="5dp"
+                android:id="@+id/card_how_to_send"
+                android:background="@color/white"
+                android:layout_marginTop="16dp"
                 android:layout_height="wrap_content"
-                android:textColor="#666565"
-                android:layout_marginStart="48dp"
-                android:textSize="11dp"
-                android:fontFamily="@font/vazir_medium"
-                android:text="ورود به باشگاه صامد"/>
+                android:layout_below="@id/card_zarrin">
+                <TextView
+                    android:fontFamily="@font/vazir_medium"
+                    android:padding="8dp"
+                    android:id="@+id/tv_address_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight=".33"
-                android:layout_height="wrap_content"
-                android:textColor="#666565"
-                android:textSize="11dp"
-                android:fontFamily="@font/vazir_medium"
-                android:layout_marginStart="24dp"
-                android:text="شیوه ارسال"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight=".33"
-                android:layout_height="wrap_content"
-                android:textColor="#666565"
-                android:textSize="11dp"
-                android:fontFamily="@font/vazir_medium"
-                android:text="پرداخت"/>
+            </android.support.v7.widget.CardView>
 
 
-        </LinearLayout>
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+    <com.pnikosis.materialishprogress.ProgressWheel
+        android:id="@+id/progress_wheel"
+        android:layout_width="50dp"
+        android:layout_above="@id/card_fragment_order"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        wheel:matProg_barColor="@color/red"
+        android:layout_marginBottom="5dp"
+        android:visibility="gone"
+        wheel:matProg_progressIndeterminate="true" />
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -135,14 +300,9 @@
             android:layout_gravity="center"
             android:fontFamily="@font/vazir_medium"
             android:gravity="center"
-            android:text="پرداخت و تکمیل خرید"
+            android:text="پرداخت و نهایی کردن خرید"
             android:textColor="#ffffff"
             android:textSize="16sp"
             android:textStyle="bold" />
     </android.support.v7.widget.CardView>
-
-
-    </ScrollView>
-
-
 </RelativeLayout>

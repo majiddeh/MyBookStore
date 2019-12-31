@@ -12,95 +12,110 @@
     tools:context=".Activities.EditInformation">
     <include layout="@layout/toolbar_second"/>
 
-        <EditText
-            android:padding="8dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
-            android:textSize="@dimen/text_size_very_small"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:fontFamily="@font/vazir_medium"
-            android:background="@drawable/selector_default_edittext"
-            android:id="@+id/ed_edit_name"
-            android:inputType="text"
-            android:maxLines="1"
-            android:maxLength="30"
-            android:hint="@string/name"/>
+    <EditText
+        android:padding="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:textSize="@dimen/text_size_very_small"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:fontFamily="@font/vazir_medium"
+        android:background="@drawable/selector_default_edittext"
+        android:id="@+id/ed_edit_name"
+        android:inputType="text"
+        android:maxLines="1"
+        android:maxLength="30"
+        android:hint="@string/name"/>
 
-        <EditText
-            android:padding="8dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:textSize="@dimen/text_size_very_small"
-            android:inputType="text"
-            android:maxLines="1"
-            android:background="@drawable/selector_default_edittext"
-            android:fontFamily="@font/vazir_medium"
-            android:id="@+id/ed_edit_family"
-            android:maxLength="40"
-            android:hint="@string/family"/>
-
-
-<!--        <EditText-->
-<!--            android:padding="8dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:layout_marginRight="30dp"-->
-<!--            android:layout_marginLeft="30dp"-->
-<!--            android:textSize="@dimen/text_size_very_small"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:maxLines="1"-->
-<!--            android:gravity="right"-->
-<!--            android:maxLength="10"-->
-<!--            android:background="@drawable/selector_default_edittext"-->
-<!--            android:fontFamily="@font/vazir_medium"-->
-<!--            android:id="@+id/ed_edit_postalcode"-->
-<!--            android:inputType="numberDecimal"-->
-<!--            android:hint="کد پستی" />-->
+    <EditText
+        android:padding="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="@dimen/text_size_very_small"
+        android:inputType="text"
+        android:maxLines="1"
+        android:background="@drawable/selector_default_edittext"
+        android:fontFamily="@font/vazir_medium"
+        android:id="@+id/ed_edit_family"
+        android:maxLength="40"
+        android:hint="@string/family"/>
 
 
-<!--        <EditText-->
-<!--            android:padding="8dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:layout_marginRight="30dp"-->
-<!--            android:layout_marginLeft="30dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:textSize="@dimen/text_size_very_small"-->
-<!--            android:inputType="textMultiLine"-->
-<!--            android:id="@+id/ed_edit_address"-->
-<!--            android:background="@drawable/selector_default_edittext"-->
-<!--            android:maxLength="500"-->
-<!--            android:fontFamily="@font/vazir_medium"-->
-<!--            android:maxLines="5"-->
-<!--            android:lines="5"-->
-<!--            android:hint="@string/address"-->
-<!--            />-->
+    <!--        <EditText-->
+    <!--            android:padding="8dp"-->
+    <!--            android:layout_marginTop="10dp"-->
+    <!--            android:layout_marginRight="30dp"-->
+    <!--            android:layout_marginLeft="30dp"-->
+    <!--            android:textSize="@dimen/text_size_very_small"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:maxLines="1"-->
+    <!--            android:gravity="right"-->
+    <!--            android:maxLength="10"-->
+    <!--            android:background="@drawable/selector_default_edittext"-->
+    <!--            android:fontFamily="@font/vazir_medium"-->
+    <!--            android:id="@+id/ed_edit_postalcode"-->
+    <!--            android:inputType="numberDecimal"-->
+    <!--            android:hint="کد پستی" />-->
 
-        <Button
-            android:layout_width="200dp"
-            android:id="@+id/btn_edit_edit_activity"
-            android:foreground="?attr/selectableItemBackground"
-            android:layout_height="wrap_content"
-            android:text="@string/edit_information"
-            android:fontFamily="@font/vazir_medium"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="50dp"
-            android:textSize="@dimen/text_size_big"
-            android:textColor="@color/white"
-            android:background="@drawable/shape_btn_edit_profile"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:text="@string/myaddress"
-        android:textStyle="bold"
+    <!--        <EditText-->
+    <!--            android:padding="8dp"-->
+    <!--            android:layout_marginTop="10dp"-->
+    <!--            android:layout_marginRight="30dp"-->
+    <!--            android:layout_marginLeft="30dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:textSize="@dimen/text_size_very_small"-->
+    <!--            android:inputType="textMultiLine"-->
+    <!--            android:id="@+id/ed_edit_address"-->
+    <!--            android:background="@drawable/selector_default_edittext"-->
+    <!--            android:maxLength="500"-->
+    <!--            android:fontFamily="@font/vazir_medium"-->
+    <!--            android:maxLines="5"-->
+    <!--            android:lines="5"-->
+    <!--            android:hint="@string/address"-->
+    <!--            />-->
+
+    <Button
+        android:layout_width="200dp"
+        android:id="@+id/btn_edit_edit_activity"
+        android:foreground="?attr/selectableItemBackground"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_information"
+        android:fontFamily="@font/vazir_medium"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
         android:textSize="@dimen/text_size_big"
+        android:textColor="@color/white"
+        android:background="@drawable/shape_btn_edit_profile"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/rel_5"
         android:layout_marginTop="48dp"
-        android:layout_height="wrap_content"/>
+        android:layout_marginBottom="16dp"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_width="2dp"
+            android:id="@+id/lit_view3"
+            android:layout_height="24dp"
+            android:background="#272727"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/txt_2"
+            android:fontFamily="@font/vazir_medium"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/lit_view3"
+            android:text="آدرس های من"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -111,11 +126,44 @@
         android:layout_marginTop="24dp"
         android:textSize="@dimen/text_size_big"
         android:text="هنوز آدرسی وجود ندارد"/>
+
+    <android.support.v7.widget.CardView
+        android:layout_below="@id/rel_5"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        app:cardBackgroundColor="@color/gray_light_for_bg_activity"
+        android:foreground="?attr/selectableItemBackground"
+        android:visibility="gone"
+        android:id="@+id/card_placeholder"
+        android:layout_height="260dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="80dp"
+                android:src="@drawable/ic_add_circle_outline_black_24dp"
+                android:tint="@color/gray_for_littile_view"
+                android:layout_height="80dp"
+                android:layout_gravity="center_horizontal">
+            </ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:fontFamily="@font/vazir_medium"
+                android:layout_height="wrap_content"
+                android:text="افزودن آدرس"/>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_marginTop="8dp"
         android:id="@+id/recycler_address"
         android:layout_height="wrap_content"/>
+
 
     <Button
         android:layout_width="200dp"
@@ -131,4 +179,8 @@
         android:background="@drawable/shape_btn_edit_profile"/>
 
 
+
+
 </LinearLayout>
+
+

@@ -83,7 +83,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.EditInformation"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity
             android:name=".Activities.ProfileActivity"
             android:screenOrientation="portrait" />

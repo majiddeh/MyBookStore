@@ -131,8 +131,10 @@ public class AdapterBasket extends RecyclerView.Adapter<AdapterBasket.ViewHolder
                                             list.remove(i);
                                             notifyItemRemoved(i);
                                             notifyItemRangeRemoved(i,list.size());
+                                            dialog.dismiss();
                                         }
                                     },2);
+
                                 }
                             }
                         },500);

@@ -55,13 +55,14 @@ public class ShowActivity extends AppCompatActivity {
     private boolean fav =true;
     private boolean checkUp =true;
     private boolean checkDown =true;
+    UserSharedPrefrences userSharedPrefrences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
 
-        UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(ShowActivity.this);
+        userSharedPrefrences = new UserSharedPrefrences(ShowActivity.this);
         username = userSharedPrefrences.getUserName();
 
         findViews();
@@ -105,7 +106,7 @@ public class ShowActivity extends AppCompatActivity {
                 }else {
 
                     if (!offPrice.equals("0")){
-                        apiServices.AddToShopCart(id, titlee, imagee, offPrice, username, new ApiServices.OnShopCartAdd() {
+                        apiServices.AddToShopCart(id, titlee, imagee, offPrice, userSharedPrefrences.getUserToken(), new ApiServices.OnShopCartAdd() {
                             @Override
                             public void onShopCart(int responseStatus) {
                                 switch (responseStatus){
@@ -122,7 +123,7 @@ public class ShowActivity extends AppCompatActivity {
                         });
 
                     }else {
-                        apiServices.AddToShopCart(id, titlee, imagee, pricee, username, new ApiServices.OnShopCartAdd() {
+                        apiServices.AddToShopCart(id, titlee, imagee, pricee, userSharedPrefrences.getUserToken(), new ApiServices.OnShopCartAdd() {
                             @Override
                             public void onShopCart(int responseStatus) {
                                 switch (responseStatus){
@@ -213,7 +214,7 @@ public class ShowActivity extends AppCompatActivity {
             }
         });
 
-        apiServices.GetCount(username, new ApiServices.OnCountReceived() {
+        apiServices.GetCount(userSharedPrefrences.getUserToken(), new ApiServices.OnCountReceived() {
             @Override
             public void onCount(String count) {
                 txtCounCart.setText(count);

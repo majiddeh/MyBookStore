@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity
     TextView txtNaviLogin,txtCount,navAbout, navCat,navBasket,navAccount,
             navFav,txtListOffs,txtListOnly,txtListMostVisit,txtListMostSold;
     LinearLayout specialOffersLable;
-    String username;
+    String username,token;
     ApiServices apiServices = new ApiServices(MainActivity.this);
     UserSharedPrefrences userSharedPrefrences;
 
@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity
         userSharedPrefrences = new UserSharedPrefrences(MainActivity.this);
 
         username = userSharedPrefrences.getUserName();
+        token=userSharedPrefrences.getUserToken();
 
         recyclerOff = findViewById(R.id.offlist_recycler);
         sliderLayout = findViewById(R.id.slider);
@@ -119,12 +120,12 @@ public class MainActivity extends AppCompatActivity
 
         circleImageView = findViewById(R.id.img_circle_nav_header);
         if (userSharedPrefrences.getUserImaje().equals("")){
-                    Picasso.with(getApplicationContext()).load(R.drawable.avatar).
+                    Picasso.with(MainActivity.this).load(R.drawable.avatar).
                 error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder)
                 .into(circleImageView);
         }else {
-            Picasso.with(getApplicationContext()).load(userSharedPrefrences.getUserImaje()).
+            Picasso.with(MainActivity.this).load(userSharedPrefrences.getUserImaje()).
                     error(R.drawable.placeholder)
                     .placeholder(R.drawable.placeholder)
                     .into(circleImageView);
@@ -299,8 +300,8 @@ public class MainActivity extends AppCompatActivity
                     specialOffersLable.setVisibility(View.INVISIBLE);
                     recyclerOff.setVisibility(View.INVISIBLE);
                 } else {
-                    adapterOff = new AdapterOff(modelOffOnlies, getApplicationContext());
-                    recyclerOff.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+                    adapterOff = new AdapterOff(modelOffOnlies, MainActivity.this);
+                    recyclerOff.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
                     recyclerOff.hasFixedSize();
                     recyclerOff.setAdapter(adapterOff);
 
@@ -312,7 +313,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onCatReceived(List<ModelCategory> modelCategories) {
                 AdapterCategoryLittleView adapterCategoryLittleView = new AdapterCategoryLittleView(MainActivity.this, modelCategories);
-                recycCatLittle.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+                recycCatLittle.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
                 recycCatLittle.hasFixedSize();
                 recycCatLittle.setAdapter(adapterCategoryLittleView);
             }
@@ -322,7 +323,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onCatReceived(List<ModelCategory> modelCategories) {
                 AdapterCategory adapterCategory = new AdapterCategory(MainActivity.this, modelCategories);
-                recyclerCategory.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+                recyclerCategory.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
                 recyclerCategory.hasFixedSize();
                 recyclerCategory.setAdapter(adapterCategory);
             }
@@ -331,8 +332,8 @@ public class MainActivity extends AppCompatActivity
         apiServices.onlyReceived(Links.GET_ONLY,new ApiServices.OnOnlyReceived() {
             @Override
             public void onOnlyReceived(List<ModelOff_Only_MostVisit> modelOnlies) {
-                AdapterProduct adapterProduct = new AdapterProduct(getApplicationContext(),modelOnlies);
-                recyclerOnly.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+                AdapterProduct adapterProduct = new AdapterProduct(MainActivity.this,modelOnlies);
+                recyclerOnly.setLayoutManager(new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false));
                 recyclerOnly.hasFixedSize();
                 recyclerOnly.setAdapter(adapterProduct);
             }
@@ -341,8 +342,8 @@ public class MainActivity extends AppCompatActivity
         apiServices.MostvisitReceived(Links.GET_MOST_VISIT,new ApiServices.OnMostVisitReceived() {
             @Override
             public void onMostVisit(List<ModelOff_Only_MostVisit> modelMostVisit) {
-                AdapterProduct adapterProduct = new AdapterProduct(getApplicationContext(),modelMostVisit);
-                recyclerMostVisit.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+                AdapterProduct adapterProduct = new AdapterProduct(MainActivity.this,modelMostVisit);
+                recyclerMostVisit.setLayoutManager(new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false));
                 recyclerMostVisit.hasFixedSize();
                 recyclerMostVisit.setAdapter(adapterProduct);
             }
@@ -351,8 +352,8 @@ public class MainActivity extends AppCompatActivity
         apiServices.MostSoldReceived(Links.GET_MOST_SOLD,new ApiServices.OnMostSoldReceived() {
             @Override
             public void onSold(List<ModelOff_Only_MostVisit> modelSold) {
-                AdapterProduct adapterProduct = new AdapterProduct(getApplicationContext(),modelSold);
-                recyclerMostSold.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+                AdapterProduct adapterProduct = new AdapterProduct(MainActivity.this,modelSold);
+                recyclerMostSold.setLayoutManager(new LinearLayoutManager(MainActivity.this,LinearLayoutManager.HORIZONTAL,false));
                 recyclerMostSold.hasFixedSize();
                 recyclerMostSold.setAdapter(adapterProduct);
             }
@@ -463,7 +464,7 @@ public class MainActivity extends AppCompatActivity
                 String username = data.getStringExtra(Put.username);
                 String image = data.getStringExtra(Put.image);
                 txtNaviLogin.setText("خوش آمدید  " + username);
-                Picasso.with(getApplicationContext()).load(image)
+                Picasso.with(MainActivity.this).load(image)
                         .placeholder(R.drawable.avatar)
                         .error(R.drawable.avatar)
                         .into(circleImageView);
@@ -474,12 +475,12 @@ public class MainActivity extends AppCompatActivity
                 String username = data.getStringExtra(Put.username);
                 String image = data.getStringExtra(Put.image);
                 if (image.equals("")){
-                    Picasso.with(getApplicationContext()).load(R.drawable.banner2).
+                    Picasso.with(MainActivity.this).load(R.drawable.banner2).
                             error(R.drawable.placeholder)
                             .placeholder(R.drawable.placeholder)
                             .into(circleImageView);
                 }else {
-                    Picasso.with(getApplicationContext()).load(userSharedPrefrences.getUserImaje()).
+                    Picasso.with(MainActivity.this).load(userSharedPrefrences.getUserImaje()).
                             error(R.drawable.placeholder)
                             .placeholder(R.drawable.placeholder)
                             .into(circleImageView);
@@ -536,7 +537,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        apiServices.GetCount(username, new ApiServices.OnCountReceived() {
+        apiServices.GetCount(token, new ApiServices.OnCountReceived() {
             @Override
             public void onCount(String count) {
                 txtCount.setText(count);

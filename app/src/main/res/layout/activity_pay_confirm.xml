@@ -8,25 +8,18 @@
     android:orientation="vertical"
     android:layoutDirection="rtl"
     tools:context=".Activities.PayConfirmActivity">
-
     <include
         android:id="@+id/toooooooolbar"
         layout="@layout/toolbar_second" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/rel_root"
         android:layout_below="@+id/toooooooolbar"
         android:layout_height="wrap_content">
-        <fragment
-
-            android:layout_width="match_parent"
-            android:id="@+id/fragment_order"
-            android:layout_height="match_parent"
-            class="com.example.mybookstore.Fragments.FragmentOrder"/>
-
+            <fragment
+                android:layout_width="match_parent"
+                android:id="@+id/fragment_order"
+                android:layout_height="match_parent"
+                class="com.example.mybookstore.Fragments.FragmentOrder"/>
     </RelativeLayout>
-
-
-
 </RelativeLayout>

@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -40,10 +41,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EditInformation extends AppCompatActivity {
-    private EditText edName,edFamily,edAddress;
+    private EditText edName,edFamily;
     private ImageView imgback;
     private TextView txtTitle;
     private Button btnEdit,btnAddAddress;
+    private CardView cardAddAddress;
     private String username,token;
     private ApiServices apiServices = new ApiServices(EditInformation.this);
     private RecyclerView recyclerView;
@@ -76,7 +78,19 @@ public class EditInformation extends AppCompatActivity {
         apiServices.GetAddress(token, new ApiServices.OnAddressReceived() {
             @Override
             public void onReceived(List<ModelAddress> modelAddresses) {
-                adapterAddress=new AdapterAddress(EditInformation.this,modelAddresses);
+                if (modelAddresses.isEmpty()){
+                    cardAddAddress.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                    btnAddAddress.setVisibility(View.GONE);
+                }
+                adapterAddress=new AdapterAddress(EditInformation.this, modelAddresses, cardAddAddress, recyclerView, new AdapterAddress.OnEndLine() {
+                    @Override
+                    public void onEnd(boolean isEnd) {
+                        if (isEnd){
+                            btnAddAddress.setVisibility(View.GONE);
+                        }
+                    }
+                });
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
                 recyclerView.hasFixedSize();
                 recyclerView.setAdapter(adapterAddress);
@@ -133,6 +147,7 @@ public class EditInformation extends AppCompatActivity {
             }
         });
 
+
         btnAddAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,7 +178,125 @@ public class EditInformation extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         idcityCap = arrayIDcityCap.get(i);
                         GetListCity(idcityCap,spinnercity);
-                        
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
+                spinnercity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        idcity = arrayIDcity.get(i);
+
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
+
+
+
+                tvNegativ.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                            }
+                        },500);
+
+                    }
+                });
+
+                tvPositive.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Handler handlerr = new Handler();
+                        handlerr.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                apiServices.AddAddress(token, etName.getText().toString().trim(), etFamiy.getText().toString().trim(), etPostalCode.getText().toString().trim()
+                                        ,etPhone.getText().toString().trim(),
+                                        etMobile.getText().toString().trim(),
+                                        idcity,
+                                        idcityCap,
+                                        etAddress.getText().toString().trim()
+                                        , new ApiServices.OnAddressAdd() {
+                                            @Override
+                                            public void onAddress(String response) {
+                                                if (response.equals("218")){
+                                                    dialog.dismiss();
+                                                    apiServices.GetAddress(token, new ApiServices.OnAddressReceived() {
+                                                        @Override
+                                                        public void onReceived(List<ModelAddress> modelAddresses) {
+                                                            adapterAddress=new AdapterAddress(EditInformation.this, modelAddresses, cardAddAddress, recyclerView, new AdapterAddress.OnEndLine() {
+                                                                @Override
+                                                                public void onEnd(boolean isEnd) {
+                                                                    if (isEnd){
+                                                                        btnAddAddress.setVisibility(View.GONE);
+                                                                    }
+                                                                }
+                                                            });
+                                                            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+                                                            recyclerView.hasFixedSize();
+                                                            recyclerView.setAdapter(adapterAddress);
+                                                        }
+                                                    });
+                                                    Toast.makeText(EditInformation.this, "آدرس با موفقیت اضافه شد", Toast.LENGTH_SHORT).show();
+                                                }else {
+                                                    Toast.makeText(EditInformation.this, response, Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                            }
+                        },500);
+
+                    }
+                });
+            }
+        });
+
+        cardAddAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final Dialog dialog = new Dialog(EditInformation.this);
+                dialog.setContentView(R.layout.dialog_address);
+                dialog.show();
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.setCancelable(false);
+                final EditText etName,etFamiy,etPostalCode,etPhone,etMobile,etAddress;
+                TextView tvNegativ,tvPositive;
+                final Spinner spinnerCityCap,spinnercity;
+                tvNegativ=dialog.findViewById(R.id.tv_dialog_negative);
+                tvPositive=dialog.findViewById(R.id.tv_dialog_positive);
+                etName=dialog.findViewById(R.id.Et_name);
+                etFamiy=dialog.findViewById(R.id.Et_family);
+                etAddress=dialog.findViewById(R.id.Et_address);
+                etMobile=dialog.findViewById(R.id.Et_phone);
+                etPhone=dialog.findViewById(R.id.Et_phone_home);
+                etPostalCode=dialog.findViewById(R.id.Et_postalcod);
+                spinnercity =dialog.findViewById(R.id.spinner_city);
+                spinnerCityCap = dialog.findViewById(R.id.spiner_city_cap);
+
+                GetListCityCap(spinnerCityCap);
+
+                spinnerCityCap.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        idcityCap = arrayIDcityCap.get(i);
+                        GetListCity(idcityCap,spinnercity);
+
                     }
 
                     @Override
@@ -221,10 +354,20 @@ public class EditInformation extends AppCompatActivity {
                                             public void onAddress(String response) {
                                                 if (response.equals("218")){
                                                     dialog.dismiss();
+                                                    cardAddAddress.setVisibility(View.GONE);
+                                                    recyclerView.setVisibility(View.VISIBLE);
+                                                    btnAddAddress.setVisibility(View.VISIBLE);
                                                     apiServices.GetAddress(token, new ApiServices.OnAddressReceived() {
                                                         @Override
                                                         public void onReceived(List<ModelAddress> modelAddresses) {
-                                                            adapterAddress=new AdapterAddress(EditInformation.this,modelAddresses);
+                                                            adapterAddress=new AdapterAddress(EditInformation.this, modelAddresses, cardAddAddress, recyclerView, new AdapterAddress.OnEndLine() {
+                                                                @Override
+                                                                public void onEnd(boolean isEnd) {
+                                                                    if (isEnd){
+                                                                        btnAddAddress.setVisibility(View.GONE);
+                                                                    }
+                                                                }
+                                                            });
                                                             recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
                                                             recyclerView.hasFixedSize();
                                                             recyclerView.setAdapter(adapterAddress);
@@ -353,7 +496,8 @@ public class EditInformation extends AppCompatActivity {
         imgback = findViewById(R.id.img_back_second_toolbar);
         txtTitle = findViewById(R.id.txt_title_toolbar_second);
         btnEdit=findViewById(R.id.btn_edit_edit_activity);
-        btnAddAddress = findViewById(R.id.btn_add_address);
+        btnAddAddress=findViewById(R.id.btn_add_address);
+        cardAddAddress = findViewById(R.id.card_placeholder);
         UserSharedPrefrences userSharedPrefrences = new UserSharedPrefrences(EditInformation.this);
         username =userSharedPrefrences.getUserName();
         token = userSharedPrefrences.getUserToken();

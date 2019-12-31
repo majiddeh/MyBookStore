@@ -1,39 +1,31 @@
 package com.example.mybookstore.Adapters;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mybookstore.Models.ModelAddress;
 import com.example.mybookstore.R;
-import com.example.mybookstore.Utils.ApiServices;
 
 import java.util.List;
 
 public class AdapterAddressFragment extends RecyclerView.Adapter<AdapterAddressFragment.viewHolder> {
 
-    int[] idRadioButton;
     private RadioButton lastCheckedRB = null;
     Context context;
     List<ModelAddress> modelAddresses;
+    GetAddressUser getAddressUser;
 
-    public AdapterAddressFragment(Context context, List<ModelAddress> modelAddresses) {
+    public AdapterAddressFragment(Context context, List<ModelAddress> modelAddresses, GetAddressUser getAddressUser) {
         this.context = context;
         this.modelAddresses = modelAddresses;
-        idRadioButton=new int[modelAddresses.size()];
+        this.getAddressUser=getAddressUser;
     }
 
     @NonNull
@@ -47,10 +39,6 @@ public class AdapterAddressFragment extends RecyclerView.Adapter<AdapterAddressF
     public void onBindViewHolder(@NonNull final viewHolder viewHolder, final int position) {
 
         viewHolder.radioButton.setVisibility(View.VISIBLE);
-
-        final int id = View.generateViewId();
-        viewHolder.radioButton.setId(id);
-        idRadioButton[position]=id;
 
         final ModelAddress modelAddress=modelAddresses.get(position);
         viewHolder.tvNameFamily.setText(modelAddress.getName() + " " + modelAddress.getFamily());
@@ -77,20 +65,27 @@ public class AdapterAddressFragment extends RecyclerView.Adapter<AdapterAddressF
 //            }
 //        });
 
+
         viewHolder.radioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 RadioButton checked_rb = (RadioButton) view;
+                getAddressUser.onAddressUser(modelAddress.getName(),modelAddress.getFamily(),modelAddress.getAddress(),modelAddress.getCity(),modelAddress.getCityCap(),modelAddress.getMobile());
                 if(lastCheckedRB != null){
                     lastCheckedRB.setChecked(false);
                 }
                 lastCheckedRB = checked_rb;
+
             }
         });
 
 
 
 
+    }
+
+    public interface GetAddressUser {
+        void onAddressUser(String name,String family,String address,String city,String cityCap,String mobile);
     }
 
     @Override

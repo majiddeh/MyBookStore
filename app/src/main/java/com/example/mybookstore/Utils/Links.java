@@ -2,8 +2,8 @@ package com.example.mybookstore.Utils;
 
 
 public class Links {
-    public static final String Link_HOST = "http://majiddehghan74.ir";
-    public static final String LINK_ADAPTER = "majiddehghan74.ir";
+    public static final String Link_HOST = "http://shop.majiddehghan74.ir";
+    public static final String LINK_ADAPTER = "shop.majiddehghan74.ir";
     public static final String LOCALHOST = "localhost";
 //    public static final String LINK = "http://majiddehghan74.ir";
 //    public static final String LINK_ADAPTER2 = "majiddehghan74.ir";
@@ -24,13 +24,13 @@ public class Links {
     static final String CHANGE_PASS = Link_HOST + "/samed_bookstore/1changepass(HA).php";
 
     public static final String GET_CAT = Link_HOST + "/samed_bookstore/getcategory.php";
-    public static final String GET_OFF = "http://majiddehghan74.ir/samed_bookstore/getOff.php";
+    public static final String GET_OFF = "http://shop.majiddehghan74.ir/samed_bookstore/getOff.php";
     public static final String GET_ONLY = Link_HOST + "/samed_bookstore/getOnly.php";
     public static final String GET_MOST_VISIT = Link_HOST + "/samed_bookstore/getMostVisit.php";
     public static final String GET_MOST_SOLD = Link_HOST + "/samed_bookstore/getNumSold.php";
-    static final String GET_LIKES = "http://majiddehghan74.ir/samed_bookstore/likeproduct.php";
-    static final String GET_ADDRESS = "http://majiddehghan74.ir/samed_bookstore/1getAddress(HA).php";
-    static final String DEL_ADDRESS = "http://majiddehghan74.ir/samed_bookstore/1delAddress(HA).php";
+    static final String GET_LIKES = "http://shop.majiddehghan74.ir/samed_bookstore/likeproduct.php";
+    static final String GET_ADDRESS = "http://shop.majiddehghan74.ir/samed_bookstore/1getAddress(HA).php";
+    static final String DEL_ADDRESS = "http://shop.majiddehghan74.ir/samed_bookstore/1delAddress(HA).php";
 
     static final String GET_IMAGE_PRODUCT = Link_HOST + "/samed_bookstore/getImageProduct.php";
     static final String GET_DATA_PRODUCT = Link_HOST + "/samed_bookstore/getDataProduct.php";

@@ -8,6 +8,7 @@
     android:layout_marginStart="16dp"
     app:cardElevation="8dp"
     android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
     android:layout_marginTop="5dp"
     android:background="@color/bg_for_itemshow"
     android:layout_marginBottom="5dp"

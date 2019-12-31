@@ -19,6 +19,7 @@ import com.example.mybookstore.Utils.ApiServices;
 import com.example.mybookstore.Utils.Links;
 import com.example.mybookstore.Utils.Put;
 import com.example.mybookstore.Utils.UserSharedPrefrences;
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -30,6 +31,7 @@ public class BasketActivity extends AppCompatActivity {
     CardView cardBasket;
     RecyclerView recyclerViewBasket;
     ApiServices apiServices = new ApiServices(BasketActivity.this);
+    ProgressWheel progressWheel;
     AdapterBasket adapterBasket;
     int totalAllPrice = 0;
     String phone,token;
@@ -54,7 +56,7 @@ public class BasketActivity extends AppCompatActivity {
     }
 
     private void initializePage() {
-        apiServices.CartReceived(phone, new ApiServices.OnCartReceived() {
+        apiServices.CartReceived(progressWheel,token, new ApiServices.OnCartReceived() {
             @Override
             public void onReceived(List<ModelBasket> modelBaskets,int totalPrice) {
                 adapterBasket = new AdapterBasket(BasketActivity.this,modelBaskets);
@@ -107,6 +109,7 @@ public class BasketActivity extends AppCompatActivity {
     }
 
     private void finViews() {
+        progressWheel = findViewById(R.id.progress_wheel);
         recyclerViewBasket=findViewById(R.id.recyclerbasket);
         cardBasket=findViewById(R.id.card_basket);
         txtTitle = findViewById(R.id.txt_title_toolbar_second);
